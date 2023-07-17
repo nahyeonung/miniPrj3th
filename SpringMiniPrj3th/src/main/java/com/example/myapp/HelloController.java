@@ -11,5 +11,9 @@ public class HelloController {
 	public String index() {
 		return "index";
 	}
+	@RequestMapping("/product/productManage")
+	public String manage() {
+		return "product/productManage";
+	}
 }
 

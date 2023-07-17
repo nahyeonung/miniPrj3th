@@ -2,9 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.myapp.product.dao.IProductRepository">
 
-	<select id="selectCnt" resultType="int">
-	<![CDATA[	
-		select count(*) from product
-	]]>
+	<select id="selectAllProduct" parameterType="int" resultType="com.example.myapp.product.model.Product">
+		SELECT
+			category_name AS categoryName,
+			product_name AS productName,
+			product_price AS productPrice,
+			product_description AS productDescription,
+			product_stock AS productStock,
+			product_date AS productDate,
+			image_name AS imageName,
+			image_data AS imageData
+		FROM
+			product p
+		LEFT JOIN
+			category c
+		ON p.category_id = c.category_id
+		LEFT JOIN
+			product_image pi
+		ON p.product_id = pi.product_id
+		<if test='categoryId != -1'>
+			WHERE p.category_id = #{categoryId}
+		</if>		
 	</select>
+	
+
 </mapper>
