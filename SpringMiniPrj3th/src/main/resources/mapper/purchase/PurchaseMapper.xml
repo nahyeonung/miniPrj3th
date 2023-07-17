@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.myapp.purchase.dao.IPurchaseRepository">
+	
+ 	
+	<select id="selectAllPurchase" parameterType="String" resultType="com.example.myapp.purchase.model.Purchase">
+		<![CDATA[
+			SELECT
+			    purchase_id as "purchaseId",
+			    purchase.user_id as "userId",
+			    delivery as "delivery",
+			    purchase_date as "purchaseDate",
+			    purchase_state as "purchaseState",
+			    total_price as "totalPrice"
+			FROM purchase
+			JOIN users
+			    ON purchase.user_id = users.user_id
+			WHERE purchase.user_id = #{userId}
+		]]>
+	</select>
+	
+	<select id="selectPurchase" parameterType="hashmap" resultType="com.example.myapp.purchase.model.PurchaseDetail">
+		<![CDATA[
+			SELECT 
+			    pur.purchase_id as "purchaseId", 
+			    pur.purchase_date as "purchaseDate", 
+			    u.user_name as "userName", 
+			    pur.purchase_state as "purchaseState", 
+			    pur.total_price as "totalPrice", 
+			    proi.image_name as "imageName",
+			    pro.product_name as "productName", 
+			    purd.purchase_cnt as "purchaseCnt",
+			    pur.delivery as "delivery",
+			    u.user_phone as "userPhone"
+			FROM users u, product pro, product_image proi, purchase pur, purchase_detail purd
+			WHERE u.user_id = pur.user_id
+			AND pro.product_id = purd.product_id
+			AND pur.purchase_id = purd.purchase_id
+			AND pro.product_id = proi.product_id
+			AND pur.user_id = #{userId}
+			AND purd.purchase_id = #{purchaseId}
+		]]>
+	</select>
+	
+	<insert id="insertPurchase" parameterType="com.example.myapp.purchase.model.Purchase">
+		<![CDATA[
+			INSERT INTO PURCHASE 
+				(purchase_id, user_id, delivery, purchase_date, purchase_state, total_price)
+			VALUE
+				(#{purchase_id}, #{user_id}, #{delivery_id}, #{purchase_date}, #{purchase_state}, #{total_price}
+		]]>
+	</insert>
+	
+	<insert id="insertPurchaseDetail" parameterType="com.example.myapp.purchase.model.PurchaseDetail">
+		<![CDATA[
+			INSERT INTO PURCHASE_DETAIL 
+				(purchase_detail_id, product_id, purchase_id, purchase_cnt)
+			VALUE
+				(#{purchase_detail_id}, #{product_id}, #{purchase_id}, #{purchase_cnt})
+		]]>
+	</insert>
+	
+</mapper>

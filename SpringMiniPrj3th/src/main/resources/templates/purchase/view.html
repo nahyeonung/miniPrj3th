@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+		<table>
+		<thead>
+			<tr>
+				<th>NO</th>
+				<th>주문일자</th>
+				<th>주문자</th>
+				<th>배송상태</th>
+				<th>가격</th>
+				<th>이미지</th>
+				<th>상품이름</th>
+				<th>상품개수</th>
+				<th>배송지</th>
+				<th>핸드폰번호</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>[[${purchaseDetail.purchaseId}]]</td>
+				<td th:text="${#dates.format(purchaseDetail.purchaseDate, 'yyyy-MM-dd')}"></td>
+				<td>[[${purchaseDetail.userName}]]</td>
+				<td>[[${purchaseDetail.purchaseState}]]</td>
+				<td>[[${purchaseDetail.totalPrice}]]</td>
+				<td>[[${purchaseDetail.imageName}]]</td>
+				<td>[[${purchaseDetail.productName}]]</td>
+				<td>[[${purchaseDetail.purchaseCnt}]]</td>
+				<td>[[${purchaseDetail.delivery}]]</td>
+				<td>[[${purchaseDetail.userPhone}]]</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
