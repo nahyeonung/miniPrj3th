@@ -29,7 +29,6 @@ public class PurchaseController {
 	@RequestMapping(value="/purchase/insert", method=RequestMethod.POST)
 	public String insertPurchase(BindingResult results, RedirectAttributes redirectAttrs) {
 		Purchase purchase = new Purchase();
-		purchase.setPurchaseId(0)
 		return "purchase/insert";
 	}
 	
