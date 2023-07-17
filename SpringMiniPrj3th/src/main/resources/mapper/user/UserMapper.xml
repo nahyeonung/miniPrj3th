@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.myapp.user.dao.IUserRepository">
+
+	<insert id="insertUser"
+		parameterType="com.example.myapp.user.model.User">
+	<![CDATA[
+		INSERT INTO 
+		USERS (user_id, user_pwd, user_name, user_birth, user_address, user_phone, user_state)
+		VALUES 
+			(#{userId}, #{userPwd}, #{userName}, #{userBirth}, #{userAddress}, #{userPhone}, #{userState})
+	]]>
+	</insert>
+
+	<select id="selectUser" parameterType="string"
+		resultType="com.example.myapp.user.model.User">
+	<![CDATA[
+		SELECT 
+			user_id,
+			user_pwd,
+			user_name,
+			user_birth,
+			user_address,
+			user_phone,
+			user_state
+		FROM 
+			USERS
+		WHERE user_id=#{userId}
+	]]>
+	</select>
+
+	<select id="selectAllUsers"
+		resultType="com.example.myapp.user.model.User">
+	<![CDATA[
+		SELECT 
+			user_id, user_pwd, user_name, user_birth, user_phone, user_state
+		FROM
+			USERS
+	]]>
+	</select>
+
+	<update id="updateUser"
+		parameterType="com.example.myapp.user.model.User">
+	<![CDATA[
+		UPDATE USERS
+		SET 
+			user_pwd=#{userPwd}, user_name=#{userName}, user_birth=#{userBirth}, user_address=#{userAddress}, user_phone=${userPhone}
+		WHERE 
+			userid=#{userid}
+	]]>
+	</update>
+
+	<delete id="deleteUser"
+		parameterType="com.example.myapp.user.model.User">
+	<![CDATA[
+		DELETE FROM
+			USERS
+		WHERE
+			user_id=#{userId} AND user_pwd=#{userPwd}
+	]]>
+	</delete>
+
+	<select id="getPassword" parameterType="string"
+		resultType="string">
+	<![CDATA[
+		SELECT
+			user_pwd
+		FROM
+			USERS
+		WHERE user_id=#{userId}
+	]]>
+	</select>
+</mapper>
