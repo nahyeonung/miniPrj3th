@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.myapp.review.dao.IReviewRepository">
+
+	<select id="selectReviewList" parameterType="int" resultType="com.example.myapp.review.model.Review">
+		<![CDATA[
+			SELECT 
+			    p.product_name as "productName", 
+			    p.product_price as "productPrice", 
+			    p.product_description as "productDescription",
+			    r.rate as "rate", 
+			    r.content as "content", 
+			    ri.review_image_name as "reviewImageName"	
+			FROM review r, review_image ri, product p
+			WHERE r.review_id = ri.review_id
+			and r.product_id = p.product_id
+			and r.product_id = #{productId}
+		]]>
+	</select>
+
+</mapper>

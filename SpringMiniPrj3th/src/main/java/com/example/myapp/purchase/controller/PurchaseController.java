@@ -27,8 +27,13 @@ public class PurchaseController {
 	}
 	
 	@RequestMapping(value="/purchase/insert", method=RequestMethod.POST)
-	public String insertPurchase(BindingResult results, RedirectAttributes redirectAttrs) {
-		Purchase purchase = new Purchase();
+	public String insertPurchase(Purchase purchase, PurchaseDetail purchaseDetail, BindingResult results, RedirectAttributes redirectAttrs) {
+		purchase.setDelivery(purchase.getDelivery());
+		purchase.setPurchaseDate(purchase.getPurchaseDate());
+		purchase.setPurchaseState(purchase.getPurchaseState());
+		purchase.setTotalPrice(purchase.getTotalPrice());
+		
+		/* purchaseDetail.setUserName() */
 		return "purchase/insert";
 	}
 	
