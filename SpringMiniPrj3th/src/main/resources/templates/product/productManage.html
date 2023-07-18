@@ -16,5 +16,53 @@
 			</div>
 		</form>
 	</div>
+	<div>
+		<form th:action="@{/category/delete}" method="post">
+			<div>카테고리 삭제</div>
+			<div th:each="list : ${categoryList}">
+				<label><input type="checkbox" name="categoryId" th:value="${list.categoryId}">[[${list.categoryName}]]</label>
+			</div>
+			<input type="submit" value="Submit">
+		</form>
+	</div>
+	
+	
+	<div>
+		<form th:action="@{/product/insert}" method="post" enctype="multipart/form-data">
+			<div>상품 추가</div>
+			<span th:each="list : ${categoryList}">
+				<label><input type="checkbox" name="categoryId" th:value="${list.categoryId}">[[${list.categoryName}]]</label>
+			</span>
+			<div>
+				<label><input type="text" name="productName">상품이름</label>
+			</div>
+			<div>
+				<label><input type="text" name="productPrice">상품가격</label>
+			</div>
+			<div>
+				<label><input type="text" name="productStock">상품재고</label>
+			</div>
+			<div>
+				<label><input type="text" name="productDescription">상품설명</label>
+			</div>
+			<div>
+				<label><input type="file" name="file">파일</label>
+			</div>
+			<input type="submit" value="Submit">
+		</form>
+	</div>
+	
+	<div>
+		<form th:action="@{/product/delete}" method="post">
+			<div>상품 삭제</div>
+			<div th:each="pList : ${productList}">
+				<label><input type="checkbox" name="productId" th:value="${pList.productId}">[[${pList.productName}]]</label>
+				<span>[[${pList.categoryName}]]</span>
+				<span>[[${pList.productPrice}]]</span>
+				<span>[[${pList.productDate}]]</span>
+				<span>[[${pList.imageName}]]</span>
+			</div>
+		</form>
+	</div>
 </body>
 </html>
