@@ -21,8 +21,8 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public User selectUser(String userid) {
-		return userDao.selectUser(userid);
+	public User selectUser(String userId) {
+		return userDao.selectUser(userId);
 	}
 
 	@Override
@@ -41,8 +41,8 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public String getPassword(String userid) {
-		return userDao.getPassword(userid);
+	public String getPassword(String userId) {
+		return userDao.getPassword(userId);
 	}
 
 }
