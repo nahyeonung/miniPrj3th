@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<td>상품이름</td>
+				<td>상품가격</td>
+				<td>상품설명</td>
+				<td>평점</td>
+				<td>리뷰내용</td>
+				<td>리뷰사진</td>
+			</tr>
+		</thead>
+		<tr th:each="review : ${reviewList}">
+			<td>[[${review.productName}]]</td>
+			<td>[[${review.productPrice}]]</td>
+			<td>[[${review.productDescription}]]</td>
+			<td>[[${review.rate}]]</td>
+			<td>[[${review.content}]]</td>
+			<td>[[${review.reviewImageName}]]</td>		
+		</tr>
+	</table>
+</body>
+</html>
