@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.myapp.product.dao.IProductRepository;
 import com.example.myapp.product.model.Category;
 import com.example.myapp.product.model.Product;
+import com.example.myapp.product.model.UploadImage;
 import com.example.myapp.product.model.UploadProduct;
 
 @Service
@@ -38,11 +39,36 @@ public class productService implements IProductService{
 	}
 	
 	@Transactional
-	public void insertProducts(UploadProduct product) {
+	public void insertProducts(UploadProduct product, UploadImage img) {
 		int row = productRepository.insertProduct(product);
 		if(row != 0) {
 			int productId = productRepository.selectProductId();
-			int rowNum = productRepository.insertProductImg(product, productId);
+			int rowNum = productRepository.insertProductImg(img, productId);
 		}
+	}
+
+	@Override
+	public void insertProducts(UploadProduct product) {
+		productRepository.insertProduct(product);
+	}
+
+	@Override
+	public UploadImage getFile(int imgId) {
+		return productRepository.getFile(imgId);
+	}
+
+	@Override
+	public int deleteProduct(int productId) {
+		return productRepository.deleteProduct(productId);
+	}
+
+	@Override
+	public int deleteBackProduct(int productId) {
+		return productRepository.deleteBackProduct(productId);
+	}
+
+	@Override
+	public Product selectProdcut(int productId) {
+		return productRepository.selectProduct(productId);
 	}
 }

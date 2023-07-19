@@ -31,7 +31,7 @@
 		<form th:action="@{/product/insert}" method="post" enctype="multipart/form-data">
 			<div>상품 추가</div>
 			<span th:each="list : ${categoryList}">
-				<label><input type="checkbox" name="categoryId" th:value="${list.categoryId}">[[${list.categoryName}]]</label>
+				<label><input type="radio" name="categoryId" th:value="${list.categoryId}">[[${list.categoryName}]]</label>
 			</span>
 			<div>
 				<label><input type="text" name="productName">상품이름</label>
@@ -55,14 +55,66 @@
 	<div>
 		<form th:action="@{/product/delete}" method="post">
 			<div>상품 삭제</div>
-			<div th:each="pList : ${productList}">
-				<label><input type="checkbox" name="productId" th:value="${pList.productId}">[[${pList.productName}]]</label>
-				<span>[[${pList.categoryName}]]</span>
-				<span>[[${pList.productPrice}]]</span>
-				<span>[[${pList.productDate}]]</span>
-				<span>[[${pList.imageName}]]</span>
-			</div>
+			<table>
+			<thead>
+			<tr>
+				<td>상품 이름</td>
+				<td>카테고리</td>
+				<td>상품가격</td>
+				<td>등록 날짜</td>
+				<td>이미지</td>
+				<td>사용 유무</td>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="pList : ${productList}">
+				<td>
+					<label><input type="checkbox" name="productId" th:value="${pList.productId}">[[${pList.productName}]]</label>
+				</td>
+				<td>
+					<span>[[${pList.categoryName}]]</span>
+				</td>
+				<td>
+					<span>[[${pList.productPrice}]]</span>
+				</td>
+				<td>
+					<span>[[${pList.productDate}]]</span>
+				</td>
+				<td style="height:100px; widht:100px">
+					<img th:src="@{/file/{id}(id=${pList.imageId})}">
+				</td>
+				<td>
+					<span th:if="${pList.productState==0}">사용중</span>
+					<span th:if="${pList.productState==1}">사용불가</span>
+				</td>
+			</tr>
+			</tbody>
+			</table>
+			<input type="submit" value="Submit">
 		</form>
 	</div>
+	<script>
+      const body = document.querySelector('body');
+      const modal = document.querySelector('.modal');
+      const btnOpenPopup = document.querySelector('.btn-open-popup');
+
+      btnOpenPopup.addEventListener('click', () => {
+        modal.classList.toggle('show');
+
+        if (modal.classList.contains('show')) {
+          body.style.overflow = 'hidden';
+        }
+      });
+
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+          modal.classList.toggle('show');
+
+          if (!modal.classList.contains('show')) {
+            body.style.overflow = 'auto';
+          }
+        }
+      });
+    </script>
 </body>
 </html>

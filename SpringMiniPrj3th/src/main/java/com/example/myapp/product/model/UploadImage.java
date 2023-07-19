@@ -1,13 +1,15 @@
 package com.example.myapp.product.model;
 
-import lombok.Data;
 
-@Data
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
 public class UploadImage {
-	private int fileId;
-	private int boardId;
-	private String fileName;
-	private long fileSize;
-	private String fileContentType;
-	private byte[] fileData;
+	private int imageId;
+	private String imageName;
+	private long imageSize;
+	private String imageType;
+	private byte[] imageData;
+	private int productId;
 }
