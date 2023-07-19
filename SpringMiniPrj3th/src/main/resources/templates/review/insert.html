@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/include/head :: header}"></head>
+<body>
+ 	<!-- Start Top Nav -->
+	<div th:replace="~{/include/body-header :: bodyHeader}"></div>
+    <!-- Close Top Nav -->
+
+
+    <!-- Header -->
+    <div th:replace="~{/include/navbar :: navbar}"></div>
+    <!-- Close Header -->
+	
+	<div class="container">
+		<form th:action="@{/review/insert}" method="post" enctype="multipart/form-data">
+			<input type="number" name="productId" th:value=${productId}>
+			<label for="rate">평점</label>
+			<select id="rate" name="rate" required>
+				<option th:value=1>1점</option>
+				<option th:value=2>2점</option>
+				<option th:value=3>3점</option>
+				<option th:value=4>4점</option>
+				<option th:value=5>5점</option>
+			</select>
+			
+			<label for="content">내용</label>
+			<textarea name="content" rows="10" cols="100"></textarea>
+			
+			<input type="file" name="file"></input>
+			
+			<input type="submit" value="글 쓰기">
+			<input type="reset" value="취소">
+		</form>
+	</div>
+    
+    <!-- Start Footer -->
+	<div th:replace="~{/include/footer :: footer}"></div>
+    <!-- End Footer -->
+</body>
+</html>

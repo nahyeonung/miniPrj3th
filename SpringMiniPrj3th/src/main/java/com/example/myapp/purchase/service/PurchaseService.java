@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.myapp.purchase.dao.IPurchaseRepository;
 import com.example.myapp.purchase.model.Purchase;
@@ -15,18 +16,11 @@ public class PurchaseService implements IPurchaseService{
 	@Autowired
 	IPurchaseRepository purchaseRepository;
 	
-	
-	@Override
-	public void insertPurchase(Purchase purhcase) {
-		purchaseRepository.insertPurchase(purhcase);
+	@Transactional
+	public void insertAllPurchase(Purchase purchase, PurchaseDetail purchaseDeail) {
+		purchaseRepository.insertPurchase(purchase);
+		purchaseRepository.insertPurchaseDetail(purchaseDeail);
 	}
-
-
-	@Override
-	public void insertPurchaseDetail(PurchaseDetail purchaseDetail) {
-		purchaseRepository.insertPurchaseDetail(purchaseDetail);
-	}
-
 
 	@Override
 	public List<Purchase> selectAllPurchase(String userId) {

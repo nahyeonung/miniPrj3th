@@ -12,6 +12,7 @@ import com.example.myapp.purchase.model.PurchaseDetail;
 @Repository
 @Mapper
 public interface IPurchaseRepository {
+	void insertAllPurchase(Purchase purchase, PurchaseDetail purchaseDetail);
 	void insertPurchase(Purchase purhcase);
 	void insertPurchaseDetail(PurchaseDetail purchaseDetail);
 	

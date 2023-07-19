@@ -4,18 +4,55 @@
 
 	<select id="selectReviewList" parameterType="int" resultType="com.example.myapp.review.model.Review">
 		<![CDATA[
-			SELECT 
+			SELECT
+				r.review_id as "reviewId",
+				r.user_id as "userId",
+				r.review_id as "reviewId", 
 			    p.product_name as "productName", 
 			    p.product_price as "productPrice", 
 			    p.product_description as "productDescription",
 			    r.rate as "rate", 
 			    r.content as "content", 
 			    ri.review_image_name as "reviewImageName"	
-			FROM review r, review_image ri, product p
-			WHERE r.review_id = ri.review_id
-			and r.product_id = p.product_id
-			and r.product_id = #{productId}
+			FROM review r 
+			LEFT OUTER JOIN review_image ri
+			ON r.review_id = ri.review_id
+			INNER JOIN product p
+			ON r.product_id = p.product_id
+			WHERE r.product_id = #{productId}
+			ORDER BY r.review_id
 		]]>
 	</select>
+	
+	<insert id="insertReview" parameterType="com.example.myapp.review.model.Review">
+		<![CDATA[
+			INSERT INTO REVIEW 
+				(review_id, rate, content, user_id, product_id)
+			VALUES 
+				(REVIEW_SEQ.NEXTVAL, #{rate}, #{content}, #{userId}, #{productId})
+		]]>
+	</insert>
+	
+	<insert id="insertImageData" parameterType="com.example.myapp.review.model.ReviewImage">
+		<![CDATA[
+			INSERT INTO REVIEW_IMAGE 
+				(review_image_id, review_image_name, review_image_size, review_image_type, review_image_data, review_id)
+			VALUES 
+				(review_image_seq.nextval, #{reviewImage}, #{reviewImageSize}, #{reivewImagetype}, #{reviewImageData}, #{reviewId})
+		]]>
+	</insert>
+	
+	<select id="getProduct" parameterType="int" resultType="com.example.myapp.review.model.Review">
+		<![CDATA[
+			SELECT
+				product_id as "productID",
+				product_name as "productName",
+				product_price as "productPrice",
+				product_description as "productDescription"
+			FROM product
+			WHERE product_id = #{product_id}
+		]]>
+	</select>
+	
 
 </mapper>

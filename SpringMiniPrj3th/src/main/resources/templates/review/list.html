@@ -8,6 +8,7 @@
 	<table>
 		<thead>
 			<tr>
+				<td>NO</td>
 				<td>상품이름</td>
 				<td>상품가격</td>
 				<td>상품설명</td>
@@ -17,6 +18,7 @@
 			</tr>
 		</thead>
 		<tr th:each="review : ${reviewList}">
+			<td>[[${review.reviewId}]]</td>
 			<td>[[${review.productName}]]</td>
 			<td>[[${review.productPrice}]]</td>
 			<td>[[${review.productDescription}]]</td>
