@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/include/head :: header}"></head>
+<body>
+	<!-- Start Top Nav -->
+	<div th:replace="~{/include/body-header :: bodyHeader}"></div>
+	<!-- Close Top Nav -->
+
+
+	<!-- Header -->
+	<div th:replace="~{/include/navbar :: navbar}"></div>
+	<!-- Close Header -->
+	<div class="container">
+		<div class="content">
+			<form th:action="@{/community/search}" method="get">
+				<div class="pull-right" style="margin-bottom: 10px;">
+					<div class="inputbar">
+						<input type="text" name="keyword">
+					</div>
+					<input type="submit" value="검색">
+				</div>
+			</form>
+			<table>
+				<thead>
+					<tr>
+						<th>NO</th>
+						<th>아이디</th>
+						<th>제목</th>
+						<th>작성일자</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="community : ${communityList}">
+						<td>[[${community.writeId}]]</td>
+						<td>[[${community.userId}]]</td>
+						<td><a th:href="@{/community/__${community.writeId}__}">
+								[[${community.writeTitle}]]</a></td>
+						<td th:text="${#dates.format(community.writeDate, 'yy/MM/dd')}"></td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+	<a th:href="@{/community/list}"><button type="button" class="btn list">목록</button></a>
+	<!-- Start Footer -->
+	<div th:replace="~{/include/footer :: footer}"></div>
+	<!-- End Footer -->
+</body>
+</html>

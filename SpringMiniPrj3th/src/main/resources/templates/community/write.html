@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/include/head :: header}"></head>
+<body>
+ 	<!-- Start Top Nav -->
+	<div th:replace="~{/include/body-header :: bodyHeader}"></div>
+    <!-- Close Top Nav -->
+
+
+    <!-- Header -->
+    <div th:replace="~{/include/navbar :: navbar}"></div>
+    <!-- Close Header -->
+	
+	<div class="container">
+		<form th:action="@{/community/write}" method="post">
+			<label for="writeTitle">제목</label>
+			<textarea name="writeTitle" rows="1" cols="100"></textarea>
+			<label for="writeContent">내용</label>
+			<textarea name="writeContent" rows="10" cols="100"></textarea>
+			<input type="submit" value="글 쓰기">
+			<input type="reset" value="취소">
+		</form>
+	</div>
+    
+    <!-- Start Footer -->
+	<div th:replace="~{/include/footer :: footer}"></div>
+    <!-- End Footer -->
+</body>
+</html>
