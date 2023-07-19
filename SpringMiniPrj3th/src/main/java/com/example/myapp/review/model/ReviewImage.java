@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class ReviewImage {
-	private int reivewImageId;
-	private int reivewId;
+	private int reviewImageId;
+	private int reviewId;
 	private String reviewImageName;
 	private String reviewImageType;
 	private long reviewImageSize;

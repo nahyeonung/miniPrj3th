@@ -12,6 +12,11 @@ public interface IReviewService {
 	void insertReview(Review review, ReviewImage reviewImage);
 	
 	Review getProduct(int productId);
-	//Review selectReview(int reviewId);
-	//ReviewImage getImage(int reviewImageId);
+	Review selectReview(int reviewId);
+	ReviewImage getImage(int reviewImageId);
+	
+	void updateReview(Review review);
+	void updateReview(Review review, ReviewImage reviewImage);
+	
+	void deleteReview(int reviewId);
 }

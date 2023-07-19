@@ -17,6 +17,14 @@ public interface IReviewRepository {
 	void insertImageData(ReviewImage reviewImage);
 	
 	Review getProduct(int productId);
-	//Review selectReview(int reviewId);
-	//ReviewImage getImage(int reviewImageId);
+	int selectReviewId();
+	int selectReviewImageId();
+	Review selectReview(int reviewId);
+	ReviewImage getImage(int reviewImageId);
+	
+	void updateReview(Review review);
+	void updateImageData(ReviewImage reviewImage);
+	
+	void deleteImageData(int reviewId);
+	void deleteReview(int reviewId);
 }

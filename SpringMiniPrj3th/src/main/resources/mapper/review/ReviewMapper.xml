@@ -13,6 +13,7 @@
 			    p.product_description as "productDescription",
 			    r.rate as "rate", 
 			    r.content as "content", 
+			    ri.review_image_id as "reviewImageId",
 			    ri.review_image_name as "reviewImageName"	
 			FROM review r 
 			LEFT OUTER JOIN review_image ri
@@ -22,6 +23,26 @@
 			WHERE r.product_id = #{productId}
 			ORDER BY r.review_id
 		]]>
+	</select>
+	
+	<select id="selectReviewId" resultType="int">
+		<![CDATA[
+			SELECT 
+         		LAST_NUMBER-1 AS reviewId
+      		FROM 
+         		user_sequences 
+      		WHERE sequence_name = 'REVIEW_SEQ'
+      ]]>
+	</select>
+	
+		<select id="selectReviewImageId" resultType="int">
+		<![CDATA[
+			SELECT 
+         		LAST_NUMBER-1 AS reviewImageId
+      		FROM 
+         		user_sequences 
+      		WHERE sequence_name = 'REVIEW_IMAGE_SEQ'
+      ]]>
 	</select>
 	
 	<insert id="insertReview" parameterType="com.example.myapp.review.model.Review">
@@ -38,7 +59,7 @@
 			INSERT INTO REVIEW_IMAGE 
 				(review_image_id, review_image_name, review_image_size, review_image_type, review_image_data, review_id)
 			VALUES 
-				(review_image_seq.nextval, #{reviewImage}, #{reviewImageSize}, #{reivewImagetype}, #{reviewImageData}, #{reviewId})
+				(review_image_seq.nextval, #{reviewImageName}, #{reviewImageSize}, #{reviewImageType}, #{reviewImageData}, #{reviewId})
 		]]>
 	</insert>
 	
@@ -54,5 +75,78 @@
 		]]>
 	</select>
 	
+	<select id="getImage" parameterType="int" resultType="com.example.myapp.review.model.ReviewImage">
+		<![CDATA[
+			SELECT
+			    review_image_id		AS "reviewImageId", 
+			    review_id			AS "reviewId", 
+			    review_image_name	AS "reviewImageName", 
+			    review_image_size	AS "reviewImageSize", 
+			    review_image_type	AS "reviewImageType", 
+			    review_image_data 	AS "reviewImageData"
+			FROM review_image
+			WHERE review_image_id=#{reviewImageId}
+		]]>
+	</select>
+	
+	<select id="selectReview" parameterType="int" resultType="com.example.myapp.review.model.Review">
+		<![CDATA[
+			SELECT 
+				p.product_id as "productId",
+				r.review_id as "reviewId",
+				p.product_name as "productName",
+				p.product_price as "productPrice",
+				p.product_description as "productDescription",
+				r.rate as "rate",
+				r.content as "content",
+				ri.review_image_id as "reviewImageId",
+				ri.review_image_name as "reviewImageName",
+				ri.review_image_size as "reviewImageSize",
+				ri.review_image_type as "reviewImageType",
+				ri.review_image_data as "reviewImageData"
+			FROM review r
+			LEFT OUTER JOIN review_image ri
+			ON r.review_id=ri.review_id
+			JOIN product p
+			ON r.product_id=p.product_id
+			WHERE r.review_id=#{reviewId}
+		]]>
+	</select>
+	
+	<update id="updateReview" parameterType="com.example.myapp.review.model.Review">
+		<![CDATA[
+			UPDATE review
+			SET
+				rate=#{rate}, content=#{content}
+			WHERE review_id=#{reviewId}
+		]]>
+	</update>
+	
+	<update id="updateImageData" parameterType="com.example.myapp.review.model.ReviewImage">
+		<![CDATA[
+			UPDATE review_image
+			SET
+				review_image_name = #{reviewImageName},
+				review_image_type = #{reviewImageType},
+				review_image_size = #{reviewImageSize},
+				review_image_data = #{reviewImageData}
+			WHERE review_id=#{reviewId}
+		]]>
+	</update>
+	
+	<delete id="deleteImageData" parameterType="int">
+		<![CDATA[
+			DELETE FROM review_image
+			WHERE EXISTS (SELECT review_id FROM review
+							WHERE review.review_id=#{reviewId}
+							AND review.review_id=review_image.review_id)
+		]]>
+	</delete>
+	
+	<delete id="deleteReview" parameterType="int">
+		<![CDATA[
+			DELETE FROM review WHERE review_id=#{reviewId}
+		]]>
+	</delete>	
 
 </mapper>
