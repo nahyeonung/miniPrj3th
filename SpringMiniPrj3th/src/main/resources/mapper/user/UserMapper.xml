@@ -8,7 +8,9 @@
 		<result property="userPwd" column="user_pwd" />
 		<result property="userName" column="user_name" />
 		<result property="userBirth" column="user_birth" />
+		<result property="userEmail" column="user_email" />		
 		<result property="userAddress" column="user_address" />
+		<result property="userDetailAddress" column="user_detailaddress" />
 		<result property="userPhone" column="user_phone" />
 		<result property="userState" column="user_state" />
 	</resultMap>
@@ -17,9 +19,9 @@
 		parameterType="com.example.myapp.user.model.User">
     <![CDATA[
         INSERT INTO 
-        USERS (user_id, user_pwd, user_name, user_birth, user_address, user_phone, user_state)
+        USERS (user_id, user_pwd, user_name, user_birth, user_email, user_address, user_detailaddress, user_phone, user_state)
         VALUES 
-            (#{userId}, #{userPwd}, #{userName}, #{userBirth}, #{userAddress}, #{userPhone}, 0)
+            (#{userId}, #{userPwd}, #{userName}, #{userBirth}, #{userEmail}, #{userAddress}, #{userDetailAddress}, #{userPhone}, 0)
     ]]>
 	</insert>
 
@@ -30,8 +32,10 @@
 			user_id,			
 			user_pwd,		
 			user_name,		
-			user_birth,		
-			user_address,	
+			user_birth,
+			user_email,		
+			user_address,
+			user_detailaddress,
 			user_phone
 		FROM 
 			USERS
@@ -43,7 +47,7 @@
 		resultType="com.example.myapp.user.model.User" resultMap="userResultMap">
 	<![CDATA[
 		SELECT 
-			user_id, user_pwd, user_name, user_birth, user_phone
+			user_id, user_pwd, user_name, user_birth, user_email, user_address, user_detailaddress, user_phone
 		FROM
 			USERS
 	]]>
@@ -54,7 +58,7 @@
     <![CDATA[
         UPDATE USERS
         SET 
-            user_pwd=#{userPwd}, user_name=#{userName}, user_birth=#{userBirth}, user_address=#{userAddress}, user_phone=#{userPhone}
+            user_pwd=#{userPwd}, user_name=#{userName}, user_birth=#{userBirth}, user_email=#{userEmail}, user_address=#{userAddress}, user_detailaddress=#{userDetailAddress}, user_phone=#{userPhone}
         WHERE 
             user_id=#{userId}
     ]]>

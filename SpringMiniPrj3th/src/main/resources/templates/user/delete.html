@@ -1,39 +1,56 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>회원 탈퇴</title>
+<head th:replace="~{/include/head :: header}">
+<title>회원 탈퇴</title>
 </head>
+
 <body>
-<div class="container">
-    <div class="pg-opt">
-        <div class="row">
-            <div class="col-md-6 pc">
-                <h2>회원 탈퇴</h2>
-            </div>
-            <div class="col-md-6">
-                <ol class="breadcrumb">
-                    <li>회원</li>
-                    <li class="active">회원 탈퇴</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-    <div class="content">
-        <form th:action="@{/user/delete}" method="post" class="form-horizontal">
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="user_pwd">회원 비밀번호</label>
-                <div class="col-sm-4">
-                    <input type="password" name="userPwd" id="user_pwd" class="form-control" placeholder="회원 비밀번호" required>
-                    <span style="color: red;" th:if="${message!=null}">[[${message}]]</span>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-8">
-                    <input type="submit" class="btn btn-info" value="회원정보 삭제">
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
+	<!-- Start Top Nav -->
+	<div th:replace="~{/include/body-header :: bodyHeader}"></div>
+	<!-- Close Top Nav -->
+
+
+	<!-- Header -->
+	<div th:replace="~{/include/navbar :: navbar}"></div>
+	<!-- Close Header -->
+	<div class="container">
+		<div class="pg-opt">
+			<div class="row">
+				<div class="col-md-6 pc">
+					<h2>회원 탈퇴</h2>
+				</div>
+			</div>
+		</div>
+		<div class="content">
+			<form th:action="@{/user/delete}" method="post"
+				class="form-horizontal">
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="user_pwd">회원
+						비밀번호</label>
+					<div class="col-sm-4">
+						<input type="password" name="userPwd" id="user_pwd"
+							class="form-control" placeholder="회원 비밀번호" required> <span
+							style="color: red;" th:if="${message!=null}">[[${message}]]</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-8">
+						<input type="submit" class="btn btn-info" value="회원정보 삭제">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- Start Footer -->
+	<div th:replace="~{/include/footer :: footer}"></div>
+	<!-- End Footer -->
+
+	<!-- Start Script -->
+	<script src="static/js/jquery-1.11.0.min.js"></script>
+	<script src="static/js/jquery-migrate-1.2.1.min.js"></script>
+	<script src="static/js/bootstrap.bundle.min.js"></script>
+	<script src="static/js/templatemo.js"></script>
+	<script src="static/js/custom.js"></script>
+	<!-- End Script -->
 </body>
 </html>

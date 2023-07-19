@@ -1,23 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="~{/include/head :: header}">
 <title>로그인</title>
 </head>
+
+
 <body>
+	<!-- Start Top Nav -->
+	<div th:replace="~{/include/body-header :: bodyHeader}"></div>
+	<!-- Close Top Nav -->
+
+
+	<!-- Header -->
+	<div th:replace="~{/include/navbar :: navbar}"></div>
+	<!-- Close Header -->
+    
 	<div class="container">
 		<div class="pg-opt">
 			<div class="row">
 				<div class="col-md-6 pc">
-					<h2>
-						<span>로그인</span><small style="color: red"
-							th:if="${message!=null}">[[${message}]]</small>
-					</h2>
-				</div>
-				<div class="col-md-6">
-					<ol class="breadcrumb">
-						<li>USER</li>
-						<li class="active">SIGN IN</li>
-					</ol>
+					<h1>
+						<span th:if="${session.userId != null}"
+							th:text="${session.userId} + '님 환영합니다.'">userId님 환영합니다.</span> <span
+							th:unless="${session.userId != null}">로그인</span>
+					</h1>
 				</div>
 			</div>
 		</div>
@@ -26,14 +32,14 @@
 				<form th:action="@{/user/login}" method="post"
 					class="form-horizontal">
 					<div class="form-group">
-						<label class="control-label col-sm-2" for="id">USER ID</label>
+						<label class="control-label col-sm-2" for="id">아이디</label>
 						<div class="col-sm-8">
 							<input type="text" name="userId" id="id" class="form-control"
 								placeholder="Id" aria-describedby="basic-addon1">
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-sm-2" for="pwd">USER PASSWORD</label>
+						<label class="control-label col-sm-2" for="pwd">비밀번호 </label>
 						<div class="col-sm-8">
 							<input type="password" name="userPwd" id="pwd"
 								class="form-control" placeholder="Password">
@@ -41,21 +47,46 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-8">
-							<input type="submit" class="btn btn-info">
-							<input type="reset" class="btn btn-info">
-							<a th:href="@{/user/insert}" class="btn btn-success">INSERT USER INFO</a>
+							<input type="submit" class="btn btn-info" value="로그인"> <input
+								type="reset" class="btn btn-info" value="취소"> <a
+								th:href="@{/user/insert}" class="btn btn-success">회원가입 </a>
 						</div>
 					</div>
 				</form>
 			</div>
 			<!-- 사인아웃 -->
-			<div th:if="${session.userId}">
-				<h4>[[${session.userId}]]</h4>
-				<h4>[[${session.userName}]]님 환영합니다.</h4>
+	 		<div th:if="${session.userId}">
+				<h2>내 정보</h2>
+				<p>
+					아이디: <span th:text="${user.userId}"></span>
+				</p>
+				<p>
+					이름: <span th:text="${user.userName}"></span>
+				</p>
+				<p>
+					생년월일: <span th:text="${user.userBirth}"></span>
+				</p>
+				<p>
+					주소: <span th:text="${user.userAddress + ', ' + user.userDetailAddress}"></span>
+				</p>
+				<p>
+					전화번호: <span th:text="${user.userPhone}"></span>
+				</p>
 				[<a th:href="@{/user/update}">사용자 정보 수정</a>] [<a
 					th:href="@{/user/logout}">로그아웃</a>] [<a th:href="@{/user/delete}">회원탈퇴</a>]
 			</div>
 		</div>
 	</div>
+	<!-- Start Footer -->
+	<div th:replace="~{/include/footer :: footer}"></div>
+	<!-- End Footer -->
+
+	<!-- Start Script -->
+	<script src="static/js/jquery-1.11.0.min.js"></script>
+	<script src="static/js/jquery-migrate-1.2.1.min.js"></script>
+	<script src="static/js/bootstrap.bundle.min.js"></script>
+	<script src="static/js/templatemo.js"></script>
+	<script src="static/js/custom.js"></script>
+	<!-- End Script -->
 </body>
 </html>

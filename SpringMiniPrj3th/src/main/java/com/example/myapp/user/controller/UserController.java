@@ -51,8 +51,6 @@ public class UserController {
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
 	public String login(String userId, String userPwd, HttpSession session, Model model) {
 		User user = userService.selectUser(userId);
-		System.out.println(userId);
-		System.out.println(userPwd);
 		if (user != null) {
 			logger.info(user.toString());
 			String dbPassword = user.getUserPwd();
@@ -60,6 +58,7 @@ public class UserController {
 				session.setMaxInactiveInterval(600); // 10분
 				session.setAttribute("userId", userId);
 				session.setAttribute("userName", user.getUserName());
+				model.addAttribute("user", user);			
 			} else { // 비밀번호가 다름
 				session.invalidate();
 				model.addAttribute("message", "비밀번호가 다릅니다.");
@@ -69,6 +68,16 @@ public class UserController {
 			model.addAttribute("message", "없는 아이디입니다.");
 		}
 		return "user/login";
+	}
+
+	@RequestMapping(value = "/user/userInfo", method = RequestMethod.GET)
+	public String userInfo(String userId, HttpSession session, Model model) {
+		User user = userService.selectUser(userId);
+		if (user != null) {
+			session.setAttribute("user", user);
+			model.addAttribute("user", user);
+		}
+		return "user/userInfo";
 	}
 
 	@RequestMapping(value = "/user/logout", method = RequestMethod.GET)
@@ -126,22 +135,21 @@ public class UserController {
 
 	@RequestMapping(value = "/user/delete", method = RequestMethod.POST)
 	public String deleteUser(String userPwd, HttpSession session, Model model) {
-	    try {
-	        User user = new User();
-	        user.setUserId((String) session.getAttribute("userId"));
-	        user.setUserPwd(userPwd); // userPwd 속성만 설정
+		try {
+			User user = new User();
+			user.setUserId((String) session.getAttribute("userId"));
+			user.setUserPwd(userPwd); // userPwd 속성만 설정
 
-	        // 변경된 deleteUser 메서드를 사용하여 삭제 수행
-	        userService.deleteUser(user);
+			// 변경된 deleteUser 메서드를 사용하여 삭제 수행
+			userService.deleteUser(user);
 
-	        session.invalidate(); // 사용자 삭제 후 로그아웃 처리
-	        return "user/login";
-	    } catch (Exception e) {
-	        model.addAttribute("message", "회원정보 삭제를 실패하였습니다.");
-	        e.printStackTrace();
-	        return "user/delete";
-	    }
+			session.invalidate(); // 사용자 삭제 후 로그아웃 처리
+			return "user/login";
+		} catch (Exception e) {
+			model.addAttribute("message", "회원정보 삭제를 실패하였습니다.");
+			e.printStackTrace();
+			return "user/delete";
+		}
 	}
-
 
 }
