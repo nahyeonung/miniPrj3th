@@ -3,17 +3,42 @@
 <mapper namespace="com.example.myapp.cart.dao.ICartRepository">
 	
 	<select id="selectCartList" parameterType="String" resultType="com.example.myapp.cart.model.Cart">
-		SELECT 
-			u.user_id as "userId", 
-			u.user_name as "userName", 
-			p.product_name as "productName", 
-			p.product_price as "productPrice", 
-			c.cart_cnt as "cartCnt", 
-			(p.product_price*c.cart_cnt) as "totalPrice"
-		FROM cart c, users u, product p
-		WHERE c.product_id = p.product_id
-		AND c.user_id = u.user_id
-		AND c.user_id = #{userId}
+		<![CDATA[
+			SELECT 
+				c.cart_id as "cartId",
+			    c.user_id as "userId",
+			    p.product_id as "productId",
+			    p.product_name as "productName",
+			    p.product_price as "productPrice",
+			    p.product_description as "productDescription",
+			    c.cart_cnt as "cartCnt",
+			    p.product_price*c.cart_cnt as "totalPrice",
+			    pi.image_id as "imageId",
+			    pi.image_name as "imageName",
+			    pi.image_size as "imageSize",
+			    pi.image_type as "imageType",
+			    pi.image_data as "imgaeData"
+			FROM cart c
+			JOIN product p ON c.product_id = p.product_id
+			LEFT OUTER JOIN product_image pi
+			ON p.product_id=pi.product_id
+			WHERE c.user_id = #{userId}
+		]]>
 	</select>
+	
+	<insert id="insertCart" parameterType="com.example.myapp.cart.model.Cart">
+		<![CDATA[
+			INSERT INTO CART (cart_id, cart_cnt, user_id, product_id)
+			VALUES (cart_seq.nextval, #{cartCnt}, #{userId}, #{productId})
+		]]>
+	</insert>
+	
+	<update id="updateCart" parameterType="com.example.myapp.cart.model.Cart">
+		<![CDATA[
+			UPDATE CART
+			SET cart.cart_cnt=#{cartCnt}
+			WHERE cart_id = #{cartId}
+		]]>
+	</update>
 	
 </mapper>

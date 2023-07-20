@@ -16,8 +16,10 @@ public class Review {
 	private String content;
 	
 	private MultipartFile file;
+	
 	private int reviewImageId;
 	private String reviewImageName;
 	private long reviewImageSize;
 	private String reviewImageType;
+	private byte[] reviewImageData;
 }

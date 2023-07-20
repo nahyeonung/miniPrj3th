@@ -19,4 +19,13 @@ public class CartService implements ICartService {
 		return cartRepository.selectCartList(userId);
 	}
 
+	@Override
+	public void insertCart(Cart cart) {
+		cartRepository.insertCart(cart);
+	}
+
+	@Override
+	public void updateCart(Cart cart) {
+		cartRepository.updateCart(cart);
+	}
 }

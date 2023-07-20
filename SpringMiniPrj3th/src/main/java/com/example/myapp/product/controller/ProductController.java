@@ -29,6 +29,9 @@ import com.example.myapp.product.model.Product;
 import com.example.myapp.product.model.UploadImage;
 import com.example.myapp.product.model.UploadProduct;
 import com.example.myapp.product.service.IProductService;
+import com.example.myapp.review.controller.ReviewController;
+import com.example.myapp.review.model.Review;
+import com.example.myapp.review.service.IReviewService;
 
 @Controller
 public class ProductController {
@@ -36,6 +39,9 @@ public class ProductController {
 	
 	@Autowired
 	IProductService productService;
+	
+	@Autowired
+	IReviewService reviewService;
 	
 	@RequestMapping("/shop")
 	public String getAllProduct(Model model) {
@@ -170,7 +176,9 @@ public class ProductController {
 	@RequestMapping(value="/product/productDetail/{productId}", method=RequestMethod.GET)
 	public String selectProduct(@PathVariable int productId, Model model) {
 		Product product = productService.selectProduct(productId);
+		List<Review> reviewList = reviewService.selectReviewList(productId);
 		model.addAttribute("product", product);
+		model.addAttribute("reviewList", reviewList);
 		return "/product/shop-single";
 	}
 }
