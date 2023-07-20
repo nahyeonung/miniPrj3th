@@ -40,7 +40,7 @@ public class ProductController {
 	@RequestMapping("/shop")
 	public String getAllProduct(Model model) {
 		List<Product> list = productService.selectAllProduct(-1);
-		System.out.println(list);
+		model.addAttribute("productList", list);
 		return "product/shop";
 	}
 	
@@ -163,8 +163,14 @@ public class ProductController {
 	@RequestMapping(value="/product/update/{productId}", method=RequestMethod.GET)
 	public String updateProduct(@PathVariable int productId) {
 		System.out.println(productId);
-		Product product = productService.selectProdcut(productId);
+		Product product = productService.selectProduct(productId);
 		return "redirect:/product/productManage";
 	}
 
+	@RequestMapping(value="/product/productDetail/{productId}", method=RequestMethod.GET)
+	public String selectProduct(@PathVariable int productId, Model model) {
+		Product product = productService.selectProduct(productId);
+		model.addAttribute("product", product);
+		return "/product/shop-single";
+	}
 }

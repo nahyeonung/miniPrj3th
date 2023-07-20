@@ -30,5 +30,5 @@ public interface IProductService {
 	
 	int deleteBackProduct(int productId);
 	
-	Product selectProdcut(int productId);
+	Product selectProduct(int productId);
 }
