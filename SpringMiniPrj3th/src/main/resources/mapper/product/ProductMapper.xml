@@ -5,6 +5,7 @@
 	<select id="selectAllProduct" parameterType="int" resultType="com.example.myapp.product.model.Product">
 		SELECT
 			p.product_id AS productId,
+			c.category_id AS categoryId,
 			category_name AS categoryName,
 			product_name AS productName,
 			product_price AS productPrice,

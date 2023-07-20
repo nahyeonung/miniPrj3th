@@ -38,9 +38,13 @@
       		<div>
 				<input class="input-pId" type="hidden" name="productId">
 			</div>
-			<span th:each="list : ${categoryList}">
-				<label><input type="radio" name="categoryId" th:value="${list.categoryId}">[[${list.categoryName}]]</label>
-			</span>
+			<label for="categoryId">카테고리</label>
+			<select class="select-id" name="categoryId" id="categoryId" required>
+				<th:block th:each="list : ${categoryList}">
+				<option th:value="${list.categoryId}" th:selected="${list.categoryId eq categoryId}">
+				[[${list.categoryName}]]</option>
+				</th:block>
+			</select>
 			<div>
 				<label><input class="input-pName" type="text" name="productName">상품이름</label>
 			</div>
@@ -56,7 +60,7 @@
 			<div>
 				<label><input type="file" name="file">파일</label>
 			</div>
-			<input type="submit" value="수정하기">
+			<button type="submit" value="수정하기">수정하기</button>
 		</form>
       </div>
   </div>
@@ -70,11 +74,11 @@
     <!-- Close Header -->
 
     <div class="site-section">
-      <div class="container">
+      <div class="container" style="max-width:100%">
         <div class="row mb-5">
         	<form th:action="@{/product/delete}" method="post" class="col-md-12">
             <div class="site-blocks-table">
-              <table class="table table-bordered">
+              <table class="table table-bordered" style="width:100%">
                 <thead>
                   <tr>
                     <th class="product-thumbnail">상품 이름</th>
@@ -115,9 +119,8 @@
                     	<span>사용중</span>
                     </td>
                     <td>
-                    	<!-- <a th:href="@{/product/update/{productId}(productId=${pList.productId})}">수정하기</a>  -->
-                    	<button type="button" 
-                    	th:onclick="openModal([[${pList.productId}]], [[${pList.productPrice}]], [[${pList.productStock}]], [[${pList.productName}]], [[${pList.productDescription}]])">수정하기</button>
+                    	<button type="button" class="update-btn" 
+                    	th:onclick="openModal([[${pList.productId}]], [[${pList.productPrice}]], [[${pList.productStock}]], [[${pList.productName}]], [[${pList.productDescription}]], [[${pList.categoryId}]])">수정하기</button>
                     </td>
                   </tr>
                 </tbody>
@@ -171,9 +174,8 @@
 						<span>사용불가</span>
                     </td>
                     <td>
-                    	<!-- <a th:href="@{/product/update/{productId}(productId=${pList.productId})}">수정하기</a> -->
-                    	<button type="button" 
-                    	th:onclick="openModal([[${pList.productId}]], [[${pList.productPrice}]], [[${pList.productStock}]], [[${pList.productName}]], [[${pList.productDescription}]])">수정하기</button>
+                    	<button type="button" class="update-btn"
+                    	th:onclick="openModal([[${pList.productId}]], [[${pList.productPrice}]], [[${pList.productStock}]], [[${pList.productName}]], [[${pList.productDescription}]], [[${pList.categoryId}]])">수정하기</button>
                     </td>
                   </tr>
                 </tbody>
@@ -187,13 +189,15 @@
   	<script>
       const body = document.querySelector('body');
       const modal = document.querySelector('.modal');
-      const pName = document.querySelector('.input-pName');
-      const pPrice = document.querySelector('.input-pPrice');
-      const pStock = document.querySelector('.input-pStock');
-      const pDesc = document.querySelector('.input-pDesc');
-      const pId = document.querySelector('.input-pId');
 
-      function openModal(productId, productPrice, productStock, productName, productDescription){
+      function openModal(productId, productPrice, productStock, productName, productDescription, categoryId){
+          const pName = document.querySelector('.input-pName');
+          const pPrice = document.querySelector('.input-pPrice');
+          const pStock = document.querySelector('.input-pStock');
+          const pDesc = document.querySelector('.input-pDesc');
+          const pId = document.querySelector('.input-pId');
+          const sId = document.querySelector('.select-id');
+    	  sId.value = categoryId;
     	  pId.value = productId;
     	  pName.value = productName;
     	  pPrice.value = productPrice;
@@ -214,6 +218,19 @@
           }
         }
       });
+      
+//      function checked() {
+//    	  const category = document.getElementsByName('categoryId');
+//   	  let cnt = 0;
+//    	  category.forEach((node) => {
+//    		    if(node.checked)  {
+//    		      cnt++;
+//    		    }
+//    		}) 
+//    	  if(cnt == 0){
+//    		  window.alert("카테고리를 선택해주세요.");
+//    	  }
+//      }
     </script>    
   </body>
 </html>
