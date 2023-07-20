@@ -10,6 +10,7 @@ import lombok.Setter;
 @Getter @Setter
 public class Product {
 	private int productId;
+	private int categoryId;
 	private String categoryName;
 	private String productName;
 	private int productPrice;
