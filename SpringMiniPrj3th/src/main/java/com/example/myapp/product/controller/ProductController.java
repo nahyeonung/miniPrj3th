@@ -102,8 +102,6 @@ public class ProductController {
 		try {
 			MultipartFile mfile = product.getFile();
 			if(mfile != null && !mfile.isEmpty()) {
-				System.out.println(product);
-				System.out.println(mfile);
 				UploadImage uploadImage = new UploadImage();
 				uploadImage.setImageName(mfile.getOriginalFilename());
 				uploadImage.setImageSize(mfile.getSize());
@@ -112,6 +110,28 @@ public class ProductController {
 				productService.insertProducts(product, uploadImage);
 			}else {
 				productService.insertProducts(product);
+			}
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+			redirectAttrs.addFlashAttribute("message", e.getMessage());
+		}
+		return "redirect:/product/productManage";
+	}
+	
+	@RequestMapping(value="/product/update", method=RequestMethod.POST)
+	public String updateProduct(UploadProduct product, RedirectAttributes redirectAttrs) throws IOException{
+		logger.info(product.getFile().getOriginalFilename());
+		try {
+			MultipartFile mfile = product.getFile();
+			if(mfile != null && !mfile.isEmpty()) {
+				UploadImage uploadImage = new UploadImage();
+				uploadImage.setImageName(mfile.getOriginalFilename());
+				uploadImage.setImageSize(mfile.getSize());
+				uploadImage.setImageType(mfile.getContentType());
+				uploadImage.setImageData(mfile.getBytes());
+				int row = productService.updateProduct(product, uploadImage);
+			}else {
+				int row = productService.updateProduct(product);
 			}
 		}catch(Exception e) {
 			logger.error(e.getMessage());

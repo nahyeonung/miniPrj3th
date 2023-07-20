@@ -12,6 +12,10 @@ public interface IProductService {
 	
 	void insertProducts(UploadProduct product, UploadImage img);
 	
+	int updateProduct(UploadProduct product);
+	
+	int updateProduct(UploadProduct product, UploadImage img);
+	
 	List<Product> selectAllProduct(int categoryId);
 	
 	int insertCategory(String categoryName);

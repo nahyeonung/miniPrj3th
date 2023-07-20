@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class UploadProduct {
+	private int productId;
 	private int categoryId;
 	private String productName;
 	private int productPrice;
