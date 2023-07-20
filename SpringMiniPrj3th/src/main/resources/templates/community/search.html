@@ -41,6 +41,13 @@
 			</table>
 
 		</div>
+		<table class="table">
+		<tr>
+			<td align="left">
+				<div th:replace="~{/include/search-paging :: searchPaging}"></div> 
+			</td>
+		</tr>
+		</table>
 	</div>
 	<a th:href="@{/community/list}"><button type="button" class="btn list">목록</button></a>
 	<!-- Start Footer -->

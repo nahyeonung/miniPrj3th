@@ -4,7 +4,7 @@
 	namespace="com.example.myapp.community.dao.ICommunityRepository">
 
 	<select id="selectArticleListByCommunity"
-		parameterType="String"
+		parameterType="hashmap"
 		resultType="com.example.myapp.community.model.Community">
 	<![CDATA[
 		SELECT 
@@ -12,8 +12,15 @@
 			user_id				AS "userId",	
 			write_title			AS "writeTitle",
 			write_date			AS "writeDate"
-		 FROM community
-
+		 FROM (SELECT 
+				write_id, user_id, write_title, write_date, 
+				rownum AS rnum
+			FROM (
+				SELECT * FROM community
+				ORDER BY write_id DESC)
+)
+		 WHERE rnum BETWEEN #{start} AND #{end}
+		
 	]]>
 	</select>
 
@@ -22,7 +29,7 @@
 		resultType="com.example.myapp.community.model.Community">
 	<![CDATA[
 		SELECT 
-			write_id			AS "writeId", 
+			write_id					AS "writeId", 
 			user_id						AS "userId", 
 			write_title					AS "writeTitle",
 			write_date					AS "writeDate",
@@ -42,14 +49,6 @@
 	]]>
 	</select>
 
-	<select id="selectMaxFileId" parameterType="int"
-		resultType="int">
-	<![CDATA[
-		SELECT 
-			NVL(MAX(file_id),0) AS "fileId"
-		FROM community_upload_file
-	]]>
-	</select>
 
 	<insert id="insertArticle"
 		parameterType="com.example.myapp.community.model.Community">
@@ -72,8 +71,7 @@
 		UPDATE 
 			community 
 		SET 
-			 user_id=#{userId}, 
-			 write_title=#{wirteTitle}, 
+			 write_title=#{writeTitle}, 
 			write_content=#{writeContent}, write_date=SYSDATE 
 		WHERE 
 			write_id=#{writeId}
@@ -82,14 +80,43 @@
 
 
 		<delete id="deleteArticleByWriteId" parameterType="int">
-		DELETE FROM 
+    <![CDATA[
+        DELETE FROM community 
+        WHERE write_id=#{writeId}
+    ]]>
+</delete>
+	
+		<select id="selectDeleteArticle" parameterType="int" resultType="com.example.myapp.community.model.Community">
+	<![CDATA[
+		SELECT 
+			*
+		FROM 
 			community 
 		WHERE 
 			write_id=#{writeId}
-	</delete>
+	]]>
+	</select>
+	
 
+<select id="selectTotalArticleCountByCommunity" parameterType="int" resultType="int">
+	<![CDATA[
+		SELECT COUNT(write_id) AS "count"
+		FROM community
+	]]>
+	</select>
 
-
+<select id="selectTotalArticleCountByKeyword" parameterType="string" resultType="int">
+	<![CDATA[
+		SELECT 
+			COUNT(*) FROM community
+		WHERE 
+			write_title LIKE #{keyword}
+		    		OR 
+		    		write_content LIKE #{keyword}
+		    		OR 
+		    		user_id LIKE #{keyword}
+	]]>
+	</select> 
 
 	<select id="searchListByContentKeyword" parameterType="hashmap"
 		resultType="com.example.myapp.community.model.Community">
@@ -106,7 +133,8 @@
 	    		user_id, 
 	    		write_title, 
 	    		write_date, 
-	    		write_content
+	    		write_content,
+	    		rownum AS rnum
 	    	FROM (
 	    		SELECT * FROM community
 	    		WHERE
@@ -117,7 +145,7 @@
 		    		user_id LIKE #{keyword}
 	    	)
 	    )
-	   
+	     WHERE rnum BETWEEN #{start} AND #{end}	   
 	]]>
 	</select>
 </mapper>	

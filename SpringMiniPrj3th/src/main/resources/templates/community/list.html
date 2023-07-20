@@ -29,10 +29,16 @@
 			</tr>
 		</tbody>
 	</table>
-	<div>
-		<a th:href="@{/community/write}">
+	<table class="table">
+				<tr>
+					<td align="left">
+						<div th:replace="~{/include/paging :: paging}"></div>
+					</td>
+					<td align="right"><a th:href="@{/community/write}">
 		<button type="button" class="btn write">글쓰기</button></a>
-	</div>
+					</td>
+				</tr>
+			</table>
 	<form th:action="@{/community/search}" method="get">
 				<div class="pull-right" style="margin-bottom: 10px;">
 					<div class="inputbar">

@@ -12,11 +12,10 @@ import com.example.myapp.community.model.Community;
 @Mapper
 public interface ICommunityRepository {
 	int selectMaxArticleNo();
-	int selectMaxFileId();
 	
 	void insertArticle(Community community);
 	
-	List<Community> selectArticleListByCommunity();
+	List<Community> selectArticleListByCommunity(@Param("start") int start, @Param("end") int end);
 	
 	Community selectArticle(int writeId);
 		//Community>getCommunityDetails
@@ -26,11 +25,9 @@ public interface ICommunityRepository {
 	
 	
 	void updateArticle(Community community);
-	
+	Community selectDeleteArticle(int writeId);
 	void deleteArticleByWriteId(int writeId);
-//	int selectTotalArticleCount();
-//	int selectTotalArticleCountByCommunity(int writeId);
-
-//	int selectTotalArticleCountByKeyword(String keyword);
-	List<Community> searchListByContentKeyword(@Param("keyword") String keyword);
+	int selectTotalArticleCountByCommunity();
+	int selectTotalArticleCountByKeyword(String keyword);
+	List<Community> searchListByContentKeyword(@Param("keyword") String keyword, @Param("start") int start, @Param("end") int end);
 }
