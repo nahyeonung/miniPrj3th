@@ -11,4 +11,6 @@ import com.example.myapp.cart.model.Cart;
 @Mapper
 public interface ICartRepository {
 	List<Cart> selectCartList(String userId);
+	void insertCart(Cart cart);
+	void updateCart(Cart cart);
 }

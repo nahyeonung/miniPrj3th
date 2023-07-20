@@ -24,6 +24,7 @@
 			</select>
 			<label for="content">내용</label>
 			<textarea name="content" rows="10" cols="100">[[${review.content}]]</textarea>
+			<img th:src="@{/review/file/{id}(id=${review.reviewImageId})}">
 			<input type="hidden" name="reviewId" th:value="${review.reviewId}">
 			<input type="hidden"  name="reviewImageId" th:value="${review.reviewImageId}">
 			<input type="file" name="file">[[${review.reviewImageName}]]

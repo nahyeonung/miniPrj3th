@@ -1,31 +1,76 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
+    <title>Zay Shop - Product Detail Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" th:href="@{/img/apple-icon.png}">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/favicon.ico}">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/templatemo.css}">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" th:href="@{/css/fontawesome.min.css}">
+
+    <!-- Slick -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/slick.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/slick-theme.css}">
 </head>
 <body>
-	<table>
-		<thead>
-			<tr>
-				<th>아이디</th>
-				<th>이름</th>
-				<th>상품이름</th>
-				<th>상품가격</th>
-				<th>상품수량</th>
-				<th>총가격</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="cart : ${cartList}">
-				<td>[[${cart.userId}]]</td>
-				<td>[[${cart.userName}]]</td>
-				<td>[[${cart.productName}]]</td>
-				<td>[[${cart.productPrice}]]</td>
-				<td>[[${cart.cartCnt}]]</td>
-				<td>[[${cart.totalPrice}]]</td>	
-			</tr>
-		</tbody>
-	</table>
+    <form action="/cart/update" method="POST">
+		<table border=1>
+			<thead>
+				<tr>
+					<th>이미지</th>
+					<th>상품이름</th>
+					<th>상품설명</th>
+					<th>가격</th>
+					<th>
+					<i class="fa-solid fa-circle-minus"></i>
+						개수
+					</th>
+					<th>총가격</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="cart : ${cartList}">
+					<td><img th:src="@{/file/{id}(id=${cart.ImageId})}"></td>
+					<td>[[${cart.productName}]]</td>
+					<td>[[${cart.productDescription}]]</td>
+					<td>[[${cart.productPrice}]]</td>
+					<td>
+					    <div class="row">
+					           <div class="col-auto">
+					               <ul class="list-inline pb-3">
+					                   <li class="list-inline-item text-right">
+					                       Quantity
+					                       <input type="hidden" name="cartCnt" id="product-quanity" value="1">
+					                   </li>
+					                   <li class="list-inline-item"><span class="btn btn-success" id="btn-minus">-</span></li>
+					                   <li class="list-inline-item"><span class="badge bg-secondary" id="var-value">[[${cart.cartCnt}]]</span></li>
+					                   <li class="list-inline-item"><span class="btn btn-success" id="btn-plus">+</span></li>
+					               </ul>
+					           </div>
+					       </div>
+    					<input type="hidden" name="cartId" th:value="${cart.cartId}">
+						<div class="col d-grid">
+						    <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">변경하기</button>
+						</div>
+					</td>
+					<td class="sum">[[${cart.totalPrice}]]</td>	
+				</tr>
+			</tbody>
+		</table>
+	</form>
+	
+    <script src="/js/jquery-1.11.0.min.js"></script>
+    <script src="/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/templatemo.js"></script>
+    <script src="/js/custom.js"></script>
 </body>
 </html>

@@ -61,7 +61,7 @@ public class ReviewController {
 			e.printStackTrace();
 			redirectAttrs.addFlashAttribute("message", e.getMessage());
 		}
-		return "redirect:/review/" + review.getProductId();
+		return "redirect:/product/productDetail/" + review.getProductId();
 	}
 	
 	@RequestMapping("/review/file/{reviewImageId}")

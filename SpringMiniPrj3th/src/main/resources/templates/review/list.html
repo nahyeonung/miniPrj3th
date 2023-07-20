@@ -27,7 +27,7 @@
 				<td>[[${review.productDescription}]]</td>
 				<td>[[${review.rate}]]</td>
 				<td>[[${review.content}]]</td>
-				<td th:if="${review.reviewImageName!=null}"><img th:src="@{file/{id}(id=${review.reviewImageId})}"></td>
+				<td th:if="${review.reviewImageName!=null}"><img th:src="@{/review/file/{id}(id=${review.reviewImageId})}"></td>
 				<td><a th:href="@{/review/delete(reviewId=${review.reviewId})}">글삭제</a></td>
 				<td><a th:href="@{/review/update/{reviewId}(reviewId=${review.reviewId})}">글수정</a></td>
 			</tr>
