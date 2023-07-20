@@ -9,10 +9,14 @@
 			product_name AS productName,
 			product_price AS productPrice,
 			product_description AS productDescription,
+			product_state AS productState,
 			product_stock AS productStock,
 			product_date AS productDate,
 			image_name AS imageName,
-			image_data AS imageData
+			image_data AS imageData,
+			image_id AS imageId,
+			image_type AS imageType,
+			image_size AS imageSize
 		FROM
 			product p
 		LEFT JOIN
@@ -61,6 +65,62 @@
 	<insert id="insertProductImg">
 		INSERT INTO product_image
 		VALUES
-		(product_image_seq.nextval, #{img.imgName}, #{img.imgSize}, #{img.imgType}, #{img.imgData}, #{productId})
+		(product_image_seq.nextval, #{img.imageName}, #{img.imageSize}, #{img.imageType}, #{img.imageData}, #{productId})
 	</insert>
+
+	<select id="getFile" parameterType="int" resultType="com.example.myapp.product.model.UploadImage">
+		<![CDATA[
+			SELECT
+				image_id AS imageId,
+				image_name AS imageName,
+				image_size AS imageSize,
+				image_type AS imageType,
+				image_data AS imageData,
+				product_id AS productId
+			FROM product_image
+			WHERE image_id = #{imageId}
+		]]>
+	</select>
+	
+	<update id="deleteProduct" parameterType="int">
+		<![CDATA[
+			UPDATE product SET product_state = 1
+			WHERE product_id = #{productId}
+		]]>
+	</update>
+	
+	<update id="deleteBackProduct" parameterType="int">
+		<![CDATA[
+			UPDATE product SET product_state = 0
+			WHERE product_id = #{productId}
+		]]>
+	</update>
+	
+	<select id="selectProduct" parameterType="int" resultType="com.example.myapp.product.model.Product">
+		<![CDATA[
+			SELECT
+				p.product_id AS productId,
+				category_name AS categoryName,
+				product_name AS productName,
+				product_price AS productPrice,
+				product_description AS productDescription,
+				product_state AS productState,
+				product_stock AS productStock,
+				product_date AS productDate,
+				image_name AS imageName,
+				image_data AS imageData,
+				image_id AS imageId,
+				image_type AS imageType,
+				image_size AS imageSize
+			FROM
+				product p	
+			LEFT JOIN
+				category c
+			ON p.category_id = c.category_id
+			LEFT JOIN
+				product_image pi
+			ON p.product_id = pi.product_id
+			WHERE p.product_id = #{productId}
+		]]>
+	</select>
 </mapper>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>ShopMax &mdash; Colorlib e-Commerce Template</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"> 
+    <link rel="stylesheet" th:href="@{fonts/icomoon/style.css}">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
+    <link rel="stylesheet" th:href="@{/css/jquery-ui.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
+
+
+    <link rel="stylesheet" th:href="@{/css/aos.css}">
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="apple-touch-icon" th:href="@{/img/apple-icon.png}">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{static/img/favicon.ico}">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/templatemo.css}">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" th:href="@{/css/fontawesome.min.css}">
+    
+  </head>
+  <body>
+    <div class="modal">
+      <div class="modal_body">상품 수정
+      		<form th:action="@{/product/update}" method="post" enctype="multipart/form-data">
+			<span th:each="list : ${categoryList}">
+				<label><input type="radio" name="categoryId" th:value="${list.categoryId}">[[${list.categoryName}]]</label>
+			</span>
+			<div>
+				<label><input type="text" name="productName" placeholder="1">상품이름</label>
+			</div>
+			<div>
+				<label><input type="text" name="productPrice" placeholder="1">상품가격</label>
+			</div>
+			<div>
+				<label><input type="text" name="productStock" placeholder="1">상품재고</label>
+			</div>
+			<div>
+				<label><input type="text" name="productDescription" placeholder="1">상품설명</label>
+			</div>
+			<div>
+				<label><input type="file" name="file">파일</label>
+			</div>
+			<input type="submit" value="Submit">
+		</form>
+      </div>
+  </div>
+   <!-- Start Top Nav -->
+    <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
+        <div class="container text-light">
+            <div class="w-100 d-flex justify-content-between">
+                <div>
+                    <i class="fa fa-envelope mx-2"></i>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                    <i class="fa fa-phone mx-2"></i>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                </div>
+                <div>
+                    <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://twitter.com/" target="_blank"><i class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin fa-sm fa-fw"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Close Top Nav -->
+
+
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <a class="navbar-brand text-success logo h1 align-self-center" href="/">
+                Zay
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
+                <div class="flex-fill">
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{shop}">Shop</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navbar align-self-center d-flex">
+                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
+                            <div class="input-group-text">
+                                <i class="fa fa-fw fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
+                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none" th:href="@{product/productManage}">
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+    <!-- Close Header -->
+
+    <div class="site-section">
+      <div class="container">
+        <div class="row mb-5">
+        	<form th:action="@{/product/delete}" method="post" class="col-md-12">
+            <div class="site-blocks-table">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th class="product-thumbnail">상품 이름</th>
+                    <th class="product-name">카테고리</th>
+                    <th class="product-price">상품 가격</th>
+                    <th class="product-price">상품 재고</th>
+                    <th class="product-quantity">등록 날짜</th>
+                    <th class="product-total">이미지</th>
+                    <th class="product-remove">사용 유무</th>
+                    <th class="product-remove">상품 수정</th>
+                  </tr>
+                </thead>
+                <tbody th:each="pList : ${productList}">
+                  <tr th:if="${pList.productState==0}">
+                    <td class="product-thumbnail">
+                      <label><input type="checkbox" name="productId" th:value="${pList.productId}">[[${pList.productName}]]</label>
+                    </td>
+                    <td class="product-name">
+                      <span>[[${pList.categoryName}]]</span>
+                    </td>
+                    <td>
+                    	<span>[[${pList.productPrice}]]</span>
+                    </td>
+                    <td>
+                    	<span>[[${pList.productStock}]]</span>
+                    </td>
+                    <td>
+                      <span>[[${pList.productDate}]]</span>
+                    </td>
+                    <td>
+                    	<img th:src="@{/file/{id}(id=${pList.imageId})}" style="height: 100px; width: 100px">
+                    </td>
+                    <td>
+                    	<span>사용중</span>
+                    </td>
+                    <td>
+                    	<!-- <a th:href="@{/product/update/{productId}(productId=${pList.productId})}">수정하기</a>  -->
+                    	<button type="button" onclick="openModal()">수정하기</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <input class="input-btn" type="submit" value="상품 비활성화">
+            </div>
+          </form>
+        </div>
+        
+        <div class="row mb-5">
+          <form th:action="@{/product/deleteBack}" method="post" class="col-md-12">
+            <div class="site-blocks-table">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th class="product-thumbnail">상품 이름</th>
+                    <th class="product-name">카테고리</th>
+                    <th class="product-price">상품 가격</th>
+                    <th class="product-price">상품 재고</th>
+                    <th class="product-quantity">등록 날짜</th>
+                    <th class="product-total">이미지</th>
+                    <th class="product-remove">사용 유무</th>
+                    <th class="product-remove">상품 수정</th>
+                  </tr>
+                </thead>
+                <tbody th:each="pList : ${productList}">
+                  <tr th:if="${pList.productState==1}">
+                    <td class="product-thumbnail">
+                      <label><input type="checkbox" name="productId" th:value="${pList.productId}">[[${pList.productName}]]</label>
+                    </td>
+                    <td class="product-name">
+                      <span>[[${pList.categoryName}]]</span>
+                    </td>
+                    <td>
+                    	<span>[[${pList.productPrice}]]</span>
+                    </td>
+                    <td>
+                    	<span>[[${pList.productStock}]]</span>
+                    </td>
+                    <td>
+                      <span>[[${pList.productDate}]]</span>
+                    </td>
+                    <td>
+                    	<img th:src="@{/file/{id}(id=${pList.imageId})}" style="height: 100px; width: 100px">
+                    </td>
+                    <td>
+						<span>사용불가</span>
+                    </td>
+                    <td>
+                    	<!-- <a th:href="@{/product/update/{productId}(productId=${pList.productId})}">수정하기</a> -->
+                    	<button type="button" onclick="openModal()">수정하기</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <input class="input-btn" type="submit" value="상품 활성화">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  	<script>
+      const body = document.querySelector('body');
+      const modal = document.querySelector('.modal');
+
+      function openModal(){
+    	 // console.log(productId);
+    	  modal.classList.toggle('show');
+    	  if(modal.classList.contaions('show')){
+    		  body.style.overflow = 'hidden';
+    	  }
+      }
+
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+          modal.classList.toggle('show');
+
+          if (!modal.classList.contains('show')) {
+            body.style.overflow = 'auto';
+          }
+        }
+      });
+    </script>    
+  </body>
+</html>

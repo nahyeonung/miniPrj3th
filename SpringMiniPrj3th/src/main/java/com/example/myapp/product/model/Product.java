@@ -4,16 +4,22 @@ import java.sql.Blob;
 import java.sql.Date;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter @Setter
 public class Product {
 	private int productId;
 	private String categoryName;
 	private String productName;
 	private int productPrice;
 	private String productDescription;
+	private int productState;
 	private int productStock;
 	private Date productDate;
+	private int imageId;
 	private String imageName;
-	private Blob imageData;
+	private long imageSize;
+	private String imageType;
+	private byte[] imageData;
 }
