@@ -123,4 +123,28 @@
 			WHERE p.product_id = #{productId}
 		]]>
 	</select>
+	
+	<update id="updateProduct" parameterType="com.example.myapp.product.model.UploadProduct">
+		<![CDATA[
+			UPDATE product
+			SET category_id = #{product.categoryId},
+				product_name = #{product.productName},
+				product_price = #{product.productPrice},	
+				product_description = #{product.productDescription},
+				product_stock = #{product.productStock}
+			WHERE product_id = #{product.productId}
+		]]>
+	</update>
+	
+	<update id="updateProductImg">
+		<![CDATA[
+			UPDATE product_image
+			SET image_name = #{img.imageName},
+				image_size = #{img.imageSize},
+				image_type = #{img.imageType},
+				image_data = #{img.imageData}
+			WHERE product_id = #{productId}
+		]]>
+	</update>
+	
 </mapper>

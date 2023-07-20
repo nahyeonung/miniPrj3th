@@ -32,105 +32,41 @@
   </head>
   <body>
     <div class="modal">
-      <div class="modal_body">상품 수정
+      <div class="modal_body">
+      		<h1>상품 수정</h1>
       		<form th:action="@{/product/update}" method="post" enctype="multipart/form-data">
+      		<div>
+				<input class="input-pId" type="hidden" name="productId">
+			</div>
 			<span th:each="list : ${categoryList}">
 				<label><input type="radio" name="categoryId" th:value="${list.categoryId}">[[${list.categoryName}]]</label>
 			</span>
 			<div>
-				<label><input type="text" name="productName" placeholder="1">상품이름</label>
+				<label><input class="input-pName" type="text" name="productName">상품이름</label>
 			</div>
 			<div>
-				<label><input type="text" name="productPrice" placeholder="1">상품가격</label>
+				<label><input class="input-pPrice" type="text" name="productPrice">상품가격</label>
 			</div>
 			<div>
-				<label><input type="text" name="productStock" placeholder="1">상품재고</label>
+				<label><input class="input-pStock" type="text" name="productStock">상품재고</label>
 			</div>
 			<div>
-				<label><input type="text" name="productDescription" placeholder="1">상품설명</label>
+				<label><input class="input-pDesc" type="text" name="productDescription">상품설명</label>
 			</div>
 			<div>
 				<label><input type="file" name="file">파일</label>
 			</div>
-			<input type="submit" value="Submit">
+			<input type="submit" value="수정하기">
 		</form>
       </div>
   </div>
-   <!-- Start Top Nav -->
-    <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
-        <div class="container text-light">
-            <div class="w-100 d-flex justify-content-between">
-                <div>
-                    <i class="fa fa-envelope mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">info@company.com</a>
-                    <i class="fa fa-phone mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
-                </div>
-                <div>
-                    <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
-                    <a class="text-light" href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
-                    <a class="text-light" href="https://twitter.com/" target="_blank"><i class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
-                    <a class="text-light" href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin fa-sm fa-fw"></i></a>
-                </div>
-            </div>
-        </div>
-    </nav>
+      <!-- Start Top Nav -->
+	<div th:replace="~{/include/body-header :: bodyHeader}"></div>
     <!-- Close Top Nav -->
 
 
     <!-- Header -->
-    <nav class="navbar navbar-expand-lg navbar-light shadow">
-        <div class="container d-flex justify-content-between align-items-center">
-
-            <a class="navbar-brand text-success logo h1 align-self-center" href="/">
-                Zay
-            </a>
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
-                <div class="flex-fill">
-                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="about.html">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{shop}">Shop</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Contact</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="navbar align-self-center d-flex">
-                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
-                            <div class="input-group-text">
-                                <i class="fa fa-fw fa-search"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
-                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
-                    </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
-                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
-                    </a>
-                    <a class="nav-icon position-relative text-decoration-none" th:href="@{product/productManage}">
-                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
-                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
-                    </a>
-                </div>
-            </div>
-
-        </div>
-    </nav>
+    <div th:replace="~{/include/navbar :: navbar}"></div>
     <!-- Close Header -->
 
     <div class="site-section">
@@ -143,6 +79,7 @@
                   <tr>
                     <th class="product-thumbnail">상품 이름</th>
                     <th class="product-name">카테고리</th>
+                   	<th class="product-name">상품 설명</th>
                     <th class="product-price">상품 가격</th>
                     <th class="product-price">상품 재고</th>
                     <th class="product-quantity">등록 날짜</th>
@@ -158,6 +95,9 @@
                     </td>
                     <td class="product-name">
                       <span>[[${pList.categoryName}]]</span>
+                    </td>
+                    <td>
+                    	<span>[[${pList.productDescription}]]</span>
                     </td>
                     <td>
                     	<span>[[${pList.productPrice}]]</span>
@@ -176,7 +116,8 @@
                     </td>
                     <td>
                     	<!-- <a th:href="@{/product/update/{productId}(productId=${pList.productId})}">수정하기</a>  -->
-                    	<button type="button" onclick="openModal()">수정하기</button>
+                    	<button type="button" 
+                    	th:onclick="openModal([[${pList.productId}]], [[${pList.productPrice}]], [[${pList.productStock}]], [[${pList.productName}]], [[${pList.productDescription}]])">수정하기</button>
                     </td>
                   </tr>
                 </tbody>
@@ -194,6 +135,7 @@
                   <tr>
                     <th class="product-thumbnail">상품 이름</th>
                     <th class="product-name">카테고리</th>
+                    <th class="product-name">상품 설명</th>
                     <th class="product-price">상품 가격</th>
                     <th class="product-price">상품 재고</th>
                     <th class="product-quantity">등록 날짜</th>
@@ -209,6 +151,9 @@
                     </td>
                     <td class="product-name">
                       <span>[[${pList.categoryName}]]</span>
+                    </td>
+                    <td>
+                    	<span>[[${pList.productDescription}]]</span>
                     </td>
                     <td>
                     	<span>[[${pList.productPrice}]]</span>
@@ -227,7 +172,8 @@
                     </td>
                     <td>
                     	<!-- <a th:href="@{/product/update/{productId}(productId=${pList.productId})}">수정하기</a> -->
-                    	<button type="button" onclick="openModal()">수정하기</button>
+                    	<button type="button" 
+                    	th:onclick="openModal([[${pList.productId}]], [[${pList.productPrice}]], [[${pList.productStock}]], [[${pList.productName}]], [[${pList.productDescription}]])">수정하기</button>
                     </td>
                   </tr>
                 </tbody>
@@ -241,9 +187,18 @@
   	<script>
       const body = document.querySelector('body');
       const modal = document.querySelector('.modal');
+      const pName = document.querySelector('.input-pName');
+      const pPrice = document.querySelector('.input-pPrice');
+      const pStock = document.querySelector('.input-pStock');
+      const pDesc = document.querySelector('.input-pDesc');
+      const pId = document.querySelector('.input-pId');
 
-      function openModal(){
-    	 // console.log(productId);
+      function openModal(productId, productPrice, productStock, productName, productDescription){
+    	  pId.value = productId;
+    	  pName.value = productName;
+    	  pPrice.value = productPrice;
+    	  pStock.value = productStock;
+    	  pDesc.value = productDescription;
     	  modal.classList.toggle('show');
     	  if(modal.classList.contaions('show')){
     		  body.style.overflow = 'hidden';

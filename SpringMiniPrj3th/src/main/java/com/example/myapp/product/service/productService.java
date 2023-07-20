@@ -51,6 +51,23 @@ public class productService implements IProductService{
 	public void insertProducts(UploadProduct product) {
 		productRepository.insertProduct(product);
 	}
+	
+	@Transactional
+	public int updateProduct(UploadProduct product, UploadImage img) {
+		int row = productRepository.updateProduct(product);
+		if(row != 0) {
+			int productId = product.getProductId();
+			int rowNum = productRepository.updateProductImg(img, productId);
+			return rowNum;
+		}else {
+			return row;
+		}
+	}
+	
+	@Override
+	public int updateProduct(UploadProduct product) {
+		return productRepository.updateProduct(product);
+	}
 
 	@Override
 	public UploadImage getFile(int imgId) {

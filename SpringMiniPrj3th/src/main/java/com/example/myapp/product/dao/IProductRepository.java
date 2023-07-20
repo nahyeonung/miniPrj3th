@@ -35,4 +35,8 @@ public interface IProductRepository {
 	int deleteBackProduct(@Param("productId") int productId);
 	
 	Product selectProduct(@Param("productId") int productId);
+
+	int updateProduct(@Param("product") UploadProduct product);
+	
+	int updateProductImg(@Param("img") UploadImage img, @Param("productId") int productId);
 }
