@@ -85,7 +85,7 @@ public class productService implements IProductService{
 	}
 
 	@Override
-	public Product selectProdcut(int productId) {
+	public Product selectProduct(int productId) {
 		return productRepository.selectProduct(productId);
 	}
 }
