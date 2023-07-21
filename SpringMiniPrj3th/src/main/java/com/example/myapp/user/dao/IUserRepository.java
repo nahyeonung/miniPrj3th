@@ -21,4 +21,5 @@ public interface IUserRepository {
 	void deleteUser(User user);
 
 	String getPassword(String userId);
+	
 }

@@ -1,18 +1,25 @@
 package com.example.myapp.user.controller;
 
+import java.util.HashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.myapp.user.model.User;
 import com.example.myapp.user.service.IUserService;
+import com.example.myapp.user.service.MailSendService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -23,6 +30,9 @@ public class UserController {
 
 	@Autowired
 	IUserService userService;
+
+	@Autowired
+	MailSendService mailSendService;
 
 	@RequestMapping(value = "/user/insert", method = RequestMethod.GET)
 	public String insertUser(Model model) {
@@ -58,7 +68,7 @@ public class UserController {
 				session.setMaxInactiveInterval(600); // 10분
 				session.setAttribute("userId", userId);
 				session.setAttribute("userName", user.getUserName());
-				model.addAttribute("user", user);			
+				model.addAttribute("user", user);
 			} else { // 비밀번호가 다름
 				session.invalidate();
 				model.addAttribute("message", "비밀번호가 다릅니다.");
@@ -152,4 +162,14 @@ public class UserController {
 		}
 	}
 
+	@RequestMapping(value = "/api/mailcheck", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> mailCheck(@RequestBody HashMap<String, Object> user) {
+		String username = (String) user.get("username");
+		String authNum = mailSendService.joinEmail(username);
+
+		logger.info("email: " + user.get("username"));
+		logger.info("checkNum: " + authNum);
+
+		return ResponseEntity.status(HttpStatus.OK).body(authNum);
+	}
 }

@@ -16,6 +16,4 @@ public interface IUserService {
 	void deleteUser(User user);
 
 	String getPassword(String userId);
-	
-	
 }
