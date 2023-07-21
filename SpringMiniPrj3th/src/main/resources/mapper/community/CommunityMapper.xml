@@ -79,23 +79,13 @@
 	</update>
 
 
-		<delete id="deleteArticleByWriteId" parameterType="int">
+		<delete id="deleteArticleByWriteId" parameterType="com.example.myapp.community.model.Community">
     <![CDATA[
         DELETE FROM community 
         WHERE write_id=#{writeId}
     ]]>
 </delete>
 	
-		<select id="selectDeleteArticle" parameterType="int" resultType="com.example.myapp.community.model.Community">
-	<![CDATA[
-		SELECT 
-			*
-		FROM 
-			community 
-		WHERE 
-			write_id=#{writeId}
-	]]>
-	</select>
 	
 
 <select id="selectTotalArticleCountByCommunity" parameterType="int" resultType="int">

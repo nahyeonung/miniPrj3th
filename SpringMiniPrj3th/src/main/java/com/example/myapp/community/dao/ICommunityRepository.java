@@ -25,7 +25,7 @@ public interface ICommunityRepository {
 	
 	
 	void updateArticle(Community community);
-	Community selectDeleteArticle(int writeId);
+//	Community selectDeleteArticle(int writeId);
 	void deleteArticleByWriteId(int writeId);
 	int selectTotalArticleCountByCommunity();
 	int selectTotalArticleCountByKeyword(String keyword);

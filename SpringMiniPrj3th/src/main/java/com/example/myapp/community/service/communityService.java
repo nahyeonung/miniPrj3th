@@ -51,13 +51,8 @@ public class communityService implements ICommunityService {
 		communityRepository.updateArticle(community);
 	}
 	@Override
-	public Community selectDeleteArticle(int writeId) {
-		return communityRepository.selectDeleteArticle(writeId);
-	}
-	@Transactional
-	public void deleteArticle(int writeId) {
-	    // 삭제 로직 추가
-	    communityRepository.deleteArticleByWriteId(writeId);
+	public void deleteArticleByWriteId(int writeId) {
+		communityRepository.deleteArticleByWriteId(writeId);
 	}
 
 
