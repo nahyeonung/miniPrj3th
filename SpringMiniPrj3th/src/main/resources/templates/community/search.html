@@ -30,8 +30,8 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="community : ${communityList}">
-						<td>[[${community.writeId}]]</td>
+					<tr th:each="community, stat : ${communityList}">
+						 <td th:text="${stat.count}"></td>
 						<td>[[${community.userId}]]</td>
 						<td><a th:href="@{/community/__${community.writeId}__}">
 								[[${community.writeTitle}]]</a></td>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"> 
+    <link rel="stylesheet" th:href="@{fonts/icomoon/style.css}">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
+    <link rel="stylesheet" th:href="@{/css/jquery-ui.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
+
+
+    <link rel="stylesheet" th:href="@{/css/aos.css}">
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="apple-touch-icon" th:href="@{/img/apple-icon.png}">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{static/img/favicon.ico}">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/templatemo.css}">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" th:href="@{/css/fontawesome.min.css}">
+    
+<head th:replace="~{/include/head :: header}"></head>
+<body>
+ 	<!-- Start Top Nav -->
+	<div th:replace="~{/include/body-header :: bodyHeader}"></div>
+    <!-- Close Top Nav -->
+
+
+    <!-- Header -->
+    <div th:replace="~{/include/navbar :: navbar}"></div>
+    <!-- Close Header -->
+	<table>
+		<thead>
+			<tr>
+				<th>NO</th>
+				<th>아이디</th>
+				<th>제목</th>
+				<th>작성일자</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="community, stat : ${communityList}" id="table_list">
+				 <td th:text="${stat.count}"></td>
+				<td>[[${community.userId}]]</td>
+				<td> <a th:href="@{/community/__${community.writeId}__}">
+							[[${community.writeTitle}]]</a></td>
+				<td th:text="${#dates.format(community.writeDate, 'yy/MM/dd')}"></td>
+			</tr>
+		</tbody>
+	</table>
+	<table class="table">
+				<tr>
+					<td align="left">
+						<div th:replace="~{/include/my-paging :: myPaging}"></div>
+					</td>
+					<td align="right"><a th:href="@{/community/write}">
+		<button type="button" class="btn write">글쓰기</button></a>
+					</td>
+				</tr>
+			</table>
+	<form th:action="@{/community/search}" method="get">
+				<div class="pull-right" style="margin-bottom: 10px;">
+					<div class="inputbar">
+						<input type="text" name="keyword">
+					</div>
+					<input type="submit" value="검색">
+				</div>
+			</form>
+	 <!-- Start Footer -->
+	<div th:replace="~{/include/footer :: footer}"></div>
+    <!-- End Footer -->
+</body>
+</html>

@@ -2,28 +2,78 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{/include/head :: header}"></head>
 <body>
- 	<!-- Start Top Nav -->
+	<!-- Start Top Nav -->
 	<div th:replace="~{/include/body-header :: bodyHeader}"></div>
-    <!-- Close Top Nav -->
+	<!-- Close Top Nav -->
 
 
-    <!-- Header -->
-    <div th:replace="~{/include/navbar :: navbar}"></div>
-    <!-- Close Header -->
-	
+	<!-- Header -->
+	<div th:replace="~{/include/navbar :: navbar}"></div>
+	<!-- Close Header -->
+
 	<div class="container">
 		<form th:action="@{/community/write}" method="post">
+			<label for="Date">작성일자</label>
+			<h1 id="clock" style="color: black;">clock</h1>
 			<label for="TitleBlank">제목</label>
 			<textarea name="writeTitle" rows="1" cols="100"></textarea>
-			<label for="writeContent">내용</label>
-			<textarea name="writeContent" rows="10" cols="100"></textarea>
-			<input type="submit" value="글 쓰기">
-			<input type="reset" value="취소">
+			<br> <br> <label for="writeContent">내용</label>
+			<textarea name="writeContent" rows="20" cols="100"></textarea>
+			<input id="submit" type="button" value="저장"
+				onclick="goWrite(this.form)" /> 
+				<input type="button" value="취소" onclick="goBack()">
 		</form>
+
 	</div>
-    
-    <!-- Start Footer -->
+
+	<!-- Start Footer -->
 	<div th:replace="~{/include/footer :: footer}"></div>
-    <!-- End Footer -->
+	<!-- End Footer -->
+
+
+
+	<script>
+        var Target = document.getElementById("clock");
+        function clock() {
+            var time = new Date();
+            var month = time.getMonth();
+            var date = time.getDate();
+            var day = time.getDay();
+            var week = ['일', '월', '화', '수', '목', '금', '토'];
+
+            var hours = time.getHours();
+            var minutes = time.getMinutes();
+          
+
+            Target.innerText = 
+            `${month + 1}월 ${date}일 ${week[day]}요일 ` +
+            `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}`;
+                
+        }
+        clock();
+        setInterval(clock, 1000); // 1초마다 실행
+        
+        function goBack() {
+        	  window.history.back();
+        	}
+        
+        function goWrite(community) {
+        	var title = community.writeTitle.value;
+        	var content = community.writeContent.value;
+        	
+        	if (title.trim() == ''){
+        		alert("제목을 입력해주세요");
+        	return false; 
+        	} else if (content.trim() == ''){
+        		alert("내용을 입력해주세요");
+        		return false;
+        	} else if (content.trim() != ''){
+        		if(title.trim() != ''){
+        	community.submit();}
+        		}
+        	}
+        
+       
+    </script>
 </body>
 </html>

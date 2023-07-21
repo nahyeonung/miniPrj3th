@@ -18,6 +18,7 @@ public class Community {
 	private String writeContent;
 	 private String formattedWriteDate;
 	 private int page;
+	 private int bbsCount;
 
 //	private int readCount;
 //	private int replyNumber;

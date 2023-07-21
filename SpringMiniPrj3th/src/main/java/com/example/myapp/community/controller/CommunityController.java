@@ -58,6 +58,7 @@ public class CommunityController {
 		} else {
 			endPage = totalPage;
 		}
+		model.addAttribute("bbsCount", bbsCount);
 		model.addAttribute("totalPageCount", totalPage);
 		model.addAttribute("nowPage", page);
 		model.addAttribute("totalPageBlock", totalPageBlock);
@@ -102,9 +103,6 @@ public class CommunityController {
 //		logger.info("/community/write : " + community.toString());
 		try {
 			community.setUserId("test");
-//		community.setWriteContent(community.getWriteContent().replace("\r\n", "<br>"));
-//			community.setWriteTitle(Jsoup.clean(community.getWriteTitle(), Safelist.basic()));
-//			community.setWriteContent(Jsoup.clean(community.getWriteContent(), Safelist.basic()));
 			communityService.insertArticle(community);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -142,18 +140,6 @@ public class CommunityController {
 		return "redirect:/community/list/1";
 	}
 
-//	
-//	@RequestMapping(value="/community/delete", method=RequestMethod.POST)
-//	public String deleteArticle(Community community, HttpSession session, RedirectAttributes model) {
-//		try {
-//				communityService.deleteArticleByWriteId(community.getWriteId());
-//				return "redirect:/community/list/" + (Integer)session.getAttribute("page");
-//		}catch(Exception e){
-//			model.addAttribute("message", e.getMessage());
-//			e.printStackTrace();
-//			return "error/runtime";
-//		}
-//	}
 
 	@RequestMapping("/community/search/{page}")
 	public String search(@RequestParam(required = false, defaultValue = "") String keyword, @PathVariable int page,
@@ -193,7 +179,46 @@ public class CommunityController {
 			Model model) {
 		return search(keyword, 1, session, model);
 	}
+	
+	
+	@RequestMapping("/community/mylist/{page}")
+	public String mylist(@RequestParam(required = false, defaultValue = "") String userId, @PathVariable int page,
+			HttpSession session, Model model) {
+		try {
+			List<Community> communityList = communityService.searchListByContentmylist(userId, page);
+			model.addAttribute("communityList", communityList);
+			int bbsCount = communityService.selectTotalArticleCountBymylist(userId);
+			int totalPage = 0;
+			if (bbsCount > 0) {
+				totalPage = (int) Math.ceil(bbsCount / 10.0);
+			}
+			int totalPageBlock = (int) (Math.ceil(totalPage / 10.0));
+			int nowPageBlock = (int) Math.ceil(page / 10.0);
+			int startPage = (nowPageBlock - 1) * 10 + 1;
+			int endPage = 0;
+			if (totalPage > nowPageBlock * 10) {
+				endPage = nowPageBlock * 10;
+			} else {
+				endPage = totalPage;
+			}
+			model.addAttribute("userId", userId);
+			model.addAttribute("totalPageCount", totalPage);
+			model.addAttribute("nowPage", page);
+			model.addAttribute("totalPageBlock", totalPageBlock);
+			model.addAttribute("nowPageBlock", nowPageBlock);
+			model.addAttribute("startPage", startPage);
+			model.addAttribute("endPage", endPage);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "community/mylist";
+	}
 
+	@RequestMapping("/community/mylist")
+	public String mylist(@RequestParam(required = false, defaultValue = "") String userId, HttpSession session,
+			Model model) {
+		return mylist(userId, 1, session, model);
+	}
 //
 //	@ExceptionHandler({ RuntimeException.class })
 //	public String error(HttpServletRequest request, Exception ex, Model model) {

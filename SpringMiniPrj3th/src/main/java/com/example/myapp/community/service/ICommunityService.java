@@ -23,5 +23,8 @@ public interface ICommunityService {
 	int selectTotalArticleCountByCommunity();
 	int selectTotalArticleCountByKeyword(String keyword);
 	List<Community> searchListByContentKeyword(String keyword, int page);
+	
+	int selectTotalArticleCountBymylist(String userId);
+	List<Community> searchListByContentmylist(String userId, int page);
 
 }
