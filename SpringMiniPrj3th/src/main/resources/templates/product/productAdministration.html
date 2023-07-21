@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>ShopMax &mdash; Colorlib e-Commerce Template</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"> 
+    <link rel="stylesheet" th:href="@{fonts/icomoon/style.css}">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
+    <link rel="stylesheet" th:href="@{/css/jquery-ui.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
+
+
+    <link rel="stylesheet" th:href="@{/css/aos.css}">
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="apple-touch-icon" th:href="@{/img/apple-icon.png}">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{static/img/favicon.ico}">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/templatemo.css}">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" th:href="@{/css/fontawesome.min.css}">
+    
+  </head>
+  <body>
+  
+  <div class="site-wrap">
+    
+
+    <!-- Start Top Nav -->
+	<div th:replace="~{/include/body-header :: bodyHeader}"></div>
+    <!-- Close Top Nav -->
+
+
+    <!-- Header -->
+    <div th:replace="~{/include/navbar :: navbar}"></div>
+    <!-- Close Header -->
+
+    <div class="site-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 mb-5 mb-md-0">
+          	<form th:action="@{/product/insert}" method="post" enctype="multipart/form-data">
+           	 <h2 class="h3 mb-3 text-black">상품 추가</h2>
+           	 <div class="p-3 p-lg-5 border">
+           	   <div class="form-group">
+           	     <label for="c_country" class="text-black">카테고리 <span class="text-danger">*</span></label>
+           	     <select id="c_country" name="categoryId" class="form-control">
+           	     	<th:block th:each="category : ${categoryList}">
+           	        <option th:value="${category.categoryId}" th:selected="${category.categoryId eq categoryId}">[[${category.categoryName}]]</option>
+           	        </th:block>        
+         	     </select>
+            	 </div>
+           	   <div class="form-group row">
+          	      <div class="col-md-12">
+          	        <label for="c_companyname" class="text-black">상품 이름 </label>
+     	             <input type="text" class="form-control" id="c_companyname" name="productName">
+       	         </div>
+       	       </div>
+       	       <div class="form-group row">
+       	         <div class="col-md-6">
+        	          <label for="c_fname" class="text-black">상품 가격 <span class="productPrice">*</span></label>
+           	       <input type="text" class="form-control" id="c_fname" name="c_fname">
+            	    </div>
+       	         <div class="col-md-6">
+       	           <label for="c_lname" class="text-black">상품 재고 <span class="productStock">*</span></label>
+       	           <input type="text" class="form-control" id="c_lname" name="c_lname">
+       	         </div>
+       	       </div>
+       	       <div class="form-group">
+       	         <label for="c_order_notes" class="text-black">상품 설명</label>
+       	         <textarea name="productDescription" id="c_order_notes" cols="30" rows="10" class="form-control" placeholder="Write your notes here..."></textarea>
+       	       </div>	
+				<div class="form-group row">
+          	      <div class="col-md-12">
+          	        <label for="c_order_notes" class="text-black">이미지 삽입</label>
+          	        <input type="file" name="file">파일
+       	         </div>
+       	       </div>
+       	       <div class="form-group row" style="margin-top:28px">
+          	      <div class="col-md-12">
+					<input class="btn btn-primary btn-sm px-4" type="submit" value="추가하기">
+       	         </div>
+       	       </div>
+   	         </div>
+            </form>
+          </div>
+          <div class="col-md-6">
+
+            <div class="row mb-5">
+              <div class="col-md-12">
+                <h2 class="h3 mb-3 text-black">카테고리 추가</h2>
+                <div class="p-3 p-lg-5 border">
+                  <form th:action="@{/category/insert}" method="post">
+                  <label for="c_code" class="text-black mb-3">추가할 카테고리 이름을 입력하세요.</label>
+                  <div class="input-group w-75">
+                    <input type="text" class="form-control" name="categoryName" id="c_code" placeholder="write category name" aria-label="Coupon Code" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary btn-sm px-4" onclick="addCategory(); return false;" id="button-addon2" >추가하기</button>
+                    </div>
+                  </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row mb-5">
+              <div class="col-md-12">
+                <h2 class="h3 mb-3 text-black">카테고리 삭제</h2>
+                <div class="p-3 p-lg-5 border">
+            <!--      <form th:action="@{/category/delete}" method="post">-->
+                  <table class="table site-block-order-table mb-5">
+                    <thead>
+                      <th>카테고리명</th>
+                    </thead>
+                    <tbody>
+                      <tr th:each="category : ${categoryList}">         	
+                        <td ><input type="checkbox" name="categoryId" id="categoryId" th:value="${category.categoryId}">[[${category.categoryName}]]</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="form-group">
+                    <button class="btn btn-primary btn-lg btn-block" onclick="deleteCategory();">삭제하기</button>
+                  </div>
+				<!--  </form>-->
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- </form> -->
+      </div>
+    </div>
+	<div th:replace="~{/include/footer :: footer}"></div>
+  </div>
+
+  <script th:src="@{js/jquery-3.3.1.min.js}"></script>
+  <script th:src="@{js/jquery-ui.js}"></script>
+  <script th:src="@{js/popper.min.js}"></script>
+  <script th:src="@{js/bootstrap.min.js}"></script>
+  <script th:src="@{js/owl.carousel.min.js}"></script>
+  <script th:src="@{js/jquery.magnific-popup.min.js}"></script>
+  <script th:src="@{js/aos.js}"></script>
+  <script  th:src="@{http://code.jquery.com/jquery-latest.min.js}"></script>
+
+  <script th:src="@{js/main.js}"></script>
+  <script>
+	function addCategory() {
+	  const categoryName = $('#c_code').val();
+	  if (categoryName == "") {
+	    window.alert("카테고리명을 입력해주세요");
+	  } else {
+	    $.ajax({
+	      url: "/category/insert",
+	      data: { categoryName: categoryName },
+	      type: "POST",
+	      success: function (success) {
+	        if(success == "Error"){
+	        	window.alert("이미 존재하는 카테고리입니다.");
+	        }
+	        else if(success == "Success"){
+	        	window.alert("카테고리 추가 성공");
+	        	$(location).attr('href', '/product/productInsert');
+	        }
+	      },
+	      error: function (error) {
+	        console.error("AJAX 요청 실패:", error);
+	      }
+	    });
+	  }
+	}
+  
+	function deleteCategory(){
+		const categoryId = $('#categoryId').val();
+		console.log("gd" + categoryId);
+	}
+  </script>
+  </body>
+</html>

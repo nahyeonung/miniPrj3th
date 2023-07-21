@@ -39,4 +39,6 @@ public interface IProductRepository {
 	int updateProduct(@Param("product") UploadProduct product);
 	
 	int updateProductImg(@Param("img") UploadImage img, @Param("productId") int productId);
+	
+	int checkCategory(@Param("categoryName") String categoryName);
 }

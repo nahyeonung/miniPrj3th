@@ -14,10 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,7 +27,6 @@ import com.example.myapp.product.model.Product;
 import com.example.myapp.product.model.UploadImage;
 import com.example.myapp.product.model.UploadProduct;
 import com.example.myapp.product.service.IProductService;
-import com.example.myapp.review.controller.ReviewController;
 import com.example.myapp.review.model.Review;
 import com.example.myapp.review.service.IReviewService;
 
@@ -68,6 +65,15 @@ public class ProductController {
       
    }
    
+   @RequestMapping(value="/product/productInsert", method=RequestMethod.GET)
+   public String productFactory(Model model) {
+	  List<Category> list = productService.selectAllCategory();
+	  List<Product> productList = productService.selectAllProduct(-1);
+	  model.addAttribute("categoryList", list);
+	  model.addAttribute("productList", productList);
+	  return "product/productAdministration"; 
+   }
+   
    @RequestMapping(value="/product/productManage", method=RequestMethod.GET)
    public String manage(Model model) {
       List<Category> list = productService.selectAllCategory();
@@ -84,16 +90,34 @@ public class ProductController {
       return "product/shop";
    }
    
-   @RequestMapping(value="/category/insert", method=RequestMethod.POST)
-   public String insertCategory(String categoryName) {
-      int row = productService.insertCategory(categoryName);
-      System.out.println(row);
-      return "redirect:/product/productManage";
+//  @RequestMapping(value="/category/insert", method=RequestMethod.POST)
+ //  public String insertCategory(String categoryName) {
+//	   System.out.println(categoryName);
+//	  int cnt = productService.checkCategory(categoryName);
+//	  if(cnt > 0) {
+//		  return "Error";
+		  //model.addAttribute("sameNameError", "Error");
+//	  }else {
+//		  int row = productService.insertCategory(categoryName);
+//		  return "OK";
+		  //model.addAttribute("sameNameError", "OK");
+//	  }
+      //return productFactory(model);
+//   }
+   
+   @RequestMapping(value = "/category/insert", method = RequestMethod.POST)
+   public ResponseEntity<String> insertCategory(@RequestParam("categoryName") String categoryName) {
+       int cnt = productService.checkCategory(categoryName);
+       if (cnt > 0) {
+           return ResponseEntity.ok("Error");
+       } else {
+           int row = productService.insertCategory(categoryName);
+           return ResponseEntity.ok("Success");
+       }
    }
    
    @RequestMapping(value="/category/delete", method=RequestMethod.POST)
    public String deleteCategory(@RequestParam List<Integer> categoryId) {
-      System.out.println(categoryId);
       if(categoryId.size() > 0) {   
          for(int i=0; i<categoryId.size(); i++) {
             int row = productService.deleteCategory(categoryId.get(i));            

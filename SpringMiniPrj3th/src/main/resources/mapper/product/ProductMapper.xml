@@ -31,6 +31,12 @@
 		</if>		
 	</select>
 	
+	<select id="checkCategory" parameterType="String" resultType="int">
+		SELECT count(*)
+		FROM category
+		WHERE category_name = #{categoryName}
+	</select>
+	
 	<insert id="insertCategory" parameterType="String">
 		INSERT INTO category
 		VALUES (category_seq.nextval, #{categoryName})
