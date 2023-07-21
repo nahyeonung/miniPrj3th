@@ -17,11 +17,14 @@ public interface ICommunityService {
 
 	
 	void updateArticle(Community community);
-	Community selectDeleteArticle(int writeId);
-	void deleteArticle(int writeId);
+//	Community selectDeleteArticle(int writeId);
+	void deleteArticleByWriteId(int writeId);
 
 	int selectTotalArticleCountByCommunity();
 	int selectTotalArticleCountByKeyword(String keyword);
 	List<Community> searchListByContentKeyword(String keyword, int page);
+	
+	int selectTotalArticleCountBymylist(String userId);
+	List<Community> searchListByContentmylist(String userId, int page);
 
 }

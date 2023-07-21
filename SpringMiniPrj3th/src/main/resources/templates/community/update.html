@@ -13,7 +13,20 @@
 	
 	<form action="/community/update" method="post">
 		<input type="hidden" name="writeId" th:value="${community.writeId}" />
-		
+		<table>
+        <thead>
+            <tr>
+                <th>아이디</th>
+                <th>작성일자</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td th:text="${community.userId}"></td>
+                <td th:text="${community.writeDate}"></td>
+            </tr>
+        </tbody>
+    </table>
 		<div class="form-group">
 			<label for="writeTitle">제목</label>
 			<div class="TitleBlank">
@@ -24,7 +37,7 @@
 		<div class="form-group">
 			<label for="writeContent">내용</label>
 			<div class="ContentBlank">
-				<textarea name="writeContent" rows="15" cols="100" th:text="${community.writeContent}"></textarea>
+				<textarea name="writeContent" rows="15" cols="100" th:text="${community.writeContent}" required></textarea>
 			</div>
 		</div>
 		

@@ -1,25 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
-<link rel="stylesheet" th:href="@{/css/community/paging.css}">
 <!-- paging -->
-<body>
-<div th:fragment="paging">
+<div th:fragment="myPaging">
 <nav aria-label="Page navigation">
 <ul class="pagination">
 	<li th:if="${nowPageBlock>1}">
-		<a th:href="@{/community/list/__${startPage-1}__}" aria-label="Previous">◀</a>
+		<a th:href="@{/community/mylist/__${startPage-1}__?userId=__${userId}__}" aria-label="Previous">◀</a>
 	</li>
 
 	<li th:each="i: ${#numbers.sequence(startPage, endPage)}" th:classappend="${i==nowPage}?active">
-		<a th:href="@{/community/list/__${i}__}">[[${i}]]</a>		
+		<a th:href="@{/community/mylist/__${i}__?userId=__${userId}__}">[[${i}]]</a>		
 	</li>
 	
 	<li th:if="${nowPageBlock<totalPageBlock}">
-		<a th:href="@{/community/list/__${endPage+1}__}" aria-label="Next">▶</a>
+		<a th:href="@{/community/mylist/__${endPage+1}__}" aria-label="Next">▶</a>
 	</li>
 </ul>
 </nav>
 </div>
-</body>
-</html>

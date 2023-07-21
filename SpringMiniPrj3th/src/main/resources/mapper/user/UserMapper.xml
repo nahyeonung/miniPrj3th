@@ -8,9 +8,10 @@
 		<result property="userPwd" column="user_pwd" />
 		<result property="userName" column="user_name" />
 		<result property="userBirth" column="user_birth" />
-		<result property="userEmail" column="user_email" />		
+		<result property="userEmail" column="user_email" />
 		<result property="userAddress" column="user_address" />
-		<result property="userDetailAddress" column="user_detailaddress" />
+		<result property="userDetailAddress"
+			column="user_detailaddress" />
 		<result property="userPhone" column="user_phone" />
 		<result property="userState" column="user_state" />
 	</resultMap>
@@ -18,69 +19,68 @@
 	<insert id="insertUser"
 		parameterType="com.example.myapp.user.model.User">
     <![CDATA[
-        INSERT INTO 
-        USERS (user_id, user_pwd, user_name, user_birth, user_email, user_address, user_detailaddress, user_phone, user_state)
-        VALUES 
-            (#{userId}, #{userPwd}, #{userName}, #{userBirth}, #{userEmail}, #{userAddress}, #{userDetailAddress}, #{userPhone}, 0)
+    INSERT INTO 
+    USERS (user_id, user_pwd, user_name, user_birth, user_email, user_address, user_detailaddress, user_phone, user_state)
+    VALUES 
+        (#{userId}, #{userPwd}, #{userName}, #{userBirth}, #{userEmail}, #{userAddress}, #{userDetailAddress}, #{userPhone}, 0)
     ]]>
 	</insert>
 
 	<select id="selectUser" parameterType="string"
-		resultType="com.example.myapp.user.model.User" resultMap="userResultMap">
-	<![CDATA[
-		SELECT 
-			user_id,			
-			user_pwd,		
-			user_name,		
-			user_birth,
-			user_email,		
-			user_address,
-			user_detailaddress,
-			user_phone
-		FROM 
-			USERS
-		WHERE user_id=#{userId}
-	]]>
+		resultMap="userResultMap">
+    <![CDATA[
+    SELECT 
+        user_id,			
+        user_pwd,		
+        user_name,		
+        user_birth,
+        user_email,		
+        user_address,
+        user_detailaddress,
+        user_phone
+    FROM 
+        USERS
+    WHERE user_id=#{userId}
+    ]]>
 	</select>
 
-	<select id="selectAllUsers"
-		resultType="com.example.myapp.user.model.User" resultMap="userResultMap">
-	<![CDATA[
-		SELECT 
-			user_id, user_pwd, user_name, user_birth, user_email, user_address, user_detailaddress, user_phone
-		FROM
-			USERS
-	]]>
+	<select id="selectAllUsers" resultMap="userResultMap">
+    <![CDATA[
+    SELECT 
+        user_id, user_pwd, user_name, user_birth, user_email, user_address, user_detailaddress, user_phone
+    FROM
+        USERS
+    ]]>
 	</select>
 
 	<update id="updateUser"
 		parameterType="com.example.myapp.user.model.User">
     <![CDATA[
-        UPDATE USERS
-        SET 
-            user_pwd=#{userPwd}, user_name=#{userName}, user_birth=#{userBirth}, user_email=#{userEmail}, user_address=#{userAddress}, user_detailaddress=#{userDetailAddress}, user_phone=#{userPhone}
-        WHERE 
-            user_id=#{userId}
+    UPDATE USERS
+    SET 
+        user_pwd=#{userPwd}, user_name=#{userName}, user_birth=#{userBirth}, user_email=#{userEmail}, user_address=#{userAddress}, user_detailaddress=#{userDetailAddress}, user_phone=#{userPhone}
+    WHERE 
+        user_id=#{userId}
     ]]>
 	</update>
 
 	<update id="deleteUser"
 		parameterType="com.example.myapp.user.model.User">
-	<![CDATA[
-	UPDATE USERS
-    	SET user_state = 1
+    <![CDATA[
+    UPDATE USERS
+    SET user_state = 1
     WHERE user_id=#{userId} AND user_pwd=#{userPwd}
-	]]>
+    ]]>
 	</update>
 
 	<select id="getPassword" parameterType="string"
-		resultType="string" resultMap="userResultMap">
-	<![CDATA[
-		SELECT
-			user_pwd
-		FROM
-			USERS
-		WHERE user_id=#{userId}
-	]]>
+		resultMap="userResultMap">
+    <![CDATA[
+    SELECT
+        user_pwd
+    FROM
+        USERS
+    WHERE user_id=#{userId}
+    ]]>
 	</select>
 </mapper>

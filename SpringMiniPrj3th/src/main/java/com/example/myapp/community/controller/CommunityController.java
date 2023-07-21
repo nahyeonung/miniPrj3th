@@ -17,7 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,18 +46,19 @@ public class CommunityController {
 		model.addAttribute("communityList", communityList);
 		int bbsCount = communityService.selectTotalArticleCountByCommunity();
 		int totalPage = 0;
-		if(bbsCount > 0) {
-			totalPage= (int)Math.ceil(bbsCount/10.0);
+		if (bbsCount > 0) {
+			totalPage = (int) Math.ceil(bbsCount / 10.0);
 		}
-		int totalPageBlock = (int)(Math.ceil(totalPage/10.0));
-		int nowPageBlock = (int) Math.ceil(page/10.0);
-		int startPage = (nowPageBlock-1)*10 + 1;
+		int totalPageBlock = (int) (Math.ceil(totalPage / 10.0));
+		int nowPageBlock = (int) Math.ceil(page / 10.0);
+		int startPage = (nowPageBlock - 1) * 10 + 1;
 		int endPage = 0;
-		if(totalPage > nowPageBlock*10) {
-			endPage = nowPageBlock*10;
-		}else {
+		if (totalPage > nowPageBlock * 10) {
+			endPage = nowPageBlock * 10;
+		} else {
 			endPage = totalPage;
 		}
+		model.addAttribute("bbsCount", bbsCount);
 		model.addAttribute("totalPageCount", totalPage);
 		model.addAttribute("nowPage", page);
 		model.addAttribute("totalPageBlock", totalPageBlock);
@@ -64,28 +67,30 @@ public class CommunityController {
 		model.addAttribute("endPage", endPage);
 		return "community/list";
 	}
+
 	@RequestMapping("/community/list")
 	public String getListByCommunity(HttpSession session, Model model) {
 		return getListByCommunity(1, session, model);
 	}
+
 	@RequestMapping("/community/{writeId}/{page}")
 	public String getCommunityDetails(@PathVariable int writeId, @PathVariable int page, Model model) {
 		Community community = communityService.selectArticle(writeId);
 		if (community != null) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String formattedWriteDate = sdf.format(community.getWriteDate());
-            community.setFormattedWriteDate(formattedWriteDate);
-        }
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String formattedWriteDate = sdf.format(community.getWriteDate());
+			community.setFormattedWriteDate(formattedWriteDate);
+		}
 		model.addAttribute("community", community);
 		model.addAttribute("page", page);
 		logger.info("getCommunityDetails " + community.toString());
 		return "community/view";
 	}
+
 	@RequestMapping("/community/{writeId}")
 	public String getCommunityDetails(@PathVariable int writeId, Model model) {
 		return getCommunityDetails(writeId, 1, model);
 	}
-
 
 	@RequestMapping(value = "/community/write", method = RequestMethod.GET)
 	public String writeArticle(Model model) {
@@ -93,14 +98,11 @@ public class CommunityController {
 		return "community/write";
 	}
 
-	@RequestMapping(value = "/community/write" , method=RequestMethod.POST)
+	@RequestMapping(value = "/community/write", method = RequestMethod.POST)
 	public String writeArticle(Community community, BindingResult results, RedirectAttributes redirectAttrs) {
 //		logger.info("/community/write : " + community.toString());
 		try {
-		community.setUserId("test");
-//		community.setWriteContent(community.getWriteContent().replace("\r\n", "<br>"));
-//			community.setWriteTitle(Jsoup.clean(community.getWriteTitle(), Safelist.basic()));
-//			community.setWriteContent(Jsoup.clean(community.getWriteContent(), Safelist.basic()));
+			community.setUserId("test");
 			communityService.insertArticle(community);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -108,13 +110,15 @@ public class CommunityController {
 		}
 		return "redirect:/community/list";
 	}
-	@RequestMapping(value="/community/update/{writeId}", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/community/update/{writeId}", method = RequestMethod.GET)
 	public String updateArticle(@PathVariable int writeId, Model model) {
 		Community community = communityService.selectArticle(writeId);
 //		community.setWriteContent(community.getWriteContent().replaceAll("<br>", "\r\n"));
 		model.addAttribute("community", community);
 		return "community/update";
 	}
+
 	@RequestMapping(value = "/community/update", method = RequestMethod.POST)
 	public String updateArticle(Community community, RedirectAttributes redirectAttrs) {
 		logger.info("/community/update " + community.toString());
@@ -130,20 +134,13 @@ public class CommunityController {
 		return "redirect:/community/" + community.getWriteId();
 	}
 
-	@RequestMapping(value="/community/delete/{writeId}", method=RequestMethod.GET)
-	public String deleteArticle(@PathVariable int writeId, Model model) {
-	    Community community = communityService.selectDeleteArticle(writeId);
-	    model.addAttribute("community", community);
-	    return "community/delete";
+	@RequestMapping(value = "/community/delete", method = RequestMethod.GET)
+	public String deleteArticle(@RequestParam("writeId") int writeId) {
+		communityService.deleteArticleByWriteId(writeId);
+		return "redirect:/community/list/1";
 	}
 
-	@RequestMapping(value="/community/delete/{writeId}", method=RequestMethod.POST)
-	public String deleteArticle(@PathVariable int writeId, HttpSession session) {
-	    communityService.deleteArticle(writeId);
-	    return "redirect:/community/list/" + session.getAttribute("page");
-	}
-	
-	
+
 	@RequestMapping("/community/search/{page}")
 	public String search(@RequestParam(required = false, defaultValue = "") String keyword, @PathVariable int page,
 			HttpSession session, Model model) {
@@ -152,16 +149,16 @@ public class CommunityController {
 			model.addAttribute("communityList", communityList);
 			int bbsCount = communityService.selectTotalArticleCountByKeyword(keyword);
 			int totalPage = 0;
-			if(bbsCount > 0) {
-				totalPage= (int)Math.ceil(bbsCount/10.0);
+			if (bbsCount > 0) {
+				totalPage = (int) Math.ceil(bbsCount / 10.0);
 			}
-			int totalPageBlock = (int)(Math.ceil(totalPage/10.0));
-			int nowPageBlock = (int) Math.ceil(page/10.0);
-			int startPage = (nowPageBlock-1)*10 + 1;
+			int totalPageBlock = (int) (Math.ceil(totalPage / 10.0));
+			int nowPageBlock = (int) Math.ceil(page / 10.0);
+			int startPage = (nowPageBlock - 1) * 10 + 1;
 			int endPage = 0;
-			if(totalPage > nowPageBlock*10) {
-				endPage = nowPageBlock*10;
-			}else {
+			if (totalPage > nowPageBlock * 10) {
+				endPage = nowPageBlock * 10;
+			} else {
 				endPage = totalPage;
 			}
 			model.addAttribute("keyword", keyword);
@@ -176,11 +173,52 @@ public class CommunityController {
 		}
 		return "community/search";
 	}
+
 	@RequestMapping("/community/search")
-	public String search(@RequestParam(required = false, defaultValue = "") String keyword, HttpSession session, Model model) {
+	public String search(@RequestParam(required = false, defaultValue = "") String keyword, HttpSession session,
+			Model model) {
 		return search(keyword, 1, session, model);
 	}
 	
+	
+	@RequestMapping("/community/mylist/{page}")
+	public String mylist(@RequestParam(required = false, defaultValue = "") String userId, @PathVariable int page,
+			HttpSession session, Model model) {
+		try {
+			List<Community> communityList = communityService.searchListByContentmylist(userId, page);
+			model.addAttribute("communityList", communityList);
+			int bbsCount = communityService.selectTotalArticleCountBymylist(userId);
+			int totalPage = 0;
+			if (bbsCount > 0) {
+				totalPage = (int) Math.ceil(bbsCount / 10.0);
+			}
+			int totalPageBlock = (int) (Math.ceil(totalPage / 10.0));
+			int nowPageBlock = (int) Math.ceil(page / 10.0);
+			int startPage = (nowPageBlock - 1) * 10 + 1;
+			int endPage = 0;
+			if (totalPage > nowPageBlock * 10) {
+				endPage = nowPageBlock * 10;
+			} else {
+				endPage = totalPage;
+			}
+			model.addAttribute("userId", userId);
+			model.addAttribute("totalPageCount", totalPage);
+			model.addAttribute("nowPage", page);
+			model.addAttribute("totalPageBlock", totalPageBlock);
+			model.addAttribute("nowPageBlock", nowPageBlock);
+			model.addAttribute("startPage", startPage);
+			model.addAttribute("endPage", endPage);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "community/mylist";
+	}
+
+	@RequestMapping("/community/mylist")
+	public String mylist(@RequestParam(required = false, defaultValue = "") String userId, HttpSession session,
+			Model model) {
+		return mylist(userId, 1, session, model);
+	}
 //
 //	@ExceptionHandler({ RuntimeException.class })
 //	public String error(HttpServletRequest request, Exception ex, Model model) {
