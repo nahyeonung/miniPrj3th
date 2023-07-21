@@ -88,4 +88,9 @@ public class productService implements IProductService{
 	public Product selectProduct(int productId) {
 		return productRepository.selectProduct(productId);
 	}
+
+	@Override
+	public int checkCategory(String categoryName) {
+		return productRepository.checkCategory(categoryName);
+	}
 }

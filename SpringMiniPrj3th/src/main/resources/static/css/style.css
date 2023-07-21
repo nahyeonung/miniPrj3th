@@ -67,7 +67,7 @@ a {
       background-color: #333333; }
 
 .form-control {
-  height: 43px; }
+}
   .form-control:active, .form-control:focus {
     border-color: #ee4266; }
   .form-control:hover, .form-control:active, .form-control:focus {
@@ -677,7 +677,7 @@ a {
   .site-blocks-table thead th {
     padding: 30px;
     text-align: center;
-    border-width: 1px !important;
+    border-width: 1px #59ab6e !important;
     vertical-align: middle;
     color: #212529;
     font-size: 18px; }
@@ -687,7 +687,7 @@ a {
     vertical-align: middle;
     color: #212529; }
   .site-blocks-table tbody tr:first-child td {
-    border-top: 1px solid #ee4266 !important; }
+    border-top: 1px solid #59ab6e !important; }
 
 .site-block-order-table th {
   border-top: none !important;
@@ -999,7 +999,7 @@ a {
 	border: none;
 	background-color: #59ab6e;
 	color: white;
-	font-size: 15px;
-	width: 100px;
-	height: 50px;
+	font-size: 13px;
+	width: 73px;
+	height: 35px;
 }

@@ -31,4 +31,6 @@ public interface IProductService {
 	int deleteBackProduct(int productId);
 	
 	Product selectProduct(int productId);
+	
+	int checkCategory(String categoryName);
 }
