@@ -18,6 +18,13 @@ public class CartService implements ICartService {
 	public List<Cart> selectCartList(String userId) {
 		return cartRepository.selectCartList(userId);
 	}
+	
+	@Override
+	public Cart selectCart(Cart cart) {
+		return cartRepository.selectCart(cart);
+	}
+
+
 
 	@Override
 	public void insertCart(Cart cart) {
@@ -27,5 +34,10 @@ public class CartService implements ICartService {
 	@Override
 	public void updateCart(Cart cart) {
 		cartRepository.updateCart(cart);
+	}
+
+	@Override
+	public void deleteCart(int cartId) {
+		cartRepository.deleteCart(cartId);
 	}
 }

@@ -29,19 +29,22 @@ $(document).ready(function() {
       $('#product-detail').attr('src',this_src);
       return false;
     });
-    $('#btn-minus').click(function(){
-      var val = $("#var-value").html();
-      val = (val=='1')?val:val-1;
-      $("#var-value").html(val);
-      $("#product-quanity").val(val);
-      return false;
+    $('.btn-minus').click(function(){
+        var valueElement = $(this).closest('td').find('.var-value');
+        var val = parseInt(valueElement.html());
+        val = (val > 1) ? val - 1 : val;
+        valueElement.html(val);
+        $(this).closest('td').find('.product-quanity').val(val);
+        return false;
     });
-    $('#btn-plus').click(function(){
-      var val = $("#var-value").html();
-      val++;
-      $("#var-value").html(val);
-      $("#product-quanity").val(val);
-      return false;
+
+    $('.btn-plus').click(function(){
+        var valueElement = $(this).closest('td').find('.var-value');
+        var val = parseInt(valueElement.html());
+        val++;
+        valueElement.html(val);
+        $(this).closest('td').find('.product-quanity').val(val);
+        return false;
     });
     $('.btn-size').click(function(){
       var this_val = $(this).html();

@@ -22,6 +22,8 @@ import com.example.myapp.review.model.Review;
 import com.example.myapp.review.model.ReviewImage;
 import com.example.myapp.review.service.IReviewService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class ReviewController {
 	
@@ -42,10 +44,11 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value="/review/insert", method=RequestMethod.POST)
-	public String insertArticle(Review review, BindingResult results, RedirectAttributes redirectAttrs) {
+	public String insertArticle(Review review, BindingResult results, RedirectAttributes redirectAttrs, HttpSession session) {
 		try {
 			reviewService.getProduct(review.getProductId());
-			review.setUserId("test");
+			String userId = (String)session.getAttribute("userId");
+			review.setUserId(userId);
 			MultipartFile mfile = review.getFile();
 			if(mfile!=null && !mfile.isEmpty()) {
 				ReviewImage image = new ReviewImage();
@@ -81,9 +84,10 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value="/review/update/{reviewId}", method=RequestMethod.GET)
-	public String updateReview(@PathVariable int reviewId, Model model) {
+	public String updateReview(@PathVariable int reviewId, Model model, HttpSession session) {
 		Review review = reviewService.selectReview(reviewId);
-		review.setUserId("test");
+		String userId = (String)session.getAttribute("userId");
+		review.setUserId(userId);
 		review.setContent(review.getContent().replace("<br>", "\r\n"));
 		model.addAttribute("review", review);
 		return "review/update";
@@ -113,7 +117,7 @@ public class ReviewController {
 		return "redirect:/review/"+review.getProductId();
 	}
 	
-	@GetMapping("review/delete")
+	@GetMapping("/review/delete")
 	public String deleteReview(int reviewId) {
 		reviewService.deleteReview(reviewId);
 		return "redirect:/review/" + reviewId;

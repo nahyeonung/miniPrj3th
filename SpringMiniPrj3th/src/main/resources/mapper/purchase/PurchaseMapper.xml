@@ -1,57 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.myapp.purchase.dao.IPurchaseRepository">
-	
- 	
-	<select id="selectAllPurchase" parameterType="String" resultType="com.example.myapp.purchase.model.Purchase">
-		<![CDATA[
-			SELECT
-			    purchase_id as "purchaseId",
-			    purchase.user_id as "userId",
-			    delivery as "delivery",
-			    purchase_date as "purchaseDate",
-			    purchase_state as "purchaseState",
-			    total_price as "totalPrice"
-			FROM purchase
-			JOIN users
-			    ON purchase.user_id = users.user_id
-			WHERE purchase.user_id = #{userId}
-		]]>
-	</select>
-	
-	<select id="selectPurchase" parameterType="hashmap" resultType="com.example.myapp.purchase.model.PurchaseDetail">
-		<![CDATA[
-			SELECT 
-			    pur.purchase_id as "purchaseId", 
-			    pur.purchase_date as "purchaseDate", 
-			    u.user_name as "userName", 
-			    pur.purchase_state as "purchaseState", 
-			    pur.total_price as "totalPrice", 
-			    proi.image_name as "imageName",
-			    pro.product_name as "productName", 
-			    purd.purchase_cnt as "purchaseCnt",
-			    pur.delivery as "delivery",
-			    u.user_phone as "userPhone"
-			FROM users u, product pro, product_image proi, purchase pur, purchase_detail purd
-			WHERE u.user_id = pur.user_id
-			AND pro.product_id = purd.product_id
-			AND pur.purchase_id = purd.purchase_id
-			AND pro.product_id = proi.product_id
-			AND pur.user_id = #{userId}
-			AND purd.purchase_id = #{purchaseId}
-		]]>
-	</select>
+<mapper namespace="com.example.myapp.purchase.dao.IPurchaseRepository">	
 	
 	<insert id="insertPurchase" parameterType="com.example.myapp.purchase.model.Purchase">
 		<![CDATA[
 			INSERT INTO PURCHASE 
 				(purchase_id, user_id, delivery, purchase_date, purchase_state, total_price)
 			VALUE
-				(purchase_sqe.nextval, #{user_id}, #{delivery_id}, #{purchase_date}, #{purchase_state}, #{total_price}
+				(purchase_sqe.nextval, #{user_id}, #{delivery}, SYSDATE, "배송전", #{total_price})
 		]]>
 	</insert>
 	
-	<insert id="insertPurchaseDetail" parameterType="com.example.myapp.purchase.model.PurchaseDetail">
+	<insert id="insertPurchaseDetail" parameterType="com.example.myapp.purchase.model.Purchase">
 		<![CDATA[
 			INSERT INTO PURCHASE_DETAIL 
 				(purchase_detail_id, product_id, purchase_id, purchase_cnt)
@@ -59,5 +19,60 @@
 				(ourchase_detail_sqe.nextval, #{product_id}, #{purchase_id}, #{purchase_cnt})
 		]]>
 	</insert>
+	
+	<select id="selectUserInfo" parameterType="String" resultType="com.example.myapp.purchase.model.Purchase">
+		<![CDATA[
+			SELECT 
+				user_id as "userId",
+				user_name as "userName",
+				user_address as "userAddress",
+				user_phone as "userPhone"
+			FROM users
+			WHERE user_id = #{userId}
+		]]>
+	</select>
+	
+	<select id="selectProductInfo" parameterType="int" resultType="com.example.myapp.purchase.model.Purchase">
+		<![CDATA[
+			SELECT
+				p.product_id as "productId",
+				p.product_name as "productNamd",
+				p.product_price as "productPrice",
+				p.product_description as "productDescription",
+				pi.image_id as "imageId",
+				pi.image_name as "imageName",
+				pi.image_size as "imageSize",
+				pi.image_type as "imageType",
+				pi.image_data as "imageData"
+			FROM product P
+			JOIN prodict_image pi
+			ON p.product_id = pi.product_id
+			WHERE p.product_id = #{productId}
+		]]>
+	</select>
+	
+	<select id="selectCartInfo" resultType="com.example.myapp.purchase.model.Purchase">
+			SELECT 
+			    product.product_id as "productId",
+			    product.product_name as "productName",
+			    product.product_price as "productPrice",
+			    product.product_description as "productDescription",
+			    product_image.image_id as "imageId",
+			    product_image.image_name as "imageName",
+			    product_image.image_size as "imageSize",
+			    product_image.image_type as "imageType",
+			    product_image.image_data as "imageData",
+			    cart.cart_cnt as "cartCnt"
+			FROM cart
+			JOIN product
+			ON cart.product_id=product.product_id
+			JOIN product_image
+			ON product.product_id=product_image.product_id
+			WHERE cart_id IN 
+			<foreach item="id" collection="cartIdList" open="(" separator="," close=")">
+				#{id}
+			</foreach>
+			AND user_id=#{userId}
+	</select>
 	
 </mapper>

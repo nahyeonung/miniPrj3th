@@ -23,6 +23,33 @@
 			LEFT OUTER JOIN product_image pi
 			ON p.product_id=pi.product_id
 			WHERE c.user_id = #{userId}
+			ORDER BY c.cart_id
+		]]>
+	</select>
+	
+	<select id="selectCart" parameterType="com.example.myapp.cart.model.Cart" resultType="com.example.myapp.cart.model.Cart">
+		<![CDATA[
+			SELECT 
+				c.cart_id as "cartId",
+			    c.user_id as "userId",
+			    p.product_id as "productId",
+			    p.product_name as "productName",
+			    p.product_price as "productPrice",
+			    p.product_description as "productDescription",
+			    c.cart_cnt as "cartCnt",
+			    p.product_price*c.cart_cnt as "totalPrice",
+			    pi.image_id as "imageId",
+			    pi.image_name as "imageName",
+			    pi.image_size as "imageSize",
+			    pi.image_type as "imageType",
+			    pi.image_data as "imgaeData"
+			FROM cart c
+			JOIN product p ON c.product_id = p.product_id
+			LEFT OUTER JOIN product_image pi
+			ON p.product_id=pi.product_id
+			WHERE c.user_id = #{userId}
+			AND c.cart_id = #{cartId}
+			ORDER BY c.cart_id
 		]]>
 	</select>
 	
@@ -40,5 +67,12 @@
 			WHERE cart_id = #{cartId}
 		]]>
 	</update>
+	
+	<delete id="deleteCart" parameterType="int">
+		<![CDATA[
+			DELETE FROM cart
+			WHERE cart_id = #{cartId}
+		]]>
+	</delete>
 	
 </mapper>

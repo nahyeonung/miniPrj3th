@@ -1,19 +1,19 @@
 package com.example.myapp.purchase.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.myapp.purchase.model.Purchase;
-import com.example.myapp.purchase.model.PurchaseDetail;
 import com.example.myapp.purchase.service.IPurchaseService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class PurchaseController {
@@ -21,35 +21,15 @@ public class PurchaseController {
 	@Autowired
 	IPurchaseService purchaseService;
 	
-	@RequestMapping(value="/purchase/insert", method=RequestMethod.GET)
-	public String insertPurchase() {
-		return "purchase/insert";
-	}
-	
-	@RequestMapping(value="/purchase/insert", method=RequestMethod.POST)
-	public String insertPurchase(Purchase purchase, PurchaseDetail purchaseDetail, BindingResult results, RedirectAttributes redirectAttrs) {
-		purchase.setDelivery(purchase.getDelivery());
-		purchase.setPurchaseDate(purchase.getPurchaseDate());
-		purchase.setPurchaseState(purchase.getPurchaseState());
-		purchase.setTotalPrice(purchase.getTotalPrice());
+	@RequestMapping(value="purchase/insert", method=RequestMethod.GET)
+	public String InsertPuchase(@RequestParam List<Integer> cartIdList, Purchase purchase, HttpSession session, Model model) {
+		String userId = (String)session.getAttribute("userId");
+		purchase = purchaseService.selectUserInfo(userId);
 		
-		/* purchaseDetail.setUserName() */
+		List<Purchase> list = purchaseService.selectCartInfo(cartIdList, userId);
+		System.out.println(list);
+		model.addAttribute("list", list);
+		model.addAttribute("purchase", purchase);
 		return "purchase/insert";
-	}
-	
-	@RequestMapping("/purchase/{userId}")
-	public String selectAllPurchase(@PathVariable String userId, Model model) {
-		List<Purchase> purchaseList = purchaseService.selectAllPurchase(userId);
-		model.addAttribute("purchaseList", purchaseList);
-		return "purchase/list";
-	}
-	
-	@RequestMapping("/purchase/{purchaseId}/{userId}")
-	public String selectPurchase(@PathVariable String userId, @PathVariable int purchaseId, Model model) {
-		PurchaseDetail purchaseDetail = purchaseService.selectPurchase(purchaseId, userId);
-		model.addAttribute("purchaseDetail", purchaseDetail);
-		System.out.println(purchaseDetail.getPurchaseDate());
-		model.addAttribute("userId", userId);
-		return "purchase/view";
 	}
 }

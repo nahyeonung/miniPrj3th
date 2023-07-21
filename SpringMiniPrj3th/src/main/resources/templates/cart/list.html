@@ -21,10 +21,12 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/slick-theme.css}">
 </head>
 <body>
-    <form action="/cart/update" method="POST">
-		<table border=1>
+	<div class="container my-5">
+	<h1 class="text-center mb-5">[[${session.userId}]]장바구니</h1>
+		<table class="table">
 			<thead>
 				<tr>
+					<th>선택</th>
 					<th>이미지</th>
 					<th>상품이름</th>
 					<th>상품설명</th>
@@ -38,33 +40,40 @@
 			</thead>
 			<tbody>
 				<tr th:each="cart : ${cartList}">
-					<td><img th:src="@{/file/{id}(id=${cart.ImageId})}"></td>
+					<td><input type="checkbox" name="selectCartList" th:value="${cart.cartId}"></td>
+					<td><img style="width:100px" th:src="@{/file/{id}(id=${cart.ImageId})}"></td>
 					<td>[[${cart.productName}]]</td>
 					<td>[[${cart.productDescription}]]</td>
 					<td>[[${cart.productPrice}]]</td>
 					<td>
-					    <div class="row">
-					           <div class="col-auto">
-					               <ul class="list-inline pb-3">
-					                   <li class="list-inline-item text-right">
-					                       Quantity
-					                       <input type="hidden" name="cartCnt" id="product-quanity" value="1">
-					                   </li>
-					                   <li class="list-inline-item"><span class="btn btn-success" id="btn-minus">-</span></li>
-					                   <li class="list-inline-item"><span class="badge bg-secondary" id="var-value">[[${cart.cartCnt}]]</span></li>
-					                   <li class="list-inline-item"><span class="btn btn-success" id="btn-plus">+</span></li>
-					               </ul>
-					           </div>
-					       </div>
-    					<input type="hidden" name="cartId" th:value="${cart.cartId}">
-						<div class="col d-grid">
-						    <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">변경하기</button>
+						<div>
+							<input class="cart_id" type="hidden" th:value="${cart.cartId}">
+							<input type="text" th:value="${cart.cartCnt}">
+							<button class="btn bg-danger minus_btn">-</button>
+							<button class="btn bg-info plus_btn">+</button>
 						</div>
+						<a class="btn bg-warning quantity_modify_btn">변경</a>					
 					</td>
-					<td class="sum">[[${cart.totalPrice}]]</td>	
+					<td class="sum">[[${cart.totalPrice}]]</td>
+					<td><a class="btn bg-dander cart_delete_btn">삭제</a></td>
 				</tr>
 			</tbody>
 		</table>
+		<a class="btn bg-warning purchase_btn">구매</a>
+	</div>
+	<form action="/cart/update" method="post" class="quantity_update_form">
+		<input type="hidden" name="cartId" class="update_cartId">
+		<input type="hidden" name="cartCnt" class="update_cartCnt">
+		<input type="hidden" name="userId" th:value="${session.userId}">
+	</form>	
+	
+	<form action="/cart/delete" method="post" class="cart_delete_form">
+		<input type="hidden" name="cartId" class="delete_cartId">
+	</form>
+	
+	<form action="/purchase/insert" method="get" class="purchase_form">
+		<input type="hidden" name="userId" th:value=${session.userId}>
+		<input type="hidden" name="cartIdList" class="insert_cartId">
 	</form>
 	
     <script src="/js/jquery-1.11.0.min.js"></script>
@@ -72,5 +81,44 @@
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/templatemo.js"></script>
     <script src="/js/custom.js"></script>
+    <script>
+    $(document).ready(function() {
+	    $(".plus_btn").on("click", function(){
+	    	let quantity = $(this).parent("div").find("input[type=text]").val();
+	    	$(this).parent("div").find("input[type=text]").val(++quantity);
+	    });
+	    $(".minus_btn").on("click", function(){
+	    	let quantity = $(this).parent("div").find("input[type=text]").val();
+	    	if(quantity > 1){
+	    		$(this).parent("div").find("input[type=text]").val(--quantity);		
+	    	}
+	    });
+	    $(".quantity_modify_btn").on("click", function(){
+	    	let id = $(this).parent("td").find("input[type=hidden]").val();
+	    	let cartCnt = $(this).parent("td").find("input[type=text]").val();
+	    	$(".update_cartId").val(id);
+	    	$(".update_cartCnt").val(cartCnt);
+	    	$(".quantity_update_form").submit();
+	    });
+	    $(".cart_delete_btn").on("click", function(){
+            let cartId = $(this).closest("tr").find(".cart_id").val();
+            console.log(cartId)
+            $(".delete_cartId").val(cartId);
+            $(".cart_delete_form").submit();
+	    });
+	    $(".purchase_btn").on("click", function(){
+            let selectedCartIds = [];
+            $("input[name='selectCartList']:checked").each(function(){
+                selectedCartIds.push($(this).closest("tr").find(".cart_id").val());
+            });
+            $("input[name=cartIdList]").val(selectedCartIds);
+            if(selectedCartIds.length > 0){
+                $(".purchase_form").submit();
+            } else {
+                alert("장바구니에서 구매할 상품을 선택해주세요.");
+            }
+        });
+    });
+    </script>
 </body>
 </html>
