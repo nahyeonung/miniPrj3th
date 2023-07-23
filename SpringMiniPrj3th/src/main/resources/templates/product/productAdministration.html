@@ -68,11 +68,11 @@
        	       <div class="form-group row">
        	         <div class="col-md-6">
         	          <label for="c_fname" class="text-black">상품 가격 <span class="productPrice">*</span></label>
-           	       <input type="text" class="form-control" id="c_fname" name="c_fname">
+           	       <input type="text" class="form-control" id="c_fname" name="productPrice">
             	    </div>
        	         <div class="col-md-6">
        	           <label for="c_lname" class="text-black">상품 재고 <span class="productStock">*</span></label>
-       	           <input type="text" class="form-control" id="c_lname" name="c_lname">
+       	           <input type="text" class="form-control" id="c_lname" name="productStock">
        	         </div>
        	       </div>
        	       <div class="form-group">
@@ -116,21 +116,34 @@
               <div class="col-md-12">
                 <h2 class="h3 mb-3 text-black">카테고리 삭제</h2>
                 <div class="p-3 p-lg-5 border">
-            <!--      <form th:action="@{/category/delete}" method="post">-->
+            	<form th:action="@{/category/delete}" method="post">
                   <table class="table site-block-order-table mb-5">
                     <thead>
-                      <th>카테고리명</th>
+                    	<tr>
+                    		<th>카테고리명</th>
+                    	</tr>
                     </thead>
-                    <tbody>
-                      <tr th:each="category : ${categoryList}">         	
-                        <td ><input type="checkbox" name="categoryId" id="categoryId" th:value="${category.categoryId}">[[${category.categoryName}]]</td>
+                    <tbody id="change_tbody">
+                      <tr th:each="category : ${categoryPagingList}">         	
+                        <td ><input type="checkbox" name="categoryId" class="categoryId" th:value="${category.categoryId}">[[${category.categoryName}]]</td>
                       </tr>
                     </tbody>
                   </table>
-                  <div class="form-group">
-                    <button class="btn btn-primary btn-lg btn-block" onclick="deleteCategory();">삭제하기</button>
-                  </div>
-				<!--  </form>-->
+                  <table class="table site-block-order-table mb-5">
+                  <tr>
+                  	<td align="left">
+                  		<th:block th:each="total : ${totalPage}">
+                  			<th:block th:each="num : ${#numbers.sequence(1, total)}">
+                  				<button class="btn btn-outline-primary" th:value="${num}" onclick="cPaging(this.getAttribute('value')); return false;">[[${num}]]</button>
+                  			</th:block>
+                  		</th:block>
+                  	</td>
+                  	<td align="right">
+                  		<button class="btn btn-primary btn-lg btn-block" id="deleteBtn" onclick="deleteCategory(); return false;">삭제하기</button>
+                  	</td>
+                  </tr>
+                  </table>
+				</form>
                 </div>
               </div>
             </div>
@@ -178,11 +191,47 @@
 	    });
 	  }
 	}
+	function cPaging(num){
+		console.log(num);
+	 	$.ajax({
+			url: "/category/paging",
+			data: {page : num},
+			type: 'GET',
+			success: function(response){
+				console.log(response);
+				  const tbody = document.getElementById('change_tbody');
+				  tbody.innerHTML = ""; //tbody 내용 초기화
+ 				  response.forEach(list => {
+			            const category = `
+			            <tr>         	
+	                        <td ><input type="checkbox" name="categoryId" class="categoryId" value="${list.categoryId}">${list.categoryName}</td>
+	                    </tr>`
+			            tbody.innerHTML += category;
+			        }); 
+				  
+			},
+			error: function(error){
+				console.log("AJAX 요청 실패: ", error);
+			}
+		}) 
+	}
   
 	function deleteCategory(){
-		const categoryId = $('#categoryId').val();
-		console.log("gd" + categoryId);
+		const category_len = $('.categoryId').length;
+		var cnt = 0;
+		for(var i=0; i<category_len; i++){
+			if(document.getElementsByClassName("categoryId")[i].checked == true){
+				cnt++;
+			}
+		}
+		if(cnt == 0){
+			window.alert("삭제할 카테고리를 선택하세요");
+		}else{
+			document.querySelector('.deleteBtn').submit();
+		}
+		
 	}
+
   </script>
   </body>
 </html>

@@ -93,4 +93,14 @@ public class productService implements IProductService{
 	public int checkCategory(String categoryName) {
 		return productRepository.checkCategory(categoryName);
 	}
+
+	@Override
+	public int selectCountCategory() {
+		return productRepository.selectCountCategory();
+	}
+
+	@Override
+	public List<Category> selectPagingCategory(int min, int max) {
+		return productRepository.selectPagingCategory(min, max);
+	}
 }

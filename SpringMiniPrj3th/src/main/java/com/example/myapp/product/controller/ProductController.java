@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,10 +70,23 @@ public class ProductController {
    public String productFactory(Model model) {
 	  List<Category> list = productService.selectAllCategory();
 	  List<Product> productList = productService.selectAllProduct(-1);
+	  List<Category> categoryPagingList = productService.selectPagingCategory(0, 3);
+	  int cCount = productService.selectCountCategory();
+	  int totalPage = 0;
+	  if(cCount > 0) {
+		  totalPage = (int)Math.ceil(cCount/3);
+	  }
+	  if(cCount % 3 > 0) {
+		  totalPage++;
+	  }
+	  model.addAttribute("totalPage", totalPage);
 	  model.addAttribute("categoryList", list);
 	  model.addAttribute("productList", productList);
+	  model.addAttribute("categoryPagingList", categoryPagingList);
 	  return "product/productAdministration"; 
    }
+   
+
    
    @RequestMapping(value="/product/productManage", method=RequestMethod.GET)
    public String manage(Model model) {
@@ -116,14 +130,22 @@ public class ProductController {
        }
    }
    
+   @RequestMapping(value="/category/paging", method=RequestMethod.GET)
+   public ResponseEntity<List<Category>> categoryPaging(Model model, @RequestParam("page") int page) {
+	   int min = (page - 1) * 3;
+	   int max = page * 3;
+	   List<Category> list = productService.selectPagingCategory(min, max);
+	   return ResponseEntity.ok(list);
+   }
+   
    @RequestMapping(value="/category/delete", method=RequestMethod.POST)
-   public String deleteCategory(@RequestParam List<Integer> categoryId) {
+   public String deleteCategory(@RequestParam List<Integer> categoryId, Model model) {
       if(categoryId.size() > 0) {   
          for(int i=0; i<categoryId.size(); i++) {
             int row = productService.deleteCategory(categoryId.get(i));            
          }
       }
-      return "redirect:/product/productManage";
+      return productFactory(model);
    }
    
    @RequestMapping(value="/product/insert", method=RequestMethod.POST)
