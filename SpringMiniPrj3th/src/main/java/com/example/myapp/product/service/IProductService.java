@@ -33,4 +33,8 @@ public interface IProductService {
 	Product selectProduct(int productId);
 	
 	int checkCategory(String categoryName);
+	
+	int selectCountCategory();
+	
+	List<Category> selectPagingCategory(int min, int max);
 }

@@ -41,4 +41,8 @@ public interface IProductRepository {
 	int updateProductImg(@Param("img") UploadImage img, @Param("productId") int productId);
 	
 	int checkCategory(@Param("categoryName") String categoryName);
+	
+	int selectCountCategory();
+	
+	List<Category> selectPagingCategory(@Param("min") int min, @Param("max") int max);
 }

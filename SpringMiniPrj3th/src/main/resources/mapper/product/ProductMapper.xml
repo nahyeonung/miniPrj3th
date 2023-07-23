@@ -154,4 +154,20 @@
 		]]>
 	</update>
 	
+	<select id="selectCountCategory" resultType="int">
+		<![CDATA[
+			SELECT count(*)
+			FROM category
+		]]>
+	</select>
+	
+ 	<select id="selectPagingCategory" parameterType="int" resultType="com.example.myapp.product.model.Category">
+ 		<![CDATA[
+		SELECT x2.category_id as categoryId,
+		x2.category_name as categoryName FROM (
+		SELECT rownum r, x.*  FROM (SELECT c.* FROM category c ORDER BY c.category_id) x) x2
+		WHERE r > #{min} and r <= #{max}
+		]]>
+	</select> 
+	
 </mapper>
