@@ -1,31 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
-
-
 <link rel="stylesheet" th:href="@{/css/community/list.css}">
-<link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
-<link rel="stylesheet" th:href="@{/css/jquery-ui.css}">
-<link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
-<link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
+
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/templatemo.css}">
+
 <link rel="stylesheet" th:href="@{/css/community/paging.css}">
 
-<link rel="stylesheet" th:href="@{/css/aos.css}">
 
-<link rel="apple-touch-icon" th:href="@{/img/apple-icon.png}">
 <link rel="shortcut icon" type="image/x-icon"
 	th:href="@{static/img/favicon.ico}">
 
-<link rel="stylesheet" th:href="@{/css/custom.css}">
 
-<!-- Load fonts style after rendering the layout styles -->
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
-<link rel="stylesheet" th:href="@{/css/fontawesome.min.css}">
 
-<head th:replace="~{/include/head :: header}"></head>
+
+<head th:replace="~{/include/head :: header}">
+
+</head>
 <body>
 	<!-- Start Top Nav -->
 	<div th:replace="~{/include/body-header :: bodyHeader}"></div>
@@ -39,58 +31,48 @@
 		<div class="page-title">
 			<div class="container">
 				<h3>게시글</h3>
-				<h1>[[${bbsCount}]]</h1>
-				<label for="count">개의 글</label>
+				<hr>
+				<h2>전체글보기</h2>
+				<h1>[[${bbsCount}]]개의 글</h1>
+
+				<a th:href="@{/community/write}">
+					<button type="button" class="btn btn_write">글쓰기</button>
+				</a>
 			</div>
 		</div>
 		<div id="board-list">
-        <div class="container">
-		<table class="board-table">
-			<thead>
-				<tr>
-					<th class="th-num">NO</th>
-					<th class="th-id">아이디</th>
-					<th class="th-title">제목</th>
-					<th class="th-date">작성일자</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="community, stat : ${communityList}" id="table_list">
-					<td th:text="${stat.count}"></td>
-					<td><a
-						th:href="@{/community/mylist?userId={userId}(userId=${community.userId})}">[[${community.userId}]]</a></td>
-					<td><a th:href="@{/community/__${community.writeId}__}">
-							[[${community.writeTitle}]]</a></td>
-					<td th:text="${#dates.format(community.writeDate, 'yy/MM/dd')}"></td>
-				</tr>
-			</tbody>
-		</table>
-		<table class="table">
-			<tr>
-				<td align="left">
-					<div th:replace="~{/include/paging :: paging}"></div>
-				</td>
-
-			</tr>
-			<tr>
-				<td><a th:href="@{/community/write}">
-						<button type="button" class="btn write">글쓰기</button>
-				</a></td>
-			</tr>
-		</table>
-		<div id="board-search">
 			<div class="container">
-				<div class="search-window">
-					<form th:action="@{/community/search}" method="get">
-						<div id="pull-right" style="margin-bottom: 10px;">
-							<div class="inputbar">
-								<input type="text" name="keyword">
-							</div>
-							<input type="submit" value="검색">
-						</div>
-					</form>
-				</div>
+				<table class="board-table">
+					<thead>
+						<tr>
+							<th class="th-num">NO</th>
+							<th class="th-id">아이디</th>
+							<th class="th-title">제목</th>
+							<th class="th-date">작성일자</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="community, stat : ${communityList}" id="table_list">
+							<td th:text="${stat.count}"></td>
+							<td><a
+								th:href="@{/community/mylist?userId={userId}(userId=${community.userId})}">[[${community.userId}]]</a></td>
+							<td><a th:href="@{/community/__${community.writeId}__}">
+									[[${community.writeTitle}]]</a></td>
+							<td th:text="${#dates.format(community.writeDate, 'yy/MM/dd')}"></td>
+						</tr>
+					</tbody>
+				</table>
+
+				<div th:replace="~{/include/paging :: paging}"></div>
+
+				<link rel="stylesheet"
+					href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+				<form th:action="@{/community/search}" method="get" id="search">
+					<input type="search" placeholder="Search here ..."> <i
+						class="fa fa-search"></i>
+				</form>
 			</div>
+		</div>
 		</div>
 		</div>
 		</div>

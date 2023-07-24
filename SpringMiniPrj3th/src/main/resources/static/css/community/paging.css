@@ -1,12 +1,15 @@
 @charset "UTF-8";
 .pagination {
+	margin-top:10px;
 	list-style:none;
-	float:left;
 	display:inline;
 	text-align:center;
+	align-items: center;
 }
+
 .pagination li {
-	float:left;
+	text-align:center;
+	align-items: center;
 	display:inline;
 	vertical-align:middle;
 }
@@ -16,7 +19,6 @@
 	vertical-align:top;
 	padding:4px;
 	margin-right:3px;
-	width:15px !important;
 	color:#000;
 	font:bold 12px tahoma;
 	border:1px solid #eee;
@@ -28,4 +30,10 @@
 	color:#fff;
 	border:1px solid #f40;
 	background-color:#f40;
+}
+
+.pagination li a.now {
+	color:#fff;
+	background-color:#f40;
+	border:1px solid #f40;
 }

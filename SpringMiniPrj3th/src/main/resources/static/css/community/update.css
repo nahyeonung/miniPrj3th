@@ -1,0 +1,72 @@
+@charset "UTF-8";
+div.ContentBox {
+   padding-top: 10px;
+    max-width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+.Box{
+	margin-bottom: 10px;
+}
+#Title{
+	font-size: 32px;
+line-height: 48px;}
+
+section.notice {
+  padding: 20px 0;
+
+}
+.infos{
+	float:right;
+}
+
+#post-body{
+	padding-top: 10px;
+    padding-bottom: 10px;
+    max-width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 5
+	
+}
+.infos{
+	margin-left:10px;
+}
+#content{
+	height: 400px;
+}
+#writer{
+	float:right;
+}
+
+.btn{
+	float: right;
+}
+
+.btn{
+	padding: 10px;
+}
+
+h8{
+	font-size: 1.5rem;
+	  color: #808080;
+}
+h9 {
+  font-size: 14px;
+	  color: #808080;
+  font-weight: 400;
+  text-align: center;
+  
+}
+
+.page_title{
+	text-align: center;
+	margin-top: 50px;
+	margin-bottom: 20px;
+}
+.Contain{
+	max-width: 1140px;
+	margin-left: auto;
+    margin-right: auto;
+}
