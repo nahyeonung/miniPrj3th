@@ -12,7 +12,10 @@
 			product_stock AS productStock,
 			product_date AS productDate,
 			image_name AS imageName,
-			image_data AS imageData
+			image_data AS imageData,
+			image_id AS imageId,
+			image_type AS imageType,
+			image_size AS imageSize
 		FROM
 			product p
 		LEFT JOIN
