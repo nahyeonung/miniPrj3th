@@ -22,6 +22,13 @@ public class productService implements IProductService{
 	public List<Product> selectAllProduct(int categoryId) {
 		return productRepository.selectAllProduct(categoryId);
 	}
+	
+	@Override
+	public List<Product> selectPagingProduct(int categoryId, int page) {
+		int start = (page-1) * 9 + 1;
+		System.out.println("im here" + start + " " + (start+8));
+		return productRepository.selectPagingProduct(start, start+8, categoryId);
+	}
 
 	@Override
 	public int insertCategory(String categoryName) {
@@ -102,5 +109,10 @@ public class productService implements IProductService{
 	@Override
 	public List<Category> selectPagingCategory(int min, int max) {
 		return productRepository.selectPagingCategory(min, max);
+	}
+
+	@Override
+	public int selectCountUseProduct(int categoryId) {
+		return productRepository.selectCountUseProduct(categoryId);
 	}
 }

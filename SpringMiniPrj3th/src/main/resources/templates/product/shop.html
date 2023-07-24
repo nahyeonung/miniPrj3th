@@ -7,15 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="apple-touch-icon" th:href="@{img/apple-icon.png}">
-    <link rel="shortcut icon" type="image/x-icon" th:href="@{assets/img/favicon.ico}">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/favicon.ico}">
 
-    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/templatemo.css}">
-    <link rel="stylesheet" th:href="@{css/custom.css}">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+    <link rel="stylesheet" th:href="@{/css/community/paging.css}">
 
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
-    <link rel="stylesheet" th:href="@{css/fontawesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/fontawesome.min.css}">
 <!--
     
 TemplateMo 559 Zay Shop
@@ -65,33 +66,24 @@ https://templatemo.com/tm-559-zay-shop
                 <ul class="list-unstyled templatemo-accordion">
                     <li class="pb-3">
                         <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
-                            Gender
+                            애니메이션
                             <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
                         </a>
                         <ul class="collapse show list-unstyled pl-3">
-                            <li><a class="text-decoration-none" th:href="@{shop/1}">Men</a></li>
-                            <li><a class="text-decoration-none" th:href="@{shop/2}">Women</a></li>
+                        	<li><a class="text-decoration-none" th:href="@{/shop}">전체</a></li>
+                        	<th:block th:each="list : ${categoryList}">
+                        		<li><a class="text-decoration-none" th:href="@{/shop(id=${list.categoryId}, name=${list.categoryName})}">[[${list.categoryName}]]</a></li>
+                        	</th:block>
                         </ul>
                     </li>
                     <li class="pb-3">
                         <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
-                            Sale
+                            정렬 조건
                             <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
                         </a>
                         <ul id="collapseTwo" class="collapse list-unstyled pl-3">
-                            <li><a class="text-decoration-none" href="#">Sport</a></li>
-                            <li><a class="text-decoration-none" href="#">Luxury</a></li>
-                        </ul>
-                    </li>
-                    <li class="pb-3">
-                        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
-                            Product
-                            <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
-                        </a>
-                        <ul id="collapseThree" class="collapse list-unstyled pl-3">
-                            <li><a class="text-decoration-none" href="#">Bag</a></li>
-                            <li><a class="text-decoration-none" href="#">Sweather</a></li>
-                            <li><a class="text-decoration-none" href="#">Sunglass</a></li>
+                            <li><a class="text-decoration-none" href="#">평점순</a></li>
+                            <li><a class="text-decoration-none" href="#">가격순</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -102,13 +94,7 @@ https://templatemo.com/tm-559-zay-shop
                     <div class="col-md-6">
                         <ul class="list-inline shop-top-menu pb-3 pt-1">
                             <li class="list-inline-item">
-                                <a class="h3 text-dark text-decoration-none mr-3" href="#">All</a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a class="h3 text-dark text-decoration-none mr-3" href="#">Men's</a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a class="h3 text-dark text-decoration-none" href="#">Women's</a>
+                                <a class="h3 text-dark text-decoration-none" href="#">[[${categoryName}]]</a>
                             </li>
                         </ul>
                     </div>
@@ -166,17 +152,7 @@ https://templatemo.com/tm-559-zay-shop
                 		<a th:href="@{/product/productInsert}" class="btn btn-primary btn-sm">상품 추가</a>
                 		<a th:href="@{/product/productManage}" class="btn btn-primary btn-sm">상품 조회</a>
                 	</div>
-                    <ul class="pagination pagination-lg justify-content-end" style="flex:1">
-                        <li class="page-item disabled">
-                            <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#" tabindex="-1">1</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="#">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark" href="#">3</a>
-                        </li>
-                    </ul>
+                    <div th:replace="~{/include/productPaging :: paging}"></div>
                 </div>
             </div>
 
@@ -294,11 +270,11 @@ https://templatemo.com/tm-559-zay-shop
     
 
     <!-- Start Script -->
-    <script src="assets/js/jquery-1.11.0.min.js"></script>
-    <script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/templatemo.js"></script>
-    <script src="assets/js/custom.js"></script>
+    <script th:src="@{/js/jquery-1.11.0.min.js}"></script>
+    <script th:src="@{/js/jquery-migrate-1.2.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/templatemo.js}"></script>
+    <script th:src="@{/js/custom.js}"></script>
     <!-- End Script -->
 </body>
 
