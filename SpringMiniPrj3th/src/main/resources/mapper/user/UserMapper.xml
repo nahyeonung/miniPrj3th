@@ -37,7 +37,8 @@
         user_email,		
         user_address,
         user_detailaddress,
-        user_phone
+        user_phone,
+        user_state
     FROM 
         USERS
     WHERE user_id=#{userId}

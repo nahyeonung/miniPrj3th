@@ -71,7 +71,13 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/user/login", method = RequestMethod.GET)
-	public String login() {
+	public String login(HttpSession session, Model model) {
+		String id = (String)session.getAttribute("userId");
+		User user = userService.selectUser(id);
+		if (user != null) {
+			logger.info(user.toString());
+			model.addAttribute("user", user);
+		}
 		return "user/login";
 	}
 
@@ -85,6 +91,7 @@ public class UserController {
 				session.setMaxInactiveInterval(600); // 10분
 				session.setAttribute("userId", userId);
 				session.setAttribute("userName", user.getUserName());
+				session.setAttribute("userState", user.getUserState());
 				model.addAttribute("user", user);
 			} else { // 비밀번호가 다름
 				session.invalidate();

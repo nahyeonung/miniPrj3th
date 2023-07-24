@@ -122,6 +122,7 @@ public class ProductController {
 	  if(cCount % 3 > 0) {
 		  totalPage++;
 	  }
+
 	  model.addAttribute("totalPage", totalPage);
 	  model.addAttribute("categoryList", list);
 	  model.addAttribute("productList", productList);
@@ -132,12 +133,18 @@ public class ProductController {
 
    
    @RequestMapping(value="/product/productManage", method=RequestMethod.GET)
-   public String manage(Model model) {
-      List<Category> list = productService.selectAllCategory();
-      List<Product> productList = productService.selectAllProduct(-1);
-      model.addAttribute("categoryList", list);
-      model.addAttribute("productList", productList);
-      return "product/product";
+   public String manage(HttpSession session, Model model) {
+	  int state = (int) session.getAttribute("userState");
+	  if(state == 2) {
+		 List<Category> list = productService.selectAllCategory();
+		 List<Product> productList = productService.selectAllProduct(-1);
+		 model.addAttribute("categoryList", list);
+		 model.addAttribute("productList", productList);
+		 return "product/product";
+	  }else {
+		  return "/index";
+	  }
+ 
    }
    
 //  @RequestMapping(value="/category/insert", method=RequestMethod.POST)
