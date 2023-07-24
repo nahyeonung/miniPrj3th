@@ -18,6 +18,8 @@ public interface IProductService {
 	
 	List<Product> selectAllProduct(int categoryId);
 	
+	List<Product> selectPagingProduct(int categoryId, int page);
+	
 	int insertCategory(String categoryName);
 	
 	List<Category> selectAllCategory();
@@ -37,4 +39,8 @@ public interface IProductService {
 	int selectCountCategory();
 	
 	List<Category> selectPagingCategory(int min, int max);
+
+	
+	int selectCountUseProduct(int categoryId);
 }
+

@@ -37,7 +37,8 @@
         user_email,		
         user_address,
         user_detailaddress,
-        user_phone
+        user_phone,
+        user_state
     FROM 
         USERS
     WHERE user_id=#{userId}
@@ -83,4 +84,16 @@
     WHERE user_id=#{userId}
     ]]>
 	</select>
+
+	<select id="selectUserByEmail" parameterType="string"
+		resultMap="userResultMap">
+        <![CDATA[
+        SELECT 
+            user_id, user_pwd, user_name, user_birth, user_email, user_address, user_detailaddress, user_phone, user_state
+        FROM
+            USERS
+        WHERE user_email=#{userEmail}
+        ]]>
+	</select>
+
 </mapper>
