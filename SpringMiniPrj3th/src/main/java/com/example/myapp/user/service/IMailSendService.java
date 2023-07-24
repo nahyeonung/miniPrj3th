@@ -6,4 +6,8 @@ public interface IMailSendService {
 	String joinEmail(String email);
 
 	void mailSend(String message, String email, String title);
+	
+	
+	String makeTempPassword();
+	
 }

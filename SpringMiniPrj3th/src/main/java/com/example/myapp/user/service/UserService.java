@@ -44,5 +44,10 @@ public class UserService implements IUserService {
 	public String getPassword(String userId) {
 		return userDao.getPassword(userId);
 	}
+	
+	@Override
+	public User selectUserByEmail(String userEmail) {
+		return userDao.selectUserByEmail(userEmail);
+	}
 
 }

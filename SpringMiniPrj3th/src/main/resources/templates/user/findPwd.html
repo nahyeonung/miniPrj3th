@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/include/head :: header}">
+<title>비밀번호 찾기</title>
+</head>
+
+<body>
+	<!-- Start Top Nav -->
+	<div th:replace="~{/include/body-header :: bodyHeader}"></div>
+	<!-- Close Top Nav -->
+
+	<!-- Header -->
+	<div th:replace="~{/include/navbar :: navbar}"></div>
+	<!-- Close Header -->
+
+	<div class="container">
+		<div class="pg-opt">
+			<div class="row">
+				<div class="col-md-6 pc">
+					<h1>
+						<span>비밀번호 찾기</span>
+					</h1>
+				</div>
+			</div>
+		</div>
+		<div class="content">
+			<!-- 비밀번호 찾기 폼 -->
+			<form th:action="@{/user/sendTemporaryPassword}" method="post"
+				class="form-horizontal">
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="email">이메일</label>
+					<div class="col-sm-8">
+						<input type="email" name="userEmail" id="email"
+							class="form-control" placeholder="Email"
+							aria-describedby="basic-addon1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-8">
+						<input type="submit" class="btn btn-primary" value="임시 비밀번호 발송">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- Start Footer -->
+	<div th:replace="~{/include/footer :: footer}"></div>
+	<!-- End Footer -->
+
+	<!-- Start Script -->
+	<script src="/js/jquery-1.11.0.min.js"></script>
+	<script src="/js/jquery-migrate-1.2.1.min.js"></script>
+	<script src="/js/bootstrap.bundle.min.js"></script>
+	<script src="/js/templatemo.js"></script>
+	<script src="/js/custom.js"></script>
+	<!-- End Script -->
+</body>
+</html>

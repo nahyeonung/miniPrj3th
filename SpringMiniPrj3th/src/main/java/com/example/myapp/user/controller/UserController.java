@@ -25,14 +25,23 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
+@Validated
 public class UserController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+//	@Autowired
+//	UserValidator userValidator;
 
 	@Autowired
 	IUserService userService;
 
 	@Autowired
 	MailSendService mailSendService;
+
+//	@InitBinder
+//	private void initBinder(WebDataBinder binder) {
+//		binder.setValidator(userValidator);
+//	}
 
 	@RequestMapping(value = "/user/insert", method = RequestMethod.GET)
 	public String insertUser(Model model) {
@@ -41,7 +50,14 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/user/insert", method = RequestMethod.POST)
-	public String insertUser(User user, HttpSession session, Model model) {
+	public String insertUser(@Validated User user, BindingResult result, HttpSession session, Model model) {
+//		userValidator.validate(user, result);
+//
+		if (result.hasErrors()) {
+			model.addAttribute("user", user);
+			return "user/form";
+		}
+
 		try {
 			user.setUserState(0);
 			userService.insertUser(user);
@@ -50,6 +66,7 @@ public class UserController {
 			model.addAttribute("message", "이미 존재하는 아이디입니다.");
 			return "user/form";
 		}
+
 		return "user/login";
 	}
 
@@ -164,12 +181,52 @@ public class UserController {
 
 	@RequestMapping(value = "/api/mailcheck", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> mailCheck(@RequestBody HashMap<String, Object> user) {
-		String username = (String) user.get("username");
-		String authNum = mailSendService.joinEmail(username);
+		String userEmail = (String) user.get("username");
 
-		logger.info("email: " + user.get("username"));
+		// 데이터베이스에서 이메일이 이미 존재하는지 확인
+		User existingUser = userService.selectUserByEmail(userEmail);
+		if (existingUser != null) {
+			// 이미 존재하는 이메일인 경우 에러 응답을 반환
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 존재하는 이메일입니다.");
+		}
+
+		// 새로운 이메일 등록을 위한 이메일 인증 과정 진행
+		String authNum = mailSendService.joinEmail(userEmail);
+
+		logger.info("email: " + user.get("userEmail"));
 		logger.info("checkNum: " + authNum);
-
 		return ResponseEntity.status(HttpStatus.OK).body(authNum);
+	}
+
+	@RequestMapping(value = "/user/findPwd", method = RequestMethod.GET)
+	public String findPwd() {
+		return "user/findPwd";
+	}
+
+	@RequestMapping(value = "/user/sendTemporaryPassword", method = RequestMethod.POST)
+	public String sendTemporaryPassword(String userEmail, HttpSession session, Model model) {
+		try {
+			String temporaryPassword = mailSendService.makeTempPassword();
+
+			// 이메일 발송
+			String title = "임시 비밀번호 발송";
+			String message = "임시 비밀번호는 " + temporaryPassword + " 입니다. 로그인 후 반드시 비밀번호를 변경해주세요.";
+			mailSendService.mailSend(message, userEmail, title);
+
+			// 회원 정보 업데이트
+			User user = userService.selectUserByEmail(userEmail);
+			if (user != null) {
+				// 비밀번호를 임시 비밀번호로 업데이트
+				user.setUserPwd(temporaryPassword);
+				userService.updateUser(user);
+				model.addAttribute("message", "임시 비밀번호가 발송되었습니다. 이메일을 확인해주세요.");
+			} else {
+				model.addAttribute("message", "이메일에 해당하는 사용자가 없습니다.");
+			}
+		} catch (Exception e) {
+			model.addAttribute("message", "임시 비밀번호 발송 및 회원 정보 업데이트에 실패하였습니다.");
+			e.printStackTrace();
+		}
+		return "user/login"; // 임시 비밀번호 발송 후 로그인 페이지로 이동하도록 설정
 	}
 }
