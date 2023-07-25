@@ -8,7 +8,7 @@
 	<div th:replace="~{/include/body-header :: bodyHeader}"></div>
     <!-- Close Top Nav -->
 
-
+	
     <!-- Header -->
     <div th:replace="~{/include/navbar :: navbar}"></div>
     <!-- Close Header -->
@@ -144,9 +144,10 @@
 
         </div>
     </section>
-    <!-- End Article -->
+</body>
+	    <!-- End Article -->
 
-
+	
     <!-- Start Footer -->
 	<div th:replace="~{/include/footer :: footer}"></div>
 	<!-- End Footer -->
@@ -154,12 +155,13 @@
     <!-- Start Script -->
     <script th:src="@{/js/jquery-1.11.0.min.js}"></script>
     <script th:src="@{/js/jquery-migrate-1.2.1.min.js}"></script>
-    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
     <script th:src="@{/js/templatemo.js}"></script>
     <script th:src="@{/js/custom.js}"></script>
-    <!-- End Script -->
-
-	<script>
+    <!-- End Script -->	
+    <script>	
 	    document.addEventListener("DOMContentLoaded", function() {
 	        var buyButton = document.querySelector('button[value="buy"]');
 	        var addToCartButton = document.querySelector('button[value="addtocard"]');
@@ -173,8 +175,24 @@
 	            var form = document.getElementById("product-form");
 	            form.action = "/cart/insert";
 	        });
+	        
+	        function updateQuantity(value) {
+	            let quantity = parseInt($("#var-value").text());
+	            quantity = isNaN(quantity) ? 1 : quantity + value;
+	            if (quantity < 1) quantity = 1; // Make sure quantity is always at least 1
+	            $("#var-value").text(quantity); // Update the displayed quantity
+	            $("#product-quanity").val(quantity); // Update the hidden input value
+	        }
+
+	        // Button click events
+	        $("#btn-plus").click(function() {
+	            updateQuantity(1); // Increment quantity by 1
+	        });
+
+	        $("#btn-minus").click(function() {
+	            updateQuantity(-1); // Decrement quantity by 1
+	        });
 	    });
 	</script>
-</body>
-
+	
 </html>
