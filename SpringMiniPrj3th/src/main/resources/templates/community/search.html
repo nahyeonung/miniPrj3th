@@ -1,5 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
+<link rel="stylesheet" th:href="@{/css/community/mylist.css}">
+
+ <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/templatemo.css}">
+
+<link rel="stylesheet" th:href="@{/css/community/paging.css}">
+
+
+<link rel="shortcut icon" type="image/x-icon"
+	th:href="@{static/img/favicon.ico}">
+
+
+
 <head th:replace="~{/include/head :: header}"></head>
 <body>
 	<!-- Start Top Nav -->
@@ -10,9 +24,52 @@
 	<!-- Header -->
 	<div th:replace="~{/include/navbar :: navbar}"></div>
 	<!-- Close Header -->
-	<div class="container">
-		<div class="content">
-			<form th:action="@{/community/search}" method="get">
+	<section class="notice">
+		<div class="page-title">
+			<div class="container">
+				<h3>게시글</h3>
+				<hr>
+				<h2>검색어 <strong>"[[${keyword}]]"</strong> 게시글</h2>
+				<h1>[[${bbsCount}]]개의 글</h1>
+				
+				<a th:href="@{/community/write}">
+						<button type="button" class="btn btn_write">글쓰기</button>
+				</a>
+			</div>
+		</div>
+		<div id="board-list">
+        <div class="container">
+		<table class="board-table">
+			<thead>
+				<tr>
+					<th class="th-num">NO</th>
+					<th class="th-id">아이디</th>
+					<th class="th-title">제목</th>
+					<th class="th-date">작성일자</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="community, stat : ${communityList}" id="table_list">
+					<td th:text="${stat.count}"></td>
+					<td><a
+						th:href="@{/community/mylist?userId={userId}(userId=${community.userId})}">[[${community.userId}]]</a></td>
+					<td><a th:href="@{/community/__${community.writeId}__}">
+							[[${community.writeTitle}]]</a></td>
+					<td th:text="${#dates.format(community.writeDate, 'yy/MM/dd')}"></td>
+				</tr>
+			</tbody>
+		</table>
+	<table class="table">
+				<tr>
+					<td align="left">
+					<div th:replace="~{/include/search-paging :: searchPaging}"></div> 
+					</td>
+					<td align="right"><a th:href="@{/community/write}">
+		<button type="button" class="btn write">글쓰기</button></a>
+					</td>
+				</tr>
+			</table>
+	<form th:action="@{/community/search}" method="get">
 				<div class="pull-right" style="margin-bottom: 10px;">
 					<div class="inputbar">
 						<input type="text" name="keyword">
@@ -20,38 +77,11 @@
 					<input type="submit" value="검색">
 				</div>
 			</form>
-			<table>
-				<thead>
-					<tr>
-						<th>NO</th>
-						<th>아이디</th>
-						<th>제목</th>
-						<th>작성일자</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="community, stat : ${communityList}">
-						 <td th:text="${stat.count}"></td>
-						<td>[[${community.userId}]]</td>
-						<td><a th:href="@{/community/__${community.writeId}__}">
-								[[${community.writeTitle}]]</a></td>
-						<td th:text="${#dates.format(community.writeDate, 'yy/MM/dd')}"></td>
-					</tr>
-				</tbody>
-			</table>
-
-		</div>
-		<table class="table">
-		<tr>
-			<td align="left">
-				<div th:replace="~{/include/search-paging :: searchPaging}"></div> 
-			</td>
-		</tr>
-		</table>
-	</div>
-	<a th:href="@{/community/list}"><button type="button" class="btn list">목록</button></a>
-	<!-- Start Footer -->
+			</div>
+			</div>
+			</section>
+	 <!-- Start Footer -->
 	<div th:replace="~{/include/footer :: footer}"></div>
-	<!-- End Footer -->
+    <!-- End Footer -->
 </body>
 </html>

@@ -2,6 +2,7 @@ package com.example.myapp.community.service;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,7 @@ public class communityService implements ICommunityService {
 
 	@Autowired
 	ICommunityRepository communityRepository;
+
 	
 	@Transactional
 	public void insertArticle(Community community) {
@@ -67,5 +69,7 @@ public class communityService implements ICommunityService {
 		int start = (page-1)*15 + 1;
 		return communityRepository.searchListByContentmylist(userId, start, start+14); // 오라클은 BETWEEN a AND b에서 a와 b모두 포함하므로 9를 더함
 	}
+	
+	
 	
 }

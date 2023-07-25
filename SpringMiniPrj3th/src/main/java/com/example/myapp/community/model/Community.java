@@ -3,7 +3,7 @@ package com.example.myapp.community.model;
 
 
 import java.sql.Date;
-
+import java.sql.Timestamp;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +19,9 @@ public class Community {
 	 private String formattedWriteDate;
 	 private int page;
 	 private int bbsCount;
+	 private int rno;
+	 private String replyContent;
+	 private Timestamp regDate;
 
 //	private int readCount;
 //	private int replyNumber;
