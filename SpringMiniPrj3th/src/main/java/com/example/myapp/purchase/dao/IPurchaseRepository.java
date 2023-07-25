@@ -26,4 +26,6 @@ public interface IPurchaseRepository {
 	Purchase selectPurchaseUserDetail(int purchaseId);
 	
 	List<Purchase> selectPurchaseProductDetail(int purchaseId);
+	
+	List<Purchase> selectTopThree();
 }

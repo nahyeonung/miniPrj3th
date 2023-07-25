@@ -21,6 +21,13 @@ public class PurchaseController {
 	
 	@Autowired
 	IPurchaseService purchaseService;
+	
+	@RequestMapping("/")
+	public String index(Model model) {
+		List<Purchase> list = purchaseService.selectTopThree();
+		model.addAttribute("pTopThree", list);
+		return "index";
+	}
 		
 	@RequestMapping(value="/purchase/insert", method=RequestMethod.GET)
 	public String InsertPuchase(@RequestParam List<Integer> cartIdList, Purchase purchase, HttpSession session, Model model) {

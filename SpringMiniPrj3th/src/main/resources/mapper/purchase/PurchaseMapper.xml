@@ -142,4 +142,28 @@
 		]]>
 	</select>
 	
+	<select id="selectTopThree" resultType="com.example.myapp.purchase.model.Purchase">
+	<![CDATA[
+		SELECT pp.product_name AS productName, 
+			   pp.product_price AS productPrice, 
+			   pp.category_id AS categoryId, 
+			   pp.product_id AS productId, 
+			   pi.image_id AS imageId,
+			   pi.image_name AS imageName, 
+			   pi.image_size AS imageSize, 
+			   pi.image_type AS imageType, 
+			   pi.image_data AS imageData
+			   FROM 
+				(SELECT product_name, product_price, category_id, product_id, ssum, rownum as rnum FROM
+					(SELECT p.product_name, p.product_price, p.category_id, pd.product_id, sum(pd.purchase_cnt) as ssum from 
+					 purchase_detail pd 
+					 LEFT JOIN product p on pd.product_id = p.product_id 
+					 GROUP BY pd.product_id, p.product_name, p.product_price, p.category_id order by ssum desc
+					 )
+				) pp 
+				LEFT JOIN product_image pi on pp.product_id = pi.product_id 
+				WHERE rnum <= 3
+	]]>
+	</select>
+	
 </mapper>
