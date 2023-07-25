@@ -43,6 +43,12 @@ public class UserController {
 //		binder.setValidator(userValidator);
 //	}
 
+	// 새로운 로그인 페이지 제작중
+	@RequestMapping(value = "/user/LoginJoin", method = RequestMethod.GET)
+	public String LoginJoin() {
+		return "user/LoginJoin";
+	}
+	
 	@RequestMapping(value = "/user/insert", method = RequestMethod.GET)
 	public String insertUser(Model model) {
 		model.addAttribute("user", new User());
