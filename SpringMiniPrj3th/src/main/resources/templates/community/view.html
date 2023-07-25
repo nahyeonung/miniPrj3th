@@ -28,13 +28,39 @@
 		</div>
 
 		<div id="post-body">
-		<div id="content">
-		  <span class="contentmessage" th:utext="${community.writeContent}"></span></div>
-			<div id= "writer">
+			<div id="content">
+				<span class="contentmessage" th:utext="${community.writeContent}"></span>
+			</div>
+
+			<div id="writer">
 				<a
 					th:href="@{/community/mylist?userId={userId}(userId=${community.userId})}"><strong>[[${community.userId}]]</strong>
 				</a>회원님의 게시글 더 보기
 			</div>
+			<table>
+				 <tr th:each="ReplyVO : ${replyList}" var="replyList">
+        <td th:text="${ReplyVO.userId}"></td>
+        <td th:text="${ReplyVO.replyContent}"></td>
+        <td th:text="${ReplyVO.regDate}"></td>
+    </tr>
+			</table>
+			<div>
+
+	<form method="post" action="/reply/write">
+	
+		<p>
+			<label>댓글 작성자</label> <input type="text" name="userId">
+		</p>
+		<p>
+			<textarea rows="5" cols="50" name="replyContent"></textarea>
+		</p>
+		<p>
+		<input type="hidden" name="writeId" value="${replyList.writeId}">
+			<button type="submit">댓글 작성</button>
+		</p>
+	</form>
+	
+</div>
 			
 
 			<a th:href="@{/community/list}"><button type="button"

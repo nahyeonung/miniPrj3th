@@ -65,12 +65,15 @@
 
 				<div th:replace="~{/include/paging :: paging}"></div>
 
-				<link rel="stylesheet"
-					href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-				<form th:action="@{/community/search}" method="get" id="search">
-					<input type="search" placeholder="Search here ..."> <i
-						class="fa fa-search"></i>
-				</form>
+			
+				<form th:action="@{/community/search}" method="get">
+						<div id="pull-right" style="margin-bottom: 10px;">
+							<div class="inputbar">
+								<input type="text" name="keyword">
+							</div>
+							<input type="submit" value="검색">
+						</div>
+					</form>
 			</div>
 		</div>
 		</div>
