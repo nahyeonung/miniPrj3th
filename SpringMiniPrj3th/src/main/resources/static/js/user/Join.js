@@ -152,7 +152,7 @@ function hideErrorMessage(fieldId) {
 	errorElement.style.display = 'none';
 }
 
-function validateForm() {
+/*function validateForm() {
 	const form = document.getElementById('joinForm');
 
 	// Get form field values
@@ -230,4 +230,4 @@ function validateForm() {
 }
 
 const joinForm = document.getElementById('joinForm');
-joinForm.addEventListener('submit', validateForm);
+joinForm.addEventListener('submit', validateForm);*/
