@@ -16,7 +16,7 @@
 		<h2 class="text-center m-5">[구매내역]</h2>
 		<table class="table table-hover mb-5">
 			<thead>
-				<tr class="bg-success text-white">
+				<tr class="bg-success text-white text-center">
 					<th>주문번호</th>
 					<th>아이디</th>
 					<th>배송지</th>
@@ -26,13 +26,13 @@
 				</tr>
 			</thead>
 			<tbody>
-					<tr th:each="purchase : ${purchaseList}" th:onclick="goToDetailPage([[${purchase.purchaseId}]])" style="cursor: pointer;">
+					<tr th:each="purchase : ${purchaseList}" th:onclick="goToDetailPage([[${purchase.purchaseId}]])" style="cursor: pointer;" class="text-center">
 						<td>[[${purchase.purchaseId}]]</td>
 						<td>[[${session.userId}]]</td>
 						<td>[[${purchase.delivery}]]</td>
 						<td th:text="${#dates.format(purchase.purchaseDate, 'yy/MM/dd')}"></td>
 						<td>[[${purchase.purchaseState}]]</td>
-						<td>[[${purchase.totalPrice}]]</td>		
+						<td data-th-text="${#numbers.formatInteger(purchase.totalPrice, 3, 'COMMA') + '원'}"></td>
 					</tr>
 			</tbody>
 		</table>

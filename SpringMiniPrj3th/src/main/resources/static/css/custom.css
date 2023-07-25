@@ -6,22 +6,6 @@
 	width: 300px;
 }
 
-table {
-	margin-top: auto;
-	margin-bottom: auto;
-}
-
-tr>th {
-	width:150px;
-}
-
-th {
-	text-align: center;
-}
-
-td {
-	text-align: center;
-}
 
 .text-center{
 	text-align: center;
@@ -29,6 +13,10 @@ td {
 
 .text-left {
 	text-align: left;
+}
+
+.text-right {
+	text-align: right;
 }
 
 tr {
@@ -43,4 +31,12 @@ tr {
 	width: 100px;
 	height: 50px;
 	padding: 12px;
+}
+
+.table-width-8 {
+	width: 8%;
+}
+
+.table-width-20 {
+	width: 20%
 }

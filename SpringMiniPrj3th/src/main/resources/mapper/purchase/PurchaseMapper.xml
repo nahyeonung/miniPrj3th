@@ -97,6 +97,8 @@
 				purchase
 			WHERE 
 				user_id=#{userId}
+			ORDER BY
+				purchase_id DESC
 		]]>
 	</select>
 	<select id="selectPurchaseUserDetail" parameterType="int" resultType="com.example.myapp.purchase.model.Purchase">

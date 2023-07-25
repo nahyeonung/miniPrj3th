@@ -18,7 +18,7 @@
 			<table class="table table-bordered caption-top">
 				<caption class="fw-bold">주문정보</caption>
 				<tr>
-				  <th class="bg-success text-white" scope="row">주문번호</th>
+				  <th class="bg-success text-white table-width-20" scope="row">주문번호</th>
 				  <td class="fw-bold text-left">[[${userInfo.purchaseId}]]</td>
 				</tr>
 				
@@ -41,8 +41,8 @@
 			<table class="table table-bordered caption-top">
 				<caption class="fw-bold">결제정보</caption>
 				<tr>
-				  <th class="bg-success text-white" scope="row">총 주문금액</th>
-				  <td class="orderInfo fw-bold">[[${userInfo.totalPrice}]]원</td>
+				  <th class="bg-success text-white table-width-20" scope="row" >총 주문금액</th>
+				  <td class="orderInfo fw-bold"	></td>
 				</tr>
 			</table>
 		</div>
@@ -50,7 +50,7 @@
 		<table class="table table-bordered caption-top">
 			<caption class="fw-bold">주문상품 정보</caption>
 			<thead>
-				<tr >
+				<tr class="text-center">
 					<th class="bg-success text-white" scope="col">이미지</th>
 					<th class="bg-success text-white" scope="col">상품정보</th>
 					<th class="bg-success text-white" scope="col">수량</th>
@@ -63,8 +63,8 @@
 						<img class="img-fluid img-thumbnail" style="width:150px" alt="" th:src="@{/file/{id}(id=${purchase.imageId})}">
 					</td>
 					<td class="fw-bold productName text-center">[[${purchase.productName}]]</td>
-					<td class="fw-bold">[[${purchase.purchaseCnt}]]개</td>
-					<td class="fw-bold">[[${purchase.productPrice}]]원</td>
+					<td class="fw-bold text-center">[[${purchase.purchaseCnt}]]개</td>
+					<td class="fw-bold text-center" data-th-text="${#numbers.formatInteger(purchase.productPrice, 3, 'COMMA') + '원'}"></td>
 				</tr>
 			</tbody>
 		</table>
@@ -72,15 +72,15 @@
 		<table class="table table-bordered caption-top">
 			<caption class="fw-bold">배송지정보</caption>
 			<tr>
-				<td style="width:15%" class="bg-success text-white fw-bold" scope="row">받으시는분</td>
+				<td class="table-width-20 bg-success text-white fw-bold" scope="row">받으시는분</td>
 				<td class="text-left fw-bold">[[${userInfo.userName}]]</td>
 			</tr>
 			<tr>
-				<td style="width:15%" class="bg-success text-white fw-bold" scope="row">주소</td>
+				<td class="bg-success text-white fw-bold" scope="row">주소</td>
 				<td class="text-left fw-bold">[[${userInfo.delivery}]]</td>
 			</tr>
 			<tr>			
-				<td style="width:15%" class="bg-success text-white fw-bold" scope="row">휴대전화</td>
+				<td class="bg-success text-white fw-bold" scope="row">휴대전화</td>
 				<td class="text-left fw-bold">[[${userInfo.userPhone}]]</td>
 			</tr>
 		</table>
