@@ -1,5 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/community/update.css}">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+<link
+	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"
+	rel="stylesheet">
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script
+	src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<!-- include summernote css/js-->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css"
+	rel="stylesheet">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
+<!-- include summernote-ko-KR -->
+<script src="/resources/js/summernote-ko-KR.js"></script>
 <head th:replace="~{/include/head :: header}"></head>
 <body>
 	<!-- Start Top Nav -->
@@ -7,37 +27,32 @@
 	<!-- Close Top Nav -->
 
 
+
 	<!-- Header -->
 	<div th:replace="~{/include/navbar :: navbar}"></div>
 	<!-- Close Header -->
-	
+	<section class="notice">
+	<div class="Contain">
 	<form action="/community/update" method="post">
 		<input type="hidden" name="writeId" th:value="${community.writeId}" />
-		<table>
-        <thead>
-            <tr>
-                <th>아이디</th>
-                <th>작성일자</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td th:text="${community.userId}"></td>
-                <td th:text="${community.writeDate}"></td>
-            </tr>
-        </tbody>
-    </table>
-		<div class="form-group">
-			<label for="writeTitle">제목</label>
+		<div class="ContentBox">
+			<div class="Box">
+				<a>community</a>
+			</div>
 			<div class="TitleBlank">
 				<input type="text" name="writeTitle" th:value="${community.writeTitle}" required>
 			</div>
+			<div class="infos">
+				<h11 id="name" th:text="${community.userId}" />
+				<h9 id="Todate" th:text="${community.writeDate}" />
+			</div>
 		</div>
 		
+		
 		<div class="form-group">
-			<label for="writeContent">내용</label>
+			<label for="writeContent"></label>
 			<div class="ContentBlank">
-				<textarea name="writeContent" rows="15" cols="100" th:text="${community.writeContent}" required></textarea>
+				<textarea name="writeContent" id="summernote"  type="text" th:class="form-control" rows="100" th:text="${community.writeContent}" required></textarea>
 			</div>
 		</div>
 		
@@ -46,8 +61,8 @@
 	</form>
 	<!-- th:block th:if="${userid!=null}"-->
 	
-		
-
+		</div>
+</section>
 	
 	<!-- Start Footer -->
 	<div th:replace="~{/include/footer :: footer}"></div>
@@ -58,6 +73,41 @@
 		function goBack() {
 			window.history.back();
 		}
+		
+		$(document).ready(function() {
+        	$('#summernote').summernote({
+                // 에디터 높이
+                height: 500,
+                // 에디터 한글 설정
+                lang: "ko-KR",
+                // 에디터에 커서 이동 (input창의 autofocus라고 생각)
+                focus : true,
+                toolbar: [
+                    // 글꼴 설정
+                    ['fontname', ['fontname']],
+                    // 글자 크기 설정
+                    ['fontsize', ['fontsize']],
+                    // 굵기, 기울임꼴, 밑줄,취소 선, 서식지우기
+                    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+                    // 글자색
+                    ['color', ['forecolor','color']],
+                    // 표만들기
+                    ['table', ['table']],
+                    // 글머리 기호, 번호매기기, 문단정렬
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    // 줄간격
+                    ['height', ['height']],
+                    // 코드보기, 확대해서보기, 도움말
+                    ['view', ['codeview','fullscreen', 'help']]
+                ],
+                // 추가한 글꼴
+                fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
+                // 추가한 폰트사이즈
+                fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+
+            });
+      	});
+       
 	</script>
 </body>
 </html>

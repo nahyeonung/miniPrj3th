@@ -5,12 +5,10 @@
 	<select id="selectAllProduct" parameterType="int" resultType="com.example.myapp.product.model.Product">
 		SELECT
 			p.product_id AS productId,
-			c.category_id AS categoryId,
 			category_name AS categoryName,
 			product_name AS productName,
 			product_price AS productPrice,
 			product_description AS productDescription,
-			product_state AS productState,
 			product_stock AS productStock,
 			product_date AS productDate,
 			image_name AS imageName,
@@ -29,6 +27,50 @@
 		<if test='categoryId != -1'>
 			WHERE p.category_id = #{categoryId}
 		</if>		
+	</select>
+	
+	<select id="selectPagingProduct" parameterType="int" resultType="com.example.myapp.product.model.Product">
+		SELECT
+			product_id AS productId,
+			category_id AS categoryId,
+			category_name AS categoryName,
+			product_name AS productName,
+			product_price AS productPrice,
+			product_description AS productDescription,
+			product_state AS productState,
+			product_stock AS productStock,
+			product_date AS productDate,
+			image_name AS imageName,
+			image_data AS imageData,
+			image_id AS imageId,
+			image_type AS imageType,
+			image_size AS imageSize
+		FROM (
+			SELECT product_id, category_id, category_name, product_name, product_price, product_description, product_state, product_stock,
+            product_date, image_name, image_data, image_id, image_type, image_size, rownum AS rnum
+            FROM (
+            	SELECT p.product_id, c.category_id, category_name, product_name, product_price, product_description, product_state, product_stock,
+            	product_date, image_name, image_data, image_id, image_type, image_size
+            	FROM product p 
+            	LEFT JOIN category c on p.category_id = c.category_id 
+            	LEFT JOIN product_image pi on p.product_id = pi.product_id
+            	ORDER BY p.product_id
+            	)
+			)
+		WHERE rnum BETWEEN #{start} AND #{end}
+		AND product_state = 0
+		<if test='categoryId != -1'>
+			AND category_id = #{categoryId}
+		</if>		
+	</select>
+	
+	<select id="selectCountUseProduct" parameterType="int" resultType="int">
+		SELECT count(*)
+		FROM product
+		WHERE product_state = 0
+		<if test='categoryId != -1'>
+		AND category_id = #{categoryId}
+		</if>	
 	</select>
 	
 	<select id="checkCategory" parameterType="String" resultType="int">

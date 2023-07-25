@@ -208,6 +208,7 @@ public class CommunityController {
 			model.addAttribute("nowPageBlock", nowPageBlock);
 			model.addAttribute("startPage", startPage);
 			model.addAttribute("endPage", endPage);
+			 model.addAttribute("bbsCount", bbsCount); 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

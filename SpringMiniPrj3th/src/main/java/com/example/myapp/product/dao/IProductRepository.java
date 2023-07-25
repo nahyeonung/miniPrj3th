@@ -16,6 +16,8 @@ import com.example.myapp.product.model.UploadProduct;
 public interface IProductRepository {
 	List<Product> selectAllProduct(@Param("categoryId") int categoryId);
 	
+	List<Product> selectPagingProduct(@Param("start") int start, @Param("end") int end, @Param("categoryId") int categoryId);
+	
 	int insertCategory(@Param("categoryName") String categoryName);
 	
 	List<Category> selectAllCategory();
@@ -45,4 +47,7 @@ public interface IProductRepository {
 	int selectCountCategory();
 	
 	List<Category> selectPagingCategory(@Param("min") int min, @Param("max") int max);
+	
+	int selectCountUseProduct(@Param("categoryId") int categoryId);
 }
+

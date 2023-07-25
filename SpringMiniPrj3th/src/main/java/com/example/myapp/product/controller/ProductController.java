@@ -31,6 +31,8 @@ import com.example.myapp.product.service.IProductService;
 import com.example.myapp.review.model.Review;
 import com.example.myapp.review.service.IReviewService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class ProductController {
    static final Logger logger = LoggerFactory.getLogger(ProductController.class);
@@ -42,10 +44,51 @@ public class ProductController {
    IReviewService reviewService;
    
    @RequestMapping("/shop")
-   public String getAllProduct(Model model) {
-      List<Product> list = productService.selectAllProduct(-1);
-      model.addAttribute("productList", list);
-      return "product/shop";
+   public String getAllProduct(@RequestParam(required=false, defaultValue= "-1")int id, 
+		   @RequestParam(required=false, defaultValue= "전체") String name , HttpSession session , Model model) {
+      return getAllProduct(1, id, name, session, model);
+   }
+   
+   @RequestMapping("/shop/{page}")
+   public String getAllProduct(@PathVariable int page, @RequestParam(required=false, defaultValue= "-1")int id, 
+		   @RequestParam(required=false, defaultValue= "전체") String name, HttpSession session, Model model) {
+	   	  session.setAttribute("page", page);
+		  List<Category> categoryList = productService.selectAllCategory();
+		  int productCnt = 0;
+		  if(id == -1) {
+			  List<Product> list = productService.selectPagingProduct(-1, page);		
+			  productCnt = productService.selectCountUseProduct(-1);
+			  model.addAttribute("productList", list);
+		  }else {
+			  List<Product> list = productService.selectPagingProduct(id, page);
+			  productCnt = productService.selectCountUseProduct(id);
+			  model.addAttribute("productList", list);
+		  }
+		  
+		  int totalPage = 0;
+		  if(productCnt > 0) {
+			  totalPage = (int)Math.ceil(productCnt/9.0);
+		  }
+		  int totalPageBlock = (int)Math.ceil(totalPage/9.0);
+		  int nowPageBlock = (int)Math.ceil(page/9.0);
+		  int startPage = (nowPageBlock-1)*9 + 1;
+		  int endPage = 0;
+		  if(totalPage > nowPageBlock * 9) {
+			  endPage = nowPageBlock * 9;
+		  }else {
+			  endPage = totalPage;
+		  }
+		  model.addAttribute("totalPageCount", totalPage);
+		  model.addAttribute("nowPage", page);
+		  model.addAttribute("totalPageBlcok", totalPageBlock);
+		  model.addAttribute("nowPageBlock", nowPageBlock);
+		  model.addAttribute("startPage", startPage);
+		  model.addAttribute("endPage", endPage);
+		  
+		  model.addAttribute("categoryId", id);
+		  model.addAttribute("categoryName", name);
+	      model.addAttribute("categoryList", categoryList);
+	   return "/product/shop";
    }
    
    @RequestMapping("/file/{fileId}")
@@ -79,6 +122,7 @@ public class ProductController {
 	  if(cCount % 3 > 0) {
 		  totalPage++;
 	  }
+
 	  model.addAttribute("totalPage", totalPage);
 	  model.addAttribute("categoryList", list);
 	  model.addAttribute("productList", productList);
@@ -89,19 +133,18 @@ public class ProductController {
 
    
    @RequestMapping(value="/product/productManage", method=RequestMethod.GET)
-   public String manage(Model model) {
-      List<Category> list = productService.selectAllCategory();
-      List<Product> productList = productService.selectAllProduct(-1);
-      model.addAttribute("categoryList", list);
-      model.addAttribute("productList", productList);
-      return "product/product";
-   }
-   
-   @RequestMapping("/shop/{categoryId}")
-   public String getProduct(@PathVariable int categoryId, Model model) {
-      List<Product> list = productService.selectAllProduct(categoryId);
-      System.out.println(list);
-      return "product/shop";
+   public String manage(HttpSession session, Model model) {
+	  int state = (int) session.getAttribute("userState");
+	  if(state == 2) {
+		 List<Category> list = productService.selectAllCategory();
+		 List<Product> productList = productService.selectAllProduct(-1);
+		 model.addAttribute("categoryList", list);
+		 model.addAttribute("productList", productList);
+		 return "product/product";
+	  }else {
+		  return "/index";
+	  }
+ 
    }
    
 //  @RequestMapping(value="/category/insert", method=RequestMethod.POST)
@@ -214,7 +257,6 @@ public class ProductController {
    
    @RequestMapping(value="/product/update/{productId}", method=RequestMethod.GET)
    public String updateProduct(@PathVariable int productId) {
-      System.out.println(productId);
       Product product = productService.selectProduct(productId);
       return "redirect:/product/productManage";
    }
