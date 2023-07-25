@@ -1,3 +1,46 @@
-/*
-Custom Css
-*/
+.pay {
+	height:fit-content;
+}
+
+.paybtn {
+	width: 300px;
+}
+
+table {
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+tr>th {
+	width:150px;
+}
+
+th {
+	text-align: center;
+}
+
+td {
+	text-align: center;
+}
+
+.text-center{
+	text-align: center;
+}
+
+.text-left {
+	text-align: left;
+}
+
+tr {
+	vertical-align: middle;	
+}
+
+.productName {
+	text-align: left;
+}
+
+.okbtn {
+	width: 100px;
+	height: 50px;
+	padding: 12px;
+}

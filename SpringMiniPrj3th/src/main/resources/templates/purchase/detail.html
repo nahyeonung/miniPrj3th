@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/include/head :: header}"></head>
+
+<body>
+    <!-- Start Top Nav -->
+	<div th:replace="~{/include/body-header :: bodyHeader}"></div>
+    <!-- Close Top Nav -->
+
+
+    <!-- Header -->
+    <div th:replace="~{/include/navbar :: navbar}"></div>
+    <!-- Close Header -->
+	<div class="container">
+		<h2 class="text-center m-5">[구매내역]</h2>
+				
+		<div class="order-info">
+			<table class="table table-bordered caption-top">
+				<caption class="fw-bold">주문정보</caption>
+				<tr>
+				  <th class="bg-success text-white" scope="row">주문번호</th>
+				  <td class="fw-bold text-left">[[${userInfo.purchaseId}]]</td>
+				</tr>
+				
+				<tr>
+				  <th class="bg-success text-white" scope="row">주문일자</th>
+				  <td class="fw-bold text-left">[[${userInfo.purchaseDate}]]</td>
+				</tr>
+				
+				<tr>
+				  <th class="bg-success text-white" scope="row">주문자</th>
+				  <td class="fw-bold text-left">[[${userInfo.userName}]]</td>
+				</tr>
+				
+				<tr>
+				  <th class="bg-success text-white" scope="row">배송처리상태</th>
+				  <td class="fw-bold text-left">[[${userInfo.purchaseState}]]</td>
+				</tr>
+			</table>
+			
+			<table class="table table-bordered caption-top">
+				<caption class="fw-bold">결제정보</caption>
+				<tr>
+				  <th class="bg-success text-white" scope="row">총 주문금액</th>
+				  <td class="orderInfo fw-bold">[[${userInfo.totalPrice}]]원</td>
+				</tr>
+			</table>
+		</div>
+		
+		<table class="table table-bordered caption-top">
+			<caption class="fw-bold">주문상품 정보</caption>
+			<thead>
+				<tr >
+					<th class="bg-success text-white" scope="col">이미지</th>
+					<th class="bg-success text-white" scope="col">상품정보</th>
+					<th class="bg-success text-white" scope="col">수량</th>
+					<th class="bg-success text-white" scope="col">판매가</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="purchase : ${purchaseList}">
+					<td style="width:15%">
+						<img class="img-fluid img-thumbnail" style="width:150px" alt="" th:src="@{/file/{id}(id=${purchase.imageId})}">
+					</td>
+					<td class="fw-bold productName text-center">[[${purchase.productName}]]</td>
+					<td class="fw-bold">[[${purchase.purchaseCnt}]]개</td>
+					<td class="fw-bold">[[${purchase.productPrice}]]원</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<table class="table table-bordered caption-top">
+			<caption class="fw-bold">배송지정보</caption>
+			<tr>
+				<td style="width:15%" class="bg-success text-white fw-bold" scope="row">받으시는분</td>
+				<td class="text-left fw-bold">[[${userInfo.userName}]]</td>
+			</tr>
+			<tr>
+				<td style="width:15%" class="bg-success text-white fw-bold" scope="row">주소</td>
+				<td class="text-left fw-bold">[[${userInfo.delivery}]]</td>
+			</tr>
+			<tr>			
+				<td style="width:15%" class="bg-success text-white fw-bold" scope="row">휴대전화</td>
+				<td class="text-left fw-bold">[[${userInfo.userPhone}]]</td>
+			</tr>
+		</table>
+		
+		<div class="d-flex justify-content-center">
+			<a th:href="@{/purchase/list}" class="okbtn my-5 btn bg-success text-white fw-bold">확인</a>
+		</div>
+	</div>
+	
+    <!-- Start Footer -->
+	<div th:replace="~{/include/footer :: footer}"></div>
+    <!-- End Footer -->
+</body>
+</html>

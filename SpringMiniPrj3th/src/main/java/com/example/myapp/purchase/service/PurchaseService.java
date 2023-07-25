@@ -27,5 +27,35 @@ public class PurchaseService implements IPurchaseService{
 	@Override
 	public List<Purchase> selectCartInfo(List<Integer> cartIdList, String UserId) {
 		return purchaseRepository.selectCartInfo(cartIdList, UserId);
-	}	
+	}
+
+	@Override
+	public void insertPurchase(Purchase purchase) {
+		purchaseRepository.insertPurchase(purchase);
+	}
+
+	@Override
+	public void insertPurchaseDetail(Purchase purchase) {
+		purchaseRepository.insertPurchaseDetail(purchase);
+	}
+
+	@Override
+	public int getPurchaseId() {
+		return purchaseRepository.getPurchaseId();
+	}
+
+	@Override
+	public List<Purchase> selectPurchaseList(String userId) {
+		return purchaseRepository.selectPurchaseList(userId);
+	}
+
+	@Override
+	public Purchase selectPurchaseUserDetail(int purchaseId) {
+		return purchaseRepository.selectPurchaseUserDetail(purchaseId);
+	}
+
+	@Override
+	public List<Purchase> selectPurchaseProductDetail(int purchaseId) {
+		return purchaseRepository.selectPurchaseProductDetail(purchaseId);
+	}
 }

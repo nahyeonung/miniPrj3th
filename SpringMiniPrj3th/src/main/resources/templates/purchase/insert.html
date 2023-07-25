@@ -21,7 +21,89 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/slick-theme.css}">
 </head>
 <body>
-	<div class="container" th:each="cart : ${list}">
-	</div>
+	<h1 class="text-center m-5">구매내역</h1>
+	
+	<form th:action="@{/purchase/insert}" method="post" enctype="mutipart/form-data">
+
+		<div class="row  px-5">
+		
+			<div class="col-6 mx-3">
+			
+				<div class="container border border-3 p-3 my-3">
+
+					<h5 class="text-center p-3">상품 정보</h5>
+
+					<div th:each="product : ${list}" class="d-flex my-5 px-3">
+						<img th:src="@{/file/{id}(id=${product.imageId})}" style="width:150px">
+
+						<div class="productInfo">
+							<p>상품 이름 : [[${product.productName}]]</p>
+							<p>상품 가격 : [[${product.productPrice}]]</p>
+							<p>상품 수량 : [[${product.cartCnt}]]</p>
+					        <input type="hidden" name="productId" th:value="${product.productId}" />
+			                <input type="hidden" name="purchaseCnt" th:value="${product.cartCnt}">
+						</div>
+						
+					</div>
+				</div>
+				
+				<div th:each="info : ${purchase}">
+
+					<div class="container border border-3 p-3 my-3">
+						<h5 class="text-center p-3">유저 정보</h5>
+						<p>아이디 : [[${info.userId}]]</p>
+						<p>이름 : [[${info.userName}]]</p>
+						<p>핸드폰 : [[${info.userPhone}]]</p>
+					</div>
+					
+					<div class="container border border-3 p-3 my-3">
+						<h5 class="text-center">배송지 정보</h5>
+						<input type="hidden" name="delivery" th:value="${info.userAddress}">
+						<label for="userAddress">주소 : [[${info.userAddress}]]</label>
+					</div>
+				</div>
+		
+			</div>
+					
+			<div class="pay col-5 border border-3 my-3 mx-3">
+				<div class="container border border-3 p-3 my-3">
+					<h5>결제정보</h5>
+					<P>총 결제 금액 : [[${sum}]]
+				</div>
+				
+				<div class="container border border-3 p-3 my-3">
+					<h5>결제방법 선택</h5>
+					<div class="d-flex flex-wrap p-3 justify-content-center">
+						<div class="form-check m-3">
+							<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
+							<label class="form-check-label" for="exampleRadios1">신용카드</label>
+						</div>
+						<div class="form-check m-3">
+							<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+							<label class="form-check-label" for="exampleRadios2">가상계좌</label>
+						</div>
+						<div class="form-check m-3">
+							<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
+							<label class="form-check-label" for="exampleRadios3">무통장 입금</label>
+						</div>
+						<div class="form-check m-3">
+							<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios4" value="option3">
+							<label class="form-check-label" for="exampleRadios4">핸드폰 결제</label>
+						</div>
+						<div class="form-check m-3">
+							<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios5" value="option3">
+							<label class="form-check-label" for="exampleRadios5">카카오페이</label>
+						</div>
+					</div>
+				</div>
+				<input type="hidden" name="totalPrice" th:value="${sum}">
+				<h1>[[${sum}]]</h1>	
+				<div class="d-flex justify-content-center">
+					<button class="paybtn btn text-white bg-primary my-3" type="submit">결제하기</button>
+				</div>
+			</div>
+		
+		</div>
+	</form>
 </body>
 </html>

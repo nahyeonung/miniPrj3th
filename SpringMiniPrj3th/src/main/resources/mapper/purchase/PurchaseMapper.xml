@@ -2,24 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.myapp.purchase.dao.IPurchaseRepository">	
 	
-	<insert id="insertPurchase" parameterType="com.example.myapp.purchase.model.Purchase">
-		<![CDATA[
-			INSERT INTO PURCHASE 
-				(purchase_id, user_id, delivery, purchase_date, purchase_state, total_price)
-			VALUE
-				(purchase_sqe.nextval, #{user_id}, #{delivery}, SYSDATE, "배송전", #{total_price})
-		]]>
-	</insert>
-	
-	<insert id="insertPurchaseDetail" parameterType="com.example.myapp.purchase.model.Purchase">
-		<![CDATA[
-			INSERT INTO PURCHASE_DETAIL 
-				(purchase_detail_id, product_id, purchase_id, purchase_cnt)
-			VALUE
-				(ourchase_detail_sqe.nextval, #{product_id}, #{purchase_id}, #{purchase_cnt})
-		]]>
-	</insert>
-	
 	<select id="selectUserInfo" parameterType="String" resultType="com.example.myapp.purchase.model.Purchase">
 		<![CDATA[
 			SELECT 
@@ -73,6 +55,89 @@
 				#{id}
 			</foreach>
 			AND user_id=#{userId}
+	</select>
+	
+	<select id="getPurchaseId" resultType="int">
+		<![CDATA[
+			SELECT 
+         		LAST_NUMBER-1 AS PurchaseId
+      		FROM 
+         		user_sequences 
+      		WHERE sequence_name = 'PURCHASE_SEQ'
+      ]]>
+	</select>
+	
+	<insert id="insertPurchase" parameterType="com.example.myapp.purchase.model.Purchase">
+		<![CDATA[
+			INSERT INTO PURCHASE
+				(purchase_id, user_id, delivery, purchase_date, purchase_state, total_price)
+			VALUES 
+				(PURCHASE_SEQ.NEXTVAL, #{userId}, #{delivery}, to_date(sysdate,'YY/MM/DD'), '배송전', #{totalPrice})
+		]]>
+	</insert>
+	
+	<insert id="insertPurchaseDetail" parameterType="com.example.myapp.purchase.model.Purchase">
+		<![CDATA[
+			INSERT INTO PURCHASE_DETAIL
+				(purchase_detail_id, product_id, purchase_id, purchase_cnt)
+			VALUES 
+				(PURCHASE_DETAIL_SEQ.NEXTVAL, #{productId}, #{purchaseId}, #{purchaseCnt})
+		]]>
+	</insert>
+	
+	<select id="selectPurchaseList" parameterType="String" resultType="com.example.myapp.purchase.model.Purchase">
+		<![CDATA[
+			SELECT 
+				purchase_id as "purchaseId", 
+				purchase_date as "PurchaseDate", 
+				delivery as "delivery", 
+				purchase_state as "purchaseState",
+				total_price as "totalPrice"
+			FROM 
+				purchase
+			WHERE 
+				user_id=#{userId}
+		]]>
+	</select>
+	<select id="selectPurchaseUserDetail" parameterType="int" resultType="com.example.myapp.purchase.model.Purchase">
+		<![CDATA[
+			SELECT 
+			    p.purchase_id as "purchaseId", 
+			    p.purchase_date as "purchaseDate", 
+			    p.purchase_state as "purchaseState", 
+			    p.total_price as "totalPrice", 
+			    p.user_id as "userId", 
+			    p.delivery as "delivery", 
+			    u.user_phone as "userPhone",
+			    u.user_name as "userName",
+			    u.user_phone as "userPhone"
+			FROM purchase p
+			JOIN users u
+			ON u.user_id=p.user_id
+			where p.purchase_id=#{productId}
+		]]>
+	</select>
+	
+	<select id="selectPurchaseProductDetail" parameterType="int" resultType="com.example.myapp.purchase.model.Purchase">
+		<![CDATA[
+			SELECT
+			    pi.image_id as "imageId",
+			    p.product_name as "productName",
+			    pd.purchase_cnt as "purchaseCnt",
+			    p.product_price as "productPrice"
+			FROM 
+				purchase_detail pd
+			JOIN 
+				product p
+			ON 
+				pd.product_id=p.product_id
+			JOIN 
+				product_image pi
+			ON 
+				pd.product_id=pi.product_id
+			WHERE 
+				pd.purchase_id=#{purchase_id}
+		]]>
 	</select>
 	
 </mapper>
