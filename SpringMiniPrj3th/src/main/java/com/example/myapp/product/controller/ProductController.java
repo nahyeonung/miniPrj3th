@@ -265,8 +265,13 @@ public class ProductController {
    public String selectProduct(@PathVariable int productId, Model model) {
       Product product = productService.selectProduct(productId);
       List<Review> reviewList = reviewService.selectReviewList(productId);
+      int reviewRateAvg = reviewService.selectReviewAvg(productId);
+      System.out.println("생기부" + reviewRateAvg);
+      
       model.addAttribute("product", product);
       model.addAttribute("reviewList", reviewList);
+      model.addAttribute("reviewRateAvg", reviewRateAvg);
+      model.addAttribute("comment", reviewList.size());
       return "/product/shop-single";
    }
 }

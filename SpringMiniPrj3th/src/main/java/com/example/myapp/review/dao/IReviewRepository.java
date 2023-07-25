@@ -27,4 +27,6 @@ public interface IReviewRepository {
 	
 	void deleteImageData(int reviewId);
 	void deleteReview(int reviewId);
+	
+	int selectReviewAvg(int productId);
 }

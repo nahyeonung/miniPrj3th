@@ -19,4 +19,6 @@ public interface IReviewService {
 	void updateReview(Review review, ReviewImage reviewImage);
 	
 	void deleteReview(int reviewId);
+	
+	int selectReviewAvg(int productId);
 }
