@@ -58,4 +58,9 @@ public class PurchaseService implements IPurchaseService{
 	public List<Purchase> selectPurchaseProductDetail(int purchaseId) {
 		return purchaseRepository.selectPurchaseProductDetail(purchaseId);
 	}
+
+	@Override
+	public List<Purchase> selectTopThree() {
+		return purchaseRepository.selectTopThree();
+	}
 }

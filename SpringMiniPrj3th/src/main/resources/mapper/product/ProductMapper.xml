@@ -11,6 +11,7 @@
 			product_description AS productDescription,
 			product_stock AS productStock,
 			product_date AS productDate,
+			product_state AS productState,
 			image_name AS imageName,
 			image_data AS imageData,
 			image_id AS imageId,
