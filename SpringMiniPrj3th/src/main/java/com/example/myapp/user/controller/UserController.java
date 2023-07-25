@@ -72,11 +72,15 @@ public class UserController {
 
 	@RequestMapping(value = "/user/login", method = RequestMethod.GET)
 	public String login(HttpSession session, Model model) {
-		String id = (String)session.getAttribute("userId");
-		User user = userService.selectUser(id);
-		if (user != null) {
-			logger.info(user.toString());
-			model.addAttribute("user", user);
+		System.out.println(session.getAttribute("userId"));
+		if(session.getAttribute("userId") == null) {	
+		}else {
+			String id = (String)session.getAttribute("userId"); User user =
+			userService.selectUser(id); 
+			if (user != null) { 
+				logger.info(user.toString());
+				model.addAttribute("user", user); 
+				}
 		}
 		return "user/login";
 	}
