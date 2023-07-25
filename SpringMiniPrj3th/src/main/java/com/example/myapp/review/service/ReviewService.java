@@ -79,6 +79,11 @@ public class ReviewService implements IReviewService {
 		reviewRepository.deleteImageData(reviewId);
 		reviewRepository.deleteReview(reviewId);
 	}
+
+	@Override
+	public int selectReviewAvg(int productId) {
+		return reviewRepository.selectReviewAvg(productId);
+	}
 	
 	
 }

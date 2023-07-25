@@ -81,8 +81,8 @@ public class UserController {
 		System.out.println(session.getAttribute("userId"));
 		if(session.getAttribute("userId") == null) {	
 		}else {
-			String id = (String)session.getAttribute("userId"); User user =
-			userService.selectUser(id); 
+			String id = (String)session.getAttribute("userId"); 
+			User user = userService.selectUser(id); 
 			if (user != null) { 
 				logger.info(user.toString());
 				model.addAttribute("user", user); 
