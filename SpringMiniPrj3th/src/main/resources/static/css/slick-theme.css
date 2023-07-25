@@ -205,3 +205,15 @@
     opacity: .75;
     color: black;
 }
+/* shop-single page의 review css */
+@media (min-width:992px){
+	.review-flex{
+		width: 50%;
+	}
+}
+@media (max-width:992px){
+	.review-flex{
+		width: 100%;
+	}
+}
+

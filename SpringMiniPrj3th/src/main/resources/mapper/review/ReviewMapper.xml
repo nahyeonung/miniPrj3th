@@ -149,4 +149,12 @@
 		]]>
 	</delete>	
 
+	<select id="selectReviewAvg" parameterType="int" resultType="int">
+		<![CDATA[
+			SELECT NVL(round(avg(rate),0),0) 
+			FROM review
+			WHERE product_id = #{productId} 
+		]]>
+	</select> 
+	
 </mapper>
