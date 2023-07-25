@@ -39,7 +39,6 @@ public class CartController {
 	public String insertCart(Cart cart, RedirectAttributes redirectAttrs, HttpSession session) {
 		String userId = (String)session.getAttribute("userId");
 		if(userId != null && !userId.equals("")) {
-			System.out.println(cart.getCartCnt());
 			cartService.insertCart(cart);
 			return "redirect:/cart";
 		}else {

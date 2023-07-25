@@ -2,6 +2,7 @@ package com.example.myapp.community.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.net.http.HttpClient.Redirect;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -27,7 +28,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.myapp.community.model.Community;
+import com.example.myapp.community.model.ReplyVO;
 import com.example.myapp.community.service.ICommunityService;
+import com.example.myapp.community.service.IReplyService;
 
 import jakarta.servlet.http.HttpServletRequest; // tomcat 9이하면 javax.servlet
 import jakarta.servlet.http.HttpSession;
@@ -38,7 +41,9 @@ public class CommunityController {
 
 	@Autowired
 	ICommunityService communityService;
-
+	@Autowired
+	IReplyService replyService;
+	
 	@RequestMapping("/community/list/{page}")
 	public String getListByCommunity(@PathVariable int page, HttpSession session, Model model) {
 		session.setAttribute("page", page);
@@ -58,7 +63,6 @@ public class CommunityController {
 		} else {
 			endPage = totalPage;
 		}
-		model.addAttribute("bbsCount", bbsCount);
 		model.addAttribute("totalPageCount", totalPage);
 		model.addAttribute("nowPage", page);
 		model.addAttribute("totalPageBlock", totalPageBlock);
@@ -76,11 +80,15 @@ public class CommunityController {
 	@RequestMapping("/community/{writeId}/{page}")
 	public String getCommunityDetails(@PathVariable int writeId, @PathVariable int page, Model model) {
 		Community community = communityService.selectArticle(writeId);
+		List<ReplyVO> replyList = null;
+		replyList = replyService.replyList(writeId);
 		if (community != null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String formattedWriteDate = sdf.format(community.getWriteDate());
 			community.setFormattedWriteDate(formattedWriteDate);
 		}
+		model.addAttribute("replyList", replyList);
+		model.addAttribute("writeId", writeId);
 		model.addAttribute("community", community);
 		model.addAttribute("page", page);
 		logger.info("getCommunityDetails " + community.toString());
@@ -161,6 +169,7 @@ public class CommunityController {
 			} else {
 				endPage = totalPage;
 			}
+			 model.addAttribute("bbsCount", bbsCount); 
 			model.addAttribute("keyword", keyword);
 			model.addAttribute("totalPageCount", totalPage);
 			model.addAttribute("nowPage", page);
@@ -220,6 +229,7 @@ public class CommunityController {
 			Model model) {
 		return mylist(userId, 1, session, model);
 	}
+	
 //
 //	@ExceptionHandler({ RuntimeException.class })
 //	public String error(HttpServletRequest request, Exception ex, Model model) {
