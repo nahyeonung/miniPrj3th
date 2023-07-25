@@ -18,4 +18,12 @@ public interface IPurchaseRepository {
 	Purchase selectUserInfo(String userId);
 	Purchase selectProductInfo(Purchase purchase);
 	List<Purchase> selectCartInfo(@Param("cartIdList") List<Integer> cartIdList, @Param("userId") String userId);
+	
+	int getPurchaseId();
+	
+	List<Purchase> selectPurchaseList(String userId);
+	
+	Purchase selectPurchaseUserDetail(int purchaseId);
+	
+	List<Purchase> selectPurchaseProductDetail(int purchaseId);
 }
