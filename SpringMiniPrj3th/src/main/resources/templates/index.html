@@ -119,19 +119,18 @@
         <div class="container py-5">
             <div class="row text-center py-3">
                 <div class="col-lg-6 m-auto">
-                    <h1 class="h1">Featured Product</h1>
+                    <h1 class="h1">구매 리뷰</h1>
                     <p>
-                        Reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        Excepteur sint occaecat cupidatat non proident.
+                        고객분들의 소중한 리뷰입니다.
                     </p>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" style="overflow:hidden; flex-wrap:nowrap">
+            <div id="carousel" class="row" style="flex-wrap:nowrap">
+            <th:block th:each="list : ${reviewList}">
                 <div class="col-12 col-md-4 mb-4">
                     <div class="card h-100">
-                        <a href="shop-single.html">
-                            <img th:src="@{/img/feature_prod_01.jpg}" class="card-img-top" alt="...">
-                        </a>
+                         <img th:src="@{/review/file/{id}(id=${list.reviewImageId})}" class="card-img-top" style="height:200px;">
                         <div class="card-body">
                             <ul class="list-unstyled d-flex justify-content-between">
                                 <li>
@@ -141,64 +140,21 @@
                                     <i class="text-muted fa fa-star"></i>
                                     <i class="text-muted fa fa-star"></i>
                                 </li>
-                                <li class="text-muted text-right">$240.00</li>
                             </ul>
-                            <a href="shop-single.html" class="h2 text-decoration-none text-dark">Gym Weight</a>
+                            <a href="shop-single.html" class="h3 text-decoration-none text-dark">[[${list.productName}]]</a>
                             <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt in culpa qui officia deserunt.
+                               	[[${list.content}]]
                             </p>
-                            <p class="text-muted">Reviews (24)</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-4 mb-4">
-                    <div class="card h-100">
-                        <a href="shop-single.html">
-                            <img th:src="@{img/feature_prod_02.jpg}" class="card-img-top" alt="...">
-                        </a>
-                        <div class="card-body">
-                            <ul class="list-unstyled d-flex justify-content-between">
-                                <li>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                </li>
-                                <li class="text-muted text-right">$480.00</li>
-                            </ul>
-                            <a href="shop-single.html" class="h2 text-decoration-none text-dark">Cloud Nike Shoes</a>
-                            <p class="card-text">
-                                Aenean gravida dignissim finibus. Nullam ipsum diam, posuere vitae pharetra sed, commodo ullamcorper.
-                            </p>
-                            <p class="text-muted">Reviews (48)</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4 mb-4">
-                    <div class="card h-100">
-                        <a href="shop-single.html">
-                            <img th:src="@{/img/feature_prod_03.jpg}" class="card-img-top" alt="...">
-                        </a>
-                        <div class="card-body">
-                            <ul class="list-unstyled d-flex justify-content-between">
-                                <li>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                </li>
-                                <li class="text-muted text-right">$360.00</li>
-                            </ul>
-                            <a href="shop-single.html" class="h2 text-decoration-none text-dark">Summer Addides Shoes</a>
-                            <p class="card-text">
-                                Curabitur ac mi sit amet diam luctus porta. Phasellus pulvinar sagittis diam, et scelerisque ipsum lobortis nec.
-                            </p>
-                            <p class="text-muted">Reviews (74)</p>
-                        </div>
-                    </div>
-                </div>
+             </th:block>
+             </div>
+            </div>
+            <div class="row" style="justify-content: space-between;">
+            	<button id="prev-btn" class="fa fa-arrow-left border-0 bg-transparent" style="width: 10%"></button>
+            	<div style="width: 10%"></div>
+            	<button id="next-btn" class="fa fa-arrow-right border-0 bg-transparent" style="width: 10%"></button>
             </div>
         </div>
     </section>
@@ -216,6 +172,29 @@
     <script src="/js/templatemo.js"></script>
     <script src="/js/custom.js"></script>
     <!-- End Script -->
+    
+    <script th:inline="javascript">
+    const reviewCnt = "[[${reviewCnt}]]";
+    const container = document.querySelector('#carousel');
+    const prevBtn = document.querySelector('#prev-btn');
+    const nextBtn = document.querySelector('#next-btn');
+    (function carouselEvent(){
+    	  prevBtn.addEventListener('click', translateContainer.bind(this, 1));
+    	  nextBtn.addEventListener('click', translateContainer.bind(this, -1));
+    })();
+
+    function translateContainer(direction){
+    	  const selectedBtn = (direction === 1) ? 'prev' : 'next';
+    	  container.style.transitionDuration = '300ms';
+    	  container.style.transform = `translateX(${direction * (100 / reviewCnt)}%)`;
+    	  container.ontransitionend = () => reorganizeEl(selectedBtn);
+    	}
+    function reorganizeEl(selectedBtn) {
+    	container.removeAttribute('style');
+    	container.style.flexWrap = "nowrap";
+    	  (selectedBtn === 'prev') ? container.insertBefore(container.lastElementChild, container.firstElementChild): container.appendChild(container.firstElementChild);
+    	}
+    </script>
 </body>
 
 </html>

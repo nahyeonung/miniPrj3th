@@ -69,18 +69,23 @@ public class ReviewController {
 	
 	@RequestMapping("/review/file/{reviewImageId}")
 	public ResponseEntity<byte[]> getFile(@PathVariable int reviewImageId) {
-		ReviewImage file = reviewService.getImage(reviewImageId);
 		final HttpHeaders headers = new HttpHeaders();
-		String[] mtypes = file.getReviewImageType().split("/");
-		headers.setContentType(new MediaType(mtypes[0], mtypes[1]));
-		headers.setContentLength(file.getReviewImageSize());
-		try {
-			String encodedFileName = URLEncoder.encode(file.getReviewImageName(), "UTF-8");
-			headers.setContentDispositionFormData("attachment", encodedFileName);
-		}catch (UnsupportedEncodingException e) {
-			throw new RuntimeException(e);
+		if(reviewImageId != 0) {
+			ReviewImage file = reviewService.getImage(reviewImageId);
+			String[] mtypes = file.getReviewImageType().split("/");
+			headers.setContentType(new MediaType(mtypes[0], mtypes[1]));
+			headers.setContentLength(file.getReviewImageSize());
+			try {
+				String encodedFileName = URLEncoder.encode(file.getReviewImageName(), "UTF-8");
+				headers.setContentDispositionFormData("attachment", encodedFileName);
+			}catch (UnsupportedEncodingException e) {
+				throw new RuntimeException(e);
+			}
+			return new ResponseEntity<byte[]>(file.getReviewImageData(), headers, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<byte[]>(null, headers, HttpStatus.OK);
 		}
-		return new ResponseEntity<byte[]>(file.getReviewImageData(), headers, HttpStatus.OK);
+		
 	}
 	
 	@RequestMapping(value="/review/update/{reviewId}", method=RequestMethod.GET)
