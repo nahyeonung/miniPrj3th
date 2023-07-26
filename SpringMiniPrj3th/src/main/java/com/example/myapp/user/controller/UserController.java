@@ -43,16 +43,11 @@ public class UserController {
 //		binder.setValidator(userValidator);
 //	}
 
-	// 새로운 로그인 페이지 제작중
-	@RequestMapping(value = "/user/LoginJoin", method = RequestMethod.GET)
-	public String LoginJoin() {
-		return "user/LoginJoin";
-	}
-	
+
 	@RequestMapping(value = "/user/insert", method = RequestMethod.GET)
 	public String insertUser(Model model) {
 		model.addAttribute("user", new User());
-		return "user/form";
+		return "user/join";
 	}
 
 	@RequestMapping(value = "/user/insert", method = RequestMethod.POST)
@@ -61,7 +56,7 @@ public class UserController {
 //
 		if (result.hasErrors()) {
 			model.addAttribute("user", user);
-			return "user/form";
+			return "user/join";
 		}
 
 		try {
@@ -70,7 +65,7 @@ public class UserController {
 		} catch (DuplicateKeyException e) {
 			model.addAttribute("user", user);
 			model.addAttribute("message", "이미 존재하는 아이디입니다.");
-			return "user/form";
+			return "user/join";
 		}
 
 		return "user/login";

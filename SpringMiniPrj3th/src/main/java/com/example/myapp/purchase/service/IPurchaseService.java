@@ -19,4 +19,6 @@ public interface IPurchaseService {
 	Purchase selectPurchaseUserDetail(int purchaseId);
 	
 	List<Purchase> selectPurchaseProductDetail(int purchaseId);
+	
+	List<Purchase> selectTopThree();
 }

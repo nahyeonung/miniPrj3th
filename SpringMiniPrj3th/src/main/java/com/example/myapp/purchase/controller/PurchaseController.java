@@ -21,11 +21,17 @@ public class PurchaseController {
 
 	@Autowired
 	IPurchaseService purchaseService;
-
-	@RequestMapping(value = "/purchase/insert", method = RequestMethod.GET)
-	public String InsertPuchase(@RequestParam List<Integer> cartIdList, Purchase purchase, HttpSession session,
-			Model model) {
-		String userId = (String) session.getAttribute("userId");
+	
+	@RequestMapping("/")
+	public String index(Model model) {
+		List<Purchase> list = purchaseService.selectTopThree();
+		model.addAttribute("pTopThree", list);
+		return "index";
+	}
+		
+	@RequestMapping(value="/purchase/insert", method=RequestMethod.GET)
+	public String InsertPurchase(@RequestParam List<Integer> cartIdList, Purchase purchase, HttpSession session, Model model) {
+		String userId = (String)session.getAttribute("userId");
 		purchase = purchaseService.selectUserInfo(userId);
 
 		List<Purchase> list = purchaseService.selectCartInfo(cartIdList, userId);
@@ -44,7 +50,7 @@ public class PurchaseController {
 	}
 
 	@RequestMapping(value = "/purchase/buy", method = RequestMethod.GET)
-	public String InsertPucahse(Purchase purchase, HttpSession session, Model model, int cartCnt) {
+	public String InsertPurcahse(Purchase purchase, HttpSession session, Model model, int cartCnt) {
 		Purchase buy = purchaseService.selectProductInfo(purchase.getProductId());
 		int sum = (buy.getProductPrice()* cartCnt);
 		buy.setCartCnt(cartCnt);

@@ -102,21 +102,13 @@
             </div>
         </div>
         <div class="row">
+        <th:block th:each="list : ${pTopThree}">
             <div class="col-12 col-md-4 p-5 mt-3">
-                <a href="#"><img th:src="@{/img/category_img_01.jpg}" class="rounded-circle img-fluid border"></a>
-                <h5 class="text-center mt-3 mb-3">Watches</h5>
-                <p class="text-center"><a class="btn btn-success">Go Shop</a></p>
+                <a href="#"><img style="height:60%; width:100%;" th:src="@{/file/{id}(id=${list.imageId})}" class="rounded-circle img-fluid border"></a>
+                <h5 class="text-center mt-3 mb-3">[[${list.productName}]]</h5>
+                <p class="text-center"><a th:href="@{/product/productDetail/{productId}(productId=${list.productId})}" class="btn btn-success">Go Shop</a></p>
             </div>
-            <div class="col-12 col-md-4 p-5 mt-3">
-                <a href="#"><img th:src="@{/img/category_img_02.jpg}" class="rounded-circle img-fluid border"></a>
-                <h2 class="h5 text-center mt-3 mb-3">Shoes</h2>
-                <p class="text-center"><a class="btn btn-success">Go Shop</a></p>
-            </div>
-            <div class="col-12 col-md-4 p-5 mt-3">
-                <a href="#"><img th:src="@{/img/category_img_03.jpg}" class="rounded-circle img-fluid border"></a>
-                <h2 class="h5 text-center mt-3 mb-3">Accessories</h2>
-                <p class="text-center"><a class="btn btn-success">Go Shop</a></p>
-            </div>
+        </th:block>
         </div>
     </section>
     <!-- End Categories of The Month -->

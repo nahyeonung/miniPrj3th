@@ -40,7 +40,6 @@ public interface IProductService {
 	
 	List<Category> selectPagingCategory(int min, int max);
 
-	
 	int selectCountUseProduct(int categoryId);
 }
 
