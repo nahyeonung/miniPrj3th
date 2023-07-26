@@ -55,6 +55,7 @@
 					<th class="bg-success text-white" scope="col">상품정보</th>
 					<th class="bg-success text-white" scope="col">수량</th>
 					<th class="bg-success text-white" scope="col">판매가</th>
+					<th class="bg-success text-white" scope="col">리뷰쓰기</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -62,9 +63,16 @@
 					<td style="width:15%">
 						<img class="img-fluid img-thumbnail" style="width:150px" alt="" th:src="@{/file/{id}(id=${purchase.imageId})}">
 					</td>
+					
 					<td class="fw-bold productName text-center">[[${purchase.productName}]]</td>
+					
 					<td class="fw-bold text-center">[[${purchase.purchaseCnt}]]개</td>
+					
 					<td class="fw-bold text-center" data-th-text="${#numbers.formatInteger(purchase.productPrice, 3, 'COMMA') + '원'}"></td>
+					
+					<td th:onclick="goToDetailPage([[${purchase.productId}]])" style="cursor: pointer;" class="fw-bold text-center">
+						리뷰쓰기
+					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -93,5 +101,11 @@
     <!-- Start Footer -->
 	<div th:replace="~{/include/footer :: footer}"></div>
     <!-- End Footer -->
+    
+    	<script>
+	    function goToDetailPage(productId) {
+	        window.location.href = "/review/insert/" + productId;
+	    }
+	</script>
 </body>
 </html>

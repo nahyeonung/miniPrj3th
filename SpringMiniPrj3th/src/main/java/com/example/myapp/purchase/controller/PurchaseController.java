@@ -29,28 +29,45 @@ public class PurchaseController {
 		return "index";
 	}
 		
-	@RequestMapping(value="/purchase/insert", method=RequestMethod.GET)
-	public String InsertPurchase(@RequestParam List<Integer> cartIdList, Purchase purchase, HttpSession session, Model model) {
-		String userId = (String)session.getAttribute("userId");
+	
+	@RequestMapping(value="/purchase/insert", method=RequestMethod.GET) 
+	public String InsertPurchase(@RequestParam List<Integer> cartIdList, Purchase purchase, HttpSession session, Model model) { 
+		String userId =	(String)session.getAttribute("userId");
+		System.out.println(userId);
 		purchase = purchaseService.selectUserInfo(userId);
-
+	
 		List<Purchase> list = purchaseService.selectCartInfo(cartIdList, userId);
-		model.addAttribute("list", list);
-		model.addAttribute("purchase", purchase);
-
-		int sum = 0;
-		int cnt = 0;
-		for (Purchase i : list) {
-			sum += i.getProductPrice() * i.getCartCnt();
-			cnt++;
-		}
-		model.addAttribute("sum", sum);
-		model.addAttribute("cnt", cnt);
-		return "purchase/insert";
+		model.addAttribute("list", list); model.addAttribute("purchase", purchase);
+	
+		int sum = 0; 
+		int cnt = 0; 
+		for (Purchase i : list) { 
+			sum += i.getProductPrice() * i.getCartCnt(); cnt++; 
+		} 
+		model.addAttribute("sum", sum); 
+		model.addAttribute("cnt", cnt); 
+		return "purchase/insert"; 
 	}
+	 
+	@PostMapping("/purchase/insert")
+	public String Insert(@RequestParam List<Integer> productId, @RequestParam List<Integer> purchaseCnt,
+		Purchase purchase, HttpSession session) {
+		purchase.setUserId((String) session.getAttribute("userId"));
+		purchaseService.insertPurchase(purchase);
+		
+		int purchaseId = purchaseService.getPurchaseId();
+		purchase.setPurchaseId(purchaseId);
 
+		for (int i = 0; i < productId.size(); i++) {
+			purchase.setProductId(productId.get(i));
+			purchase.setPurchaseCnt(purchaseCnt.get(i));
+			purchaseService.insertPurchaseDetail(purchase);
+			purchaseService.deleteCartPurchase(purchase.getProductId());
+		}
+		return "redirect:/purchase/list";
+	}
 	@RequestMapping(value = "/purchase/buy", method = RequestMethod.GET)
-	public String InsertPurcahse(Purchase purchase, HttpSession session, Model model, int cartCnt) {
+	public String InsertBuyPurchase(Purchase purchase, HttpSession session, Model model, int cartCnt) {
 		Purchase buy = purchaseService.selectProductInfo(purchase.getProductId());
 		int sum = (buy.getProductPrice()* cartCnt);
 		buy.setCartCnt(cartCnt);
@@ -63,16 +80,6 @@ public class PurchaseController {
 		model.addAttribute("sum", sum);
 
 		return "purchase/insert";
-	}
-
-	@PostMapping("/purchase/insert")
-	public String InsertPurcahse(@RequestParam List<Integer> productId, @RequestParam List<Integer> purchaseCnt,
-			Purchase purchase, HttpSession session) {
-		
-		purchase.setUserId((String) session.getAttribute("userId"));
-		purchaseService.insert(productId, purchaseCnt, purchase);
-
-		return "redirect:/purchase/list";
 	}
 
 	@RequestMapping("/purchase/list")
@@ -94,7 +101,7 @@ public class PurchaseController {
 		model.addAttribute("purchaseList", purchaseList);
 
 		model.addAttribute("purchaseId", purchaseId);
-		System.out.println(purchaseList);
+
 		return "purchase/detail";
 	}
 }

@@ -44,7 +44,8 @@
 			    product_image.image_size as "imageSize",
 			    product_image.image_type as "imageType",
 			    product_image.image_data as "imageData",
-			    cart.cart_cnt as "cartCnt"
+			    cart.cart_cnt as "cartCnt",
+			    cart.cart_id as "cartId"
 			FROM cart
 			JOIN product
 			ON cart.product_id=product.product_id
@@ -123,6 +124,7 @@
 	<select id="selectPurchaseProductDetail" parameterType="int" resultType="com.example.myapp.purchase.model.Purchase">
 		<![CDATA[
 			SELECT
+				p.product_id as "productId",
 			    pi.image_id as "imageId",
 			    p.product_name as "productName",
 			    pd.purchase_cnt as "purchaseCnt",
@@ -165,6 +167,13 @@
 				WHERE rnum <= 3
 	]]>
 	</select>
+	
+	<delete id="deleteCartPurchase" parameterType="int">
+		<![CDATA[
+			DELETE FROM cart
+			WHERE product_id = #{product_id}
+		]]>
+	</delete>
 	
 	
 </mapper>

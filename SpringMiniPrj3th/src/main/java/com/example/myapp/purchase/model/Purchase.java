@@ -32,6 +32,7 @@ public class Purchase {
 	private int purchaseCnt;
 	
 	private int cartCnt;
+	private int cartId;
 
 	@Override
 	public String toString() {

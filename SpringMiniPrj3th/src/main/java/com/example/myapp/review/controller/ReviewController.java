@@ -30,13 +30,6 @@ public class ReviewController {
 	@Autowired
 	IReviewService reviewService;
 	
-	@RequestMapping("/review/{productId}")
-	public String selectReviewList(@PathVariable int productId, Model model) {
-		List<Review> reviewList = reviewService.selectReviewList(productId);
-		model.addAttribute("reviewList", reviewList);
-		return "review/list";
-	}
-	
 	@RequestMapping(value="/review/insert/{productId}", method=RequestMethod.GET)
 	public String insertArticle(@PathVariable int productId, Model model) {
 		model.addAttribute("productId", productId);
