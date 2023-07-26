@@ -18,16 +18,16 @@
 		<![CDATA[
 			SELECT
 				p.product_id as "productId",
-				p.product_name as "productNamd",
+				p.product_name as "productName",
 				p.product_price as "productPrice",
-				p.product_description as "productDescription",
+				p.product_description as "description",
 				pi.image_id as "imageId",
 				pi.image_name as "imageName",
 				pi.image_size as "imageSize",
 				pi.image_type as "imageType",
 				pi.image_data as "imageData"
 			FROM product P
-			JOIN prodict_image pi
+			JOIN product_image pi
 			ON p.product_id = pi.product_id
 			WHERE p.product_id = #{productId}
 		]]>

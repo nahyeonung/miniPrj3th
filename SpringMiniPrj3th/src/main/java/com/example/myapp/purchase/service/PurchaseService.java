@@ -20,8 +20,8 @@ public class PurchaseService implements IPurchaseService{
 	}
 
 	@Override
-	public Purchase selectProductInfo(Purchase purchase) {
-		return purchaseRepository.selectProductInfo(purchase);
+	public Purchase selectProductInfo(int productId) {
+		return purchaseRepository.selectProductInfo(productId);
 	}
 
 	@Override

@@ -9,7 +9,7 @@ public interface IPurchaseService {
 	void insertPurchaseDetail(Purchase purchase);
 	
 	Purchase selectUserInfo(String userId);
-	Purchase selectProductInfo(Purchase purchase);
+	Purchase selectProductInfo(int productId);
 	List<Purchase> selectCartInfo(List<Integer> cartIdList, String UserId);
 
 	int getPurchaseId();
