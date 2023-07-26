@@ -11,10 +11,9 @@
 			write_id 			AS "writeId", 
 			user_id				AS "userId",	
 			write_title			AS "writeTitle",
-			write_date			AS "writeDate",
-			replyCnt			AS "replyCnt"
+			write_date			AS "writeDate"
 		 FROM (SELECT 
-				write_id, user_id, write_title, write_date, replyCnt,
+				write_id, user_id, write_title, write_date, 
 				rownum AS rnum
 			FROM (
 				SELECT * FROM community
@@ -169,15 +168,6 @@
 	     WHERE rnum BETWEEN #{start} AND #{end}	   
 	]]>
 	</select>
-	<update id="updateReplyCnt"
-		parameterType="com.example.myapp.community.model.Community">
-	<![CDATA[
-		UPDATE 
-			community 
-		SET 
-			 replyCnt = replyCnt + #{amount} where write_id = #{writeId}
-	]]>
-	</update>
 	
 	
 

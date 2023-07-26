@@ -1,26 +1,15 @@
 package com.example.myapp.community.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.net.http.HttpClient.Redirect;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import org.jsoup.Jsoup;
-import org.jsoup.safety.Safelist;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,7 +21,6 @@ import com.example.myapp.community.model.ReplyVO;
 import com.example.myapp.community.service.ICommunityService;
 import com.example.myapp.community.service.IReplyService;
 
-import jakarta.servlet.http.HttpServletRequest; // tomcat 9이하면 javax.servlet
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -40,10 +28,12 @@ public class CommunityController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
-	ICommunityService communityService;
-	@Autowired
 	IReplyService replyService;
+
+	@Autowired
+	ICommunityService communityService;
 	
+
 	@RequestMapping("/community/list/{page}")
 	public String getListByCommunity(@PathVariable int page, HttpSession session, Model model) {
 		session.setAttribute("page", page);
@@ -63,6 +53,7 @@ public class CommunityController {
 		} else {
 			endPage = totalPage;
 		}
+		model.addAttribute("bbsCount", bbsCount);
 		model.addAttribute("totalPageCount", totalPage);
 		model.addAttribute("nowPage", page);
 		model.addAttribute("totalPageBlock", totalPageBlock);
@@ -80,14 +71,17 @@ public class CommunityController {
 	@RequestMapping("/community/{writeId}/{page}")
 	public String getCommunityDetails(@PathVariable int writeId, @PathVariable int page, Model model) {
 		Community community = communityService.selectArticle(writeId);
-		List<ReplyVO> replyList = null;
-		replyList = replyService.replyList(writeId);
+		System.out.println(writeId);
+		model.addAttribute("writeId", writeId);
+		List<ReplyVO> replyList = replyService.replyList(writeId);
 		if (community != null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String formattedWriteDate = sdf.format(community.getWriteDate());
 			community.setFormattedWriteDate(formattedWriteDate);
 		}
+		System.out.println(replyList);
 		model.addAttribute("replyList", replyList);
+		System.out.println(replyList);
 		model.addAttribute("writeId", writeId);
 		model.addAttribute("community", community);
 		model.addAttribute("page", page);
@@ -148,7 +142,6 @@ public class CommunityController {
 		return "redirect:/community/list/1";
 	}
 
-
 	@RequestMapping("/community/search/{page}")
 	public String search(@RequestParam(required = false, defaultValue = "") String keyword, @PathVariable int page,
 			HttpSession session, Model model) {
@@ -169,7 +162,7 @@ public class CommunityController {
 			} else {
 				endPage = totalPage;
 			}
-			 model.addAttribute("bbsCount", bbsCount); 
+			model.addAttribute("bbsCount", bbsCount);
 			model.addAttribute("keyword", keyword);
 			model.addAttribute("totalPageCount", totalPage);
 			model.addAttribute("nowPage", page);
@@ -188,8 +181,7 @@ public class CommunityController {
 			Model model) {
 		return search(keyword, 1, session, model);
 	}
-	
-	
+
 	@RequestMapping("/community/mylist/{page}")
 	public String mylist(@RequestParam(required = false, defaultValue = "") String userId, @PathVariable int page,
 			HttpSession session, Model model) {
@@ -217,7 +209,7 @@ public class CommunityController {
 			model.addAttribute("nowPageBlock", nowPageBlock);
 			model.addAttribute("startPage", startPage);
 			model.addAttribute("endPage", endPage);
-			 model.addAttribute("bbsCount", bbsCount); 
+			model.addAttribute("bbsCount", bbsCount);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -229,7 +221,7 @@ public class CommunityController {
 			Model model) {
 		return mylist(userId, 1, session, model);
 	}
-	
+
 //
 //	@ExceptionHandler({ RuntimeException.class })
 //	public String error(HttpServletRequest request, Exception ex, Model model) {
