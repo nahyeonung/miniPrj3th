@@ -57,6 +57,10 @@ tr {
 	width: 30%
 }
 
+.width-100 {
+	width: 100%
+}
+
 .ms-6 {
     margin-left: 3.5rem!important;
 }
@@ -68,5 +72,14 @@ tr {
 }
 
 .opacity-9 {
-	opacity: 0.85
+	opacity: 0.95
+}
+
+.py-80 {
+	padding-top: 80px;
+	padding-bottom: 80px;
+}
+
+.pb-80 {
+	padding-bottom: 80px;
 }
