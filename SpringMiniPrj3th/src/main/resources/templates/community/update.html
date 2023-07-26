@@ -1,13 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" th:href="@{/css/community/update.css}">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-	crossorigin="anonymous">
-<link
-	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"
-	rel="stylesheet">
+<link rel="shortcut icon" type="image/x-icon"
+	th:href="@{static/img/favicon.ico}">
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script
@@ -31,83 +26,144 @@
 	<!-- Header -->
 	<div th:replace="~{/include/navbar :: navbar}"></div>
 	<!-- Close Header -->
+	<section id="body">
 	<section class="notice">
-	<div class="Contain">
-	<form action="/community/update" method="post">
-		<input type="hidden" name="writeId" th:value="${community.writeId}" />
-		<div class="ContentBox">
-			<div class="Box">
-				<a>community</a>
-			</div>
-			<div class="TitleBlank">
-				<input type="text" name="writeTitle" th:value="${community.writeTitle}" required>
-			</div>
-			<div class="infos">
-				<h11 id="name" th:text="${community.userId}" />
-				<h9 id="Todate" th:text="${community.writeDate}" />
-			</div>
-		</div>
-		
-		
-		<div class="form-group">
-			<label for="writeContent"></label>
-			<div class="ContentBlank">
-				<textarea name="writeContent" id="summernote"  type="text" th:class="form-control" rows="100" th:text="${community.writeContent}" required></textarea>
-			</div>
-		</div>
-		
-		<input type="submit" value="저장">
-		<input type="button" value="취소" onclick="goBack()">
-	</form>
-	<!-- th:block th:if="${userid!=null}"-->
-	
-		</div>
+		<div class="page-title">
+			<div class="container">
+			<h3>
+						<img src="/img/commupdatelogo.png" width="210" id="updatelogo">
+					</h3>
+				</div>
+				</div>
+				<div id="writebody">
+					<form action="/community/update" method="post">
+						<input type="hidden" name="writeId"
+							th:value="${community.writeId}" />
+						<div class="ContentBox">
+							<div class="TitleBlank">
+								<input type="text" name="writeTitle" id="namebar"
+									th:value="${community.writeTitle}" required>
+							</div>
+							<div class="infos">
+								<h id="name" >[[${community.userId}]]</h>
+								<h id="Todate" th:text="${community.writeDate}" />
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<label for="writeContent"></label>
+							<div class="ContentBlank">
+								<textarea name="writeContent" id="summernote" type="text"
+									th:class="form-control" rows="100"
+									th:text="${community.writeContent}" required></textarea>
+							</div>
+						</div>
+
+						<div class="btnwd">
+					<input id="save" type="button" value="저장" class="w-btn w-btn-gra1 w-btn-gra-anim"
+						onclick="goWrite(this.form)"><input type="button" id="no" class="w-btn w-btn-gra1 w-btn-gra-anim"
+						value="취소" onclick="goBack()">
+				</div>
+					</form>
+					<!-- th:block th:if="${userid!=null}"-->
+
+				</div>
+	</section>
 </section>
-	
 	<!-- Start Footer -->
 	<div th:replace="~{/include/footer :: footer}"></div>
 	<!-- End Footer -->
-	
+
 	<script>
+	
+	function goWrite(community) {
+    	var title = community.writeTitle.value;
+    	var content = community.writeContent.value;
+    	
+    	if (title.trim() == ''){
+    		alert("제목을 입력해주세요");
+    		title.trim.focus();
+    	return false; 
+    	} else if (content.trim() == ''){
+    		alert("내용을 입력해주세요");
+    		content.trim.focus();
+    		return false;
+    	} else{community.submit();
+    	return true;}
+    }
+    
 		// 이전 페이지로 돌아가는 함수
 		function goBack() {
 			window.history.back();
 		}
-		
-		$(document).ready(function() {
-        	$('#summernote').summernote({
-                // 에디터 높이
-                height: 500,
-                // 에디터 한글 설정
-                lang: "ko-KR",
-                // 에디터에 커서 이동 (input창의 autofocus라고 생각)
-                focus : true,
-                toolbar: [
-                    // 글꼴 설정
-                    ['fontname', ['fontname']],
-                    // 글자 크기 설정
-                    ['fontsize', ['fontsize']],
-                    // 굵기, 기울임꼴, 밑줄,취소 선, 서식지우기
-                    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-                    // 글자색
-                    ['color', ['forecolor','color']],
-                    // 표만들기
-                    ['table', ['table']],
-                    // 글머리 기호, 번호매기기, 문단정렬
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    // 줄간격
-                    ['height', ['height']],
-                    // 코드보기, 확대해서보기, 도움말
-                    ['view', ['codeview','fullscreen', 'help']]
-                ],
-                // 추가한 글꼴
-                fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
-                // 추가한 폰트사이즈
-                fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
 
-            });
-      	});
-       
+		$(document)
+				.ready(
+						function() {
+							$('#summernote')
+									.summernote(
+											{
+												// 에디터 높이
+												height : 500,
+												// 에디터 한글 설정
+												lang : "ko-KR",
+												// 에디터에 커서 이동 (input창의 autofocus라고 생각)
+												focus : true,
+												toolbar : [
+														// 글꼴 설정
+														[ 'fontname',
+																[ 'fontname' ] ],
+														// 글자 크기 설정
+														[ 'fontsize',
+																[ 'fontsize' ] ],
+														// 굵기, 기울임꼴, 밑줄,취소 선, 서식지우기
+														[
+																'style',
+																[
+																		'bold',
+																		'italic',
+																		'underline',
+																		'strikethrough',
+																		'clear' ] ],
+														// 글자색
+														[
+																'color',
+																[ 'forecolor',
+																		'color' ] ],
+														// 표만들기
+														[ 'table', [ 'table' ] ],
+														// 글머리 기호, 번호매기기, 문단정렬
+														[
+																'para',
+																[ 'ul', 'ol',
+																		'paragraph' ] ],
+														// 줄간격
+														[ 'height',
+																[ 'height' ] ],
+														// 코드보기, 확대해서보기, 도움말
+														[
+																'view',
+																[
+																		'codeview',
+																		'fullscreen',
+																		'help' ] ] ],
+												// 추가한 글꼴
+												fontNames : [ 'Arial',
+														'Arial Black',
+														'Comic Sans MS',
+														'Courier New', '맑은 고딕',
+														'궁서', '굴림체', '굴림',
+														'돋음체', '바탕체' ],
+												// 추가한 폰트사이즈
+												fontSizes : [ '8', '9', '10',
+														'11', '12', '14', '16',
+														'18', '20', '22', '24',
+														'28', '30', '36', '50',
+														'72' ]
+
+											});
+						});
 	</script>
 </body>
 </html>
