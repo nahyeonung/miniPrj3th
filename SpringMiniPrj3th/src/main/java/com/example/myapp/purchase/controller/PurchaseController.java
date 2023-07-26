@@ -66,17 +66,12 @@ public class PurchaseController {
 	}
 
 	@PostMapping("/purchase/insert")
-	public String InsertPucahse(@RequestParam List<Integer> productId, @RequestParam List<Integer> purchaseCnt,
+	public String InsertPurcahse(@RequestParam List<Integer> productId, @RequestParam List<Integer> purchaseCnt,
 			Purchase purchase, HttpSession session) {
+		
 		purchase.setUserId((String) session.getAttribute("userId"));
-		purchaseService.insertPurchase(purchase);
-		int purchaseId = purchaseService.getPurchaseId();
-		purchase.setPurchaseId(purchaseId);
-		for (int i = 0; i < productId.size(); i++) {
-			purchase.setProductId(productId.get(i));
-			purchase.setPurchaseCnt(purchaseCnt.get(i));
-			purchaseService.insertPurchaseDetail(purchase);
-		}
+		purchaseService.insert(productId, purchaseCnt, purchase);
+
 		return "redirect:/purchase/list";
 	}
 

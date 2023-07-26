@@ -37,13 +37,19 @@ public class CartController {
 	
 	@RequestMapping(value="/cart/insert", method=RequestMethod.POST)
 	public String insertCart(Cart cart, RedirectAttributes redirectAttrs, HttpSession session) {
-		String userId = (String)session.getAttribute("userId");
-		if(userId != null && !userId.equals("")) {
-			cartService.insertCart(cart);
-			return "redirect:/cart";
-		}else {
-			return "user/login";
+		try {
+			String userId = (String)session.getAttribute("userId");
+			if(userId != null && !userId.equals("")) {
+				cartService.insertCart(cart);
+				return "redirect:/cart";
+			}else {
+				return "user/login";
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			redirectAttrs.addFlashAttribute("message", e.getMessage());
 		}
+		return "redirect:/cart";
 	}
 	
 	@PostMapping("/cart/update")
