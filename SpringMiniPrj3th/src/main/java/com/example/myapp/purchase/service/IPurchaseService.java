@@ -21,4 +21,6 @@ public interface IPurchaseService {
 	List<Purchase> selectPurchaseProductDetail(int purchaseId);
 	
 	List<Purchase> selectTopThree();
+	
+	void insert(List<Integer> productId,  List<Integer> purchaseCnt, Purchase purchase);
 }
