@@ -44,11 +44,11 @@ public class UserController {
 //	}
 
 	@RequestMapping(value = "/user/mypage", method = RequestMethod.GET)
-	   public String mypage(HttpSession session, Model model) {
-	      String id = (String)session.getAttribute("userId");
-	      User user = userService.selectUser(id);
-	      model.addAttribute("user", user);
-	      return "user/mypage";
+	public String mypage(HttpSession session, Model model) {
+		String id = (String) session.getAttribute("userId");
+		User user = userService.selectUser(id);
+		model.addAttribute("user", user);
+		return "user/mypage";
 
 	}
 
@@ -56,7 +56,7 @@ public class UserController {
 	public String join() {
 		return "user/join";
 	}
-	
+
 	@RequestMapping(value = "/user/insert", method = RequestMethod.GET)
 	public String insertUser(Model model) {
 		model.addAttribute("user", new User());
@@ -84,43 +84,50 @@ public class UserController {
 		return "user/login";
 	}
 
-	   @RequestMapping(value = "/user/login", method = RequestMethod.GET)
-	   public String login(HttpSession session, Model model) {
-	      if (session.getAttribute("userId") == null) {
-	      } else {
-	         String id = (String) session.getAttribute("userId");
-	         User user = userService.selectUser(id);
-	         if (user != null) {
-	            logger.info(user.toString());
-	            model.addAttribute("user", user);
-	         }
-	      }
-	      return "user/login";
-	   }
-	   
+	@RequestMapping(value = "/user/login", method = RequestMethod.GET)
+	public String login(HttpSession session, Model model) {
+		if (session.getAttribute("userId") == null) {
+		} else {
+			String id = (String) session.getAttribute("userId");
+			User user = userService.selectUser(id);
+			if (user != null) {
+				logger.info(user.toString());
+				model.addAttribute("user", user);
+			}
+		}
+		return "user/login";
+	}
 
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
 	public String login(String userId, String userPwd, HttpSession session, Model model) {
 		User user = userService.selectUser(userId);
 		if (user != null) {
-			logger.info(user.toString());
-			String dbPassword = user.getUserPwd();
-			if (dbPassword.equals(userPwd)) { // 비밀번호 일치
-				session.setMaxInactiveInterval(600); // 10분
-				session.setAttribute("userId", userId);
-				session.setAttribute("userName", user.getUserName());
-				session.setAttribute("userState", user.getUserState());
-				model.addAttribute("user", user);
-				return "user/mypage"; // 로그인 성공 시 "mypage"로 이동
-			} else { // 비밀번호가 다름
+			System.out.println(user.getUserState());
+			if (user.getUserState() == 1) {
 				session.invalidate();
-				model.addAttribute("message", "비밀번호가 다릅니다. 다시 확인해주세요.");
+				model.addAttribute("message", "비활성화된 계정입니다. 관리자에게 문의하세요.");
+				return "user/login";
+			} else {
+
+				logger.info(user.toString());
+				String dbPassword = user.getUserPwd();
+				if (dbPassword.equals(userPwd)) { // 비밀번호 일치
+					session.setMaxInactiveInterval(600); // 10분
+					session.setAttribute("userId", userId);
+					session.setAttribute("userName", user.getUserName());
+					session.setAttribute("userState", user.getUserState());
+					model.addAttribute("user", user);
+					return "index";
+				} else { // 비밀번호가 다름
+					session.invalidate();
+					model.addAttribute("message", "비밀번호가 다릅니다. 다시 확인해주세요.");
+				}
 			}
 		} else { // 아이디가 없음
 			session.invalidate();
 			model.addAttribute("message", "존재하지 않는 아이디입니다. 다시 확인해주세요.");
 		}
-		return "/user/login";
+		return "index"; // 로그인 성공 시 "index"로 이동
 	}
 
 	@RequestMapping(value = "/user/userInfo", method = RequestMethod.GET)
@@ -246,7 +253,7 @@ public class UserController {
 				user.setUserPwd(temporaryPassword);
 				userService.updateUser(user);
 				model.addAttribute("message", "임시 비밀번호가 발송되었습니다. 이메일을 확인해주세요.");
-			} else if(user == null) {
+			} else if (user == null) {
 				model.addAttribute("message", "이메일에 해당하는 사용자가 없습니다.");
 				return "user/findPwd";
 			}

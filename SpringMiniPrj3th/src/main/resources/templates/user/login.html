@@ -69,7 +69,7 @@ a:hover, a:active {
 		<div class="input-form-backgroud row">
 			<div class="input-form col-md-11 mx-auto">
 				<h3 class="mb-3 font-weight-bold text-dark">로그인</h3>
-				<form action="/user/login" th:object="${user}" method="post"
+				<form th:action="@{/user/login}" th:object="${user}" method="post"
 					class="validation-form" id="joinForm" novalidate>
 					<div class="row">
 						<div class="col-md-12 mb-3">
@@ -84,13 +84,13 @@ a:hover, a:active {
 							<div class="invalid-feedback">비밀번호를 입력해주세요.</div>
 							<a th:href="@{/user/findPwd}" class="font-weight-bold">Forgot
 								your password?</a>
+							<hr class="mb-4">
 							<div th:if="${message}" class="alert alert-danger" role="alert"
 								th:text="${message}"></div>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-12 mb-3">
-							<hr class="mb-4">
 							<button type="submit"
 								class="mb-4 btn btn-primary btn-lg btn-block">로그인</button>
 						</div>

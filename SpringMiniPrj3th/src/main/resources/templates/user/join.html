@@ -49,7 +49,7 @@ body {
 		<div class="input-form-backgroud row">
 			<div class="input-form col-md-11 mx-auto">
 				<h3 class="mb-3 font-weight-bold text-dark">회원가입</h3>
-				<form action="/user/insert" th:object="${user}" method="post"
+				<form th:action="@{/user/insert}" th:object="${user}" method="post"
 					class="validation-form" id="joinForm" novalidate>
 					<div class="row">
 						<div class="col-md-6 mb-3">
