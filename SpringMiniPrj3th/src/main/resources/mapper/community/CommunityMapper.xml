@@ -114,7 +114,8 @@
 			write_id 				AS "writeId", 
 			user_id					AS "userId", 
 			write_title				AS "writeTitle", 
-			write_date				AS "writeDate"
+			write_date				AS "writeDate",
+			replyCnt			AS "replyCnt"
 			
 	    FROM (
 	    	SELECT 
@@ -123,14 +124,13 @@
 	    		write_title, 
 	    		write_date, 
 	    		write_content,
+	    		replyCnt,
 	    		rownum AS rnum
 	    	FROM (
 	    		SELECT * FROM community
 	    		WHERE
 	    			write_title LIKE #{keyword}
-		    		OR 
-		    		write_content LIKE #{keyword}
-	    	)
+		    			    	)
 	    )
 	     WHERE rnum BETWEEN #{start} AND #{end}	   
 	]]>
@@ -151,7 +151,8 @@
 			write_id 				AS "writeId", 
 			user_id					AS "userId", 
 			write_title				AS "writeTitle", 
-			write_date				AS "writeDate"
+			write_date				AS "writeDate",
+			replyCnt			AS "replyCnt"
 			
 	    FROM (
 	    	SELECT 
@@ -160,6 +161,7 @@
 	    		write_title, 
 	    		write_date, 
 	    		write_content,
+	    		replyCnt,
 	    		rownum AS rnum
 	    	FROM (
 	    		SELECT * FROM community

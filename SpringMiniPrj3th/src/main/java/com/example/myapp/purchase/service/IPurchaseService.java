@@ -22,5 +22,5 @@ public interface IPurchaseService {
 	
 	List<Purchase> selectTopThree();
 	
-	void insert(List<Integer> productId,  List<Integer> purchaseCnt, Purchase purchase);
+	void deleteCartPurchase(int productId);
 }

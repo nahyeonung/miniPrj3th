@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" th:href="@{/css/community/write.css}">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-	crossorigin="anonymous">
-<link
-	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"
-	rel="stylesheet">
+
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script
 	src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 <!-- include summernote css/js-->
+
+<link rel="shortcut icon" type="image/x-icon"
+	th:href="@{static/img/favicon.ico}">
+
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css"
 	rel="stylesheet">
@@ -29,42 +27,42 @@
 
 	<!-- Header -->
 	<div th:replace="~{/include/navbar :: navbar}"></div>
-	<!-- Close Header -->
-	<section class="notice">
-		<div class="container">
-			<div class="page_title">
-				<h9>게시글 작성</h9>
+	<section id="body">
+		<!-- Close Header -->
+		<section class="notice">
+			<div class="page-title">
+				<div class="container">
+					<h3>
+						<img src="/img/commwrite.png" width="210" id="writelogo">
+					</h3>
+				</div>
+				
 			</div>
-
-			<hr>
-			<h8 id="clock" style="float:right;">clock</h8>
-			<br>
+			<div id="writebody"><h8 id="clock" style="float:right;">clock</h8>
 			<form th:action="@{/community/write}" method="post">
-
-
-
-				<label for="TitleBlank">제목</label> <input type="text"
+				<input type="text" id="namebar"
 					name="writeTitle" style="width: 40%; margin-bottom: 10px;"
-					placeholder="제목을 입력해주세요." />
+					placeholder="    제목을 입력해주세요." />
 
 				<textarea name="writeContent" id="summernote" type="text"
 					th:class="form-control" rows="100"></textarea>
 
-				<div class="btn">
-					<input id="save" type="button" value="저장"
-						onclick="goWrite(this.form)"><input type="button" id="no"
+				<div class="btnwd">
+					<input id="save" type="button" value="저장" class="w-btn w-btn-gra1 w-btn-gra-anim"
+						onclick="goWrite(this.form)"><input type="button" id="no" class="w-btn w-btn-gra1 w-btn-gra-anim"
 						value="취소" onclick="goBack()">
 				</div>
 			</form>
-
-		</div>
-
-		<!-- Start Footer -->
-		<div th:replace="~{/include/footer :: footer}"></div>
-		<!-- End Footer -->
+</div>
+		</section>
 
 
 	</section>
+
+	<!-- Start Footer -->
+	<div th:replace="~{/include/footer :: footer}"></div>
+	<!-- End Footer -->
+
 	<script>
         var Target = document.getElementById("clock");
         function clock() {

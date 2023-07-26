@@ -1,0 +1,199 @@
+section.notice {
+  padding: 80px 0;
+  width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+ background-color : rgb(255,255,255,0.96);
+}
+
+#body{
+	background: url(/img/searchback.jpg)  no-repeat center;
+	background-size: cover;
+}
+.btn_write{
+	all: unset;
+	 float: right;
+}
+
+.board-table th {
+  text-align: center;
+}
+.page-title {
+  margin-bottom: 60px;
+}
+.page-title h1 {
+  font-size: 18px;
+  color: #5b5b5b;
+  font-weight: 300;
+}
+.page-title h2 {
+  font-size: 24px;
+  color: #5b5b5b;
+  font-weight: 300;
+}
+.page-title h3 {
+  font-size: 32px;
+  color: #333333;
+  font-weight: 400;
+  text-align: center;
+  
+}
+
+.board-table tbody td {
+  border-top: 1px solid #e7e7e7;
+  text-align: center;
+  font-size: 16px;
+}
+.board-table tbody th {
+  padding-left: 28px;
+  padding-right: 28px;
+  border-top: 1px solid #e7e7e7;
+  text-align: left;
+}
+
+.board-table {
+  width: 100%;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+
+.board-table a {
+  color: #333;
+  display: inline-block;
+  line-height: 1.4;
+  word-break: break-all;
+  vertical-align: middle;
+    text-decoration: none;
+}
+.board-table a:hover {
+  text-decoration: underline;
+}
+
+.board-table .th-num {
+  width: 100px;
+  text-align: center;
+}
+
+.board-table .th-date {
+  width: 200px;
+}
+.board-table .th-id {
+  width: 200px;
+}
+.board-table .th-title {
+  width: 500px;
+}
+.board-table th, .board-table td {
+  padding: 14px 0;
+}
+.board-list{
+	width: 1100px;
+  margin: 0 auto;
+}
+.container {
+  width: 1100px;
+   margin-left: auto;
+    margin-right: auto;
+}
+#pull-right{
+	  margin-left: auto;
+    margin-right: auto;
+	
+}
+form{
+    position: relative;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    transition: all 1s;
+    width: 50px;
+    height: 50px;
+    background: white;
+    box-sizing: border-box;
+    border-radius: 25px;
+    border: 4px solid white;
+    padding: 5px;
+}
+
+input{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;;
+    height: 42.5px;
+    line-height: 30px;
+    outline: 0;
+    border: 0;
+    display: none;
+    font-size: 1em;
+    border-radius: 20px;
+    padding: 0 20px;
+}
+
+.fas{
+    box-sizing: border-box;
+    padding: 10px;
+    width: 42.5px;
+    height: 42.5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 50%;
+    color: #07051a;
+    text-align: center;
+    font-size: 1.2em;
+    transition: all 1s;
+}
+
+form:hover{
+    width: 300px;
+    cursor: pointer;
+}
+
+form:hover input{
+    display: block;
+}
+
+form:hover .fas{
+    background: #07051a;
+    color: white;
+}
+
+#searchBox{
+	margin-top: 32px;
+	margin-left: 150px;
+}
+
+#box {
+  width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex; /* 수평으로 배치하기 위해 flex 사용 */
+  justify-content: space-between; /* 자식 요소들을 양 끝으로 분산 배치 */
+  align-items: center; /* 자식 요소들을 수직 가운데 정렬 */
+  height: 70px;
+}
+
+#writebtn{
+	margin-top: -20px;
+	margin-right: 50px;
+}
+
+
+#searchBox1{
+	margin-left: 80px;
+}
+
+#box1 {
+  width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex; /* 수평으로 배치하기 위해 flex 사용 */
+  justify-content: space-between; /* 자식 요소들을 양 끝으로 분산 배치 */
+  align-items: center; /* 자식 요소들을 수직 가운데 정렬 */
+  height: 30px;
+}
+
+#writebtn1{
+	margin-right: 50px;
+}

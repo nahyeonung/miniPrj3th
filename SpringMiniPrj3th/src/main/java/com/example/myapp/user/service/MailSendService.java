@@ -1,5 +1,6 @@
 package com.example.myapp.user.service;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
 import org.springframework.mail.javamail.JavaMailSender;
@@ -54,22 +55,38 @@ public class MailSendService implements IMailSendService {
 		}
 	}
 
-
 	// 랜덤함수로 임시비밀번호 구문 만들기
 	@Override
 	public String makeTempPassword() {
-		char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
-				'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+	    char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
+	            'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
 
-		String str = "";
+	    SecureRandom random = new SecureRandom();
+	    StringBuilder strBuilder = new StringBuilder();
 
-		// 문자 배열 길이의 값을 랜덤으로 10개를 뽑아 구문을 작성함
-		int idx = 0;
-		for (int i = 0; i < 10; i++) {
-			idx = (int) (charSet.length * Math.random());
-			str += charSet[idx];
-		}
-		return str;
+	    // 랜덤한 숫자 하나 추가
+	    strBuilder.append(charSet[random.nextInt(10)]);
+
+	    // 랜덤한 소문자 하나 추가
+	    strBuilder.append(Character.toLowerCase(charSet[10 + random.nextInt(26)]));
+
+	    // 랜덤한 대문자 하나 추가
+	    strBuilder.append(charSet[10 + random.nextInt(26)]);
+
+	    // 나머지 문자들 추가하여 길이가 6이 될 때까지
+	    for (int i = 0; i < 3; i++) {
+	        int idx = random.nextInt(charSet.length);
+	        strBuilder.append(charSet[idx]);
+	    }
+
+	    // 문자들을 랜덤하게 섞음
+	    for (int i = strBuilder.length() - 1; i > 0; i--) {
+	        int j = random.nextInt(i + 1);
+	        char temp = strBuilder.charAt(i);
+	        strBuilder.setCharAt(i, strBuilder.charAt(j));
+	        strBuilder.setCharAt(j, temp);
+	    }
+
+	    return strBuilder.toString();
 	}
-
 }

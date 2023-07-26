@@ -1,10 +1,20 @@
 section.notice {
   padding: 80px 0;
+  width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+ background-color : rgb(255,255,255,0.96);
 }
 
+#body{
+	background: url(/img/commsearchback.jpg)  no-repeat center;
+	background-size: cover;
+}
 .btn_write{
+	all: unset;
 	 float: right;
 }
+
 .board-table th {
   text-align: center;
 }
@@ -28,34 +38,7 @@ section.notice {
   text-align: center;
   
 }
-#board-search .search-window {
-  position: relative;
-/*   padding-right: 124px; */
-  margin: 0 auto;
-  width: 80%;
-  max-width: 564px;
-}
-#board-search .search-window  {
-  height: 40px;
-  width: 100%;
-  font-size: 14px;
-  padding: 7px 14px;
-  border: 1px solid #ccc;
-}
-#board-search .search-window  {
-  border-color: #333;
-  outline: 0;
-  border-width: 1px;
-}
-#board-search .search-window  {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 108px;
-  padding: 0;
-  font-size: 16px;
-}
+
 .board-table tbody td {
   border-top: 1px solid #e7e7e7;
   text-align: center;
@@ -67,8 +50,8 @@ section.notice {
   border-top: 1px solid #e7e7e7;
   text-align: left;
 }
+
 .board-table {
-  
   width: 100%;
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
@@ -81,6 +64,7 @@ section.notice {
   line-height: 1.4;
   word-break: break-all;
   vertical-align: middle;
+    text-decoration: none;
 }
 .board-table a:hover {
   text-decoration: underline;
@@ -103,7 +87,113 @@ section.notice {
 .board-table th, .board-table td {
   padding: 14px 0;
 }
+.board-list{
+	width: 1100px;
+  margin: 0 auto;
+}
 .container {
   width: 1100px;
-  margin: 0 auto;
+   margin-left: auto;
+    margin-right: auto;
+}
+#pull-right{
+	  margin-left: auto;
+    margin-right: auto;
+	
+}
+form{
+    position: relative;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    transition: all 1s;
+    width: 50px;
+    height: 50px;
+    background: white;
+    box-sizing: border-box;
+    border-radius: 25px;
+    border: 4px solid white;
+    padding: 5px;
+}
+
+input{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;;
+    height: 42.5px;
+    line-height: 30px;
+    outline: 0;
+    border: 0;
+    display: none;
+    font-size: 1em;
+    border-radius: 20px;
+    padding: 0 20px;
+}
+
+.fas{
+    box-sizing: border-box;
+    padding: 10px;
+    width: 42.5px;
+    height: 42.5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 50%;
+    color: #07051a;
+    text-align: center;
+    font-size: 1.2em;
+    transition: all 1s;
+}
+
+form:hover{
+    width: 300px;
+    cursor: pointer;
+}
+
+form:hover input{
+    display: block;
+}
+
+form:hover .fas{
+    background: #07051a;
+    color: white;
+}
+
+#searchBox{
+	margin-top: 32px;
+	margin-left: 150px;
+}
+
+#box {
+  width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex; /* 수평으로 배치하기 위해 flex 사용 */
+  justify-content: space-between; /* 자식 요소들을 양 끝으로 분산 배치 */
+  align-items: center; /* 자식 요소들을 수직 가운데 정렬 */
+  height: 70px;
+}
+
+#writebtn{
+	margin-top: -20px;
+	margin-right: 50px;
+}
+
+
+#searchBox1{
+	margin-left: 80px;
+}
+
+#box1 {
+  width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex; /* 수평으로 배치하기 위해 flex 사용 */
+  justify-content: space-between; /* 자식 요소들을 양 끝으로 분산 배치 */
+  align-items: center; /* 자식 요소들을 수직 가운데 정렬 */
+  height: 30px;
+}
+
+#writebtn1{
+	margin-right: 50px;
 }

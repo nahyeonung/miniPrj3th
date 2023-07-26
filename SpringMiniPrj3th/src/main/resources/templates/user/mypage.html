@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>로그인</title>
+<title>내 정보 페이지</title>
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
@@ -26,6 +26,7 @@ body {
 	background-size: cover;
 	background-repeat: no-repeat;
 	height: 100vh;
+	opacity: 0.95;
 }
 
 .input-form {
@@ -106,6 +107,8 @@ a:hover, a:active {
 				<div class="row">
 					<div class="col-md-12 mb-3">
 						<hr class="mb-4">
+						<a th:href="@{/purchase/list}"><button
+								class="mb-4 btn btn-success btn-lg btn-block">구매 내역</button></a>
 						<a th:href="@{/user/update}"><button
 								class="mb-4 btn btn-success btn-lg btn-block">사용자 정보 수정</button></a>
 						<a th:href="@{/user/logout}"><button class="btn btn-primary btn-lg btn-block">로그아웃</button></a>

@@ -28,4 +28,6 @@ public interface IPurchaseRepository {
 	List<Purchase> selectPurchaseProductDetail(int purchaseId);
 	
 	List<Purchase> selectTopThree();
+	
+	void deleteCartPurchase(int productId);
 }
