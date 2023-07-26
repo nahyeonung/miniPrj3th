@@ -34,7 +34,8 @@
 		<section class="notice">
 			<div class="page-title">
 				<div class="container">
-					<h3>게시글</h3>
+					<h3><img src="/img/commlogo.png"
+								width="400" ></h3>
 					
 				</div>
 			</div>
@@ -43,7 +44,7 @@
 					<span>전체</span>
 					<span>[<strong>[[${bbsCount}]]</strong>] 개의 글</span>
 				</div>
-				<div id="writebtn"1>
+				<div id="writebtn">
 					<a th:href="@{/community/write}">
 						<button type="button" class="btn_write">
 							<img src="https://ssl.pstatic.net/static/blog/img_write_btn.png"
@@ -83,13 +84,11 @@
 			</div>
 			<section id="box">
 				<div id="searchBox">
-					<link rel="stylesheet"
-						href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-					<form th:action="@{/community/search}" method="get">
-						<input type="search" id="keyword" name="keyword"
+					
+					<form th:action="@{/community/search}" method="get" id="keyword2">
+						<input type="search" id="keyword1" name="keyword1"
 							placeholder="Search here ..."
-							onkeypress="if( event.keyCode == 13 ){fnSearch();}"> <i
-							class="fa fa-search"></i>
+							onkeypress="if( event.keyCode == 13 ){fnSearch();}"><i class="fas fa-search"></i>
 					</form>
 				</div>
 				<div id="writebtn">
