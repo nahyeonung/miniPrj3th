@@ -105,7 +105,7 @@
         <th:block th:each="list : ${pTopThree}">
             <div class="col-12 col-md-4 p-5 mt-3">
                 <a href="#"><img style="height:60%; width:100%;" th:src="@{/file/{id}(id=${list.imageId})}" class="rounded-circle img-fluid border"></a>
-                <h5 class="text-center mt-3 mb-3">[[${list.productName}]]</h5>
+                <h5 class="text-center mt-3 mb-3">[[${list.productName}]]([[${list.totalCnt}]])</h5>
                 <p class="text-center"><a th:href="@{/product/productDetail/{productId}(productId=${list.productId})}" class="btn btn-success">Go Shop</a></p>
             </div>
         </th:block>

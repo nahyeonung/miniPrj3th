@@ -34,6 +34,8 @@ public class Purchase {
 	private int cartCnt;
 	private int cartId;
 
+	private int totalCnt;
+	
 	@Override
 	public String toString() {
 		return "Purchase [userId=" + userId + ", userName=" + userName + ", userAddress=" + userAddress + ", userPhone="
