@@ -121,8 +121,8 @@
                 		<span>[[${review.productName}]]</span>
                 	</div>
                     <div class="product-wap card rounded-0">
-                        <div class="card rounded-0" style="height:200px">
-                            <img th:if="${review.reviewImageName!=null}" style="height:200px; width:auto;" th:src="@{/review/file/{id}(id=${review.reviewImageId})}">
+                        <div class="card rounded-0" style="height:100px">
+                            <img th:if="${review.reviewImageName!=null}" style="height:100px; width:100px;" th:src="@{/review/file/{id}(id=${review.reviewImageId})}">
                         </div>
                         <div class="card-body">
                             <a href="shop-single.html" class="h3 text-decoration-none">[[${review.content}]]</a>
