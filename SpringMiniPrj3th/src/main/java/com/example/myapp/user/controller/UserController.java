@@ -43,6 +43,15 @@ public class UserController {
 //		binder.setValidator(userValidator);
 //	}
 
+	@RequestMapping(value = "/user/mypage", method = RequestMethod.GET)
+	public String mypage() {
+		return "user/mypage";
+	}
+
+	@RequestMapping(value = "/user/join", method = RequestMethod.GET)
+	public String join() {
+		return "user/join";
+	}
 
 	@RequestMapping(value = "/user/insert", method = RequestMethod.GET)
 	public String insertUser(Model model) {
@@ -54,17 +63,17 @@ public class UserController {
 	public String insertUser(@Validated User user, BindingResult result, HttpSession session, Model model) {
 //		userValidator.validate(user, result);
 //
-		if (result.hasErrors()) {
-			model.addAttribute("user", user);
-			return "user/join";
-		}
+//		if (result.hasErrors()) {
+//			model.addAttribute("user", user);
+//			return "user/join";
+//		}
 
 		try {
 			user.setUserState(0);
 			userService.insertUser(user);
 		} catch (DuplicateKeyException e) {
 			model.addAttribute("user", user);
-			model.addAttribute("message", "이미 존재하는 아이디입니다.");
+			model.addAttribute("existIdMessage", "이미 존재하는 아이디입니다.");
 			return "user/join";
 		}
 
@@ -73,15 +82,14 @@ public class UserController {
 
 	@RequestMapping(value = "/user/login", method = RequestMethod.GET)
 	public String login(HttpSession session, Model model) {
-		System.out.println(session.getAttribute("userId"));
-		if(session.getAttribute("userId") == null) {	
-		}else {
-			String id = (String)session.getAttribute("userId"); 
-			User user = userService.selectUser(id); 
-			if (user != null) { 
+		if (session.getAttribute("userId") == null) {
+		} else {
+			String id = (String) session.getAttribute("userId");
+			User user = userService.selectUser(id);
+			if (user != null) {
 				logger.info(user.toString());
-				model.addAttribute("user", user); 
-				}
+				model.addAttribute("user", user);
+			}
 		}
 		return "user/login";
 	}
@@ -98,6 +106,7 @@ public class UserController {
 				session.setAttribute("userName", user.getUserName());
 				session.setAttribute("userState", user.getUserState());
 				model.addAttribute("user", user);
+				return "user/mypage"; // 로그인 성공 시 "mypage"로 이동
 			} else { // 비밀번호가 다름
 				session.invalidate();
 				model.addAttribute("message", "비밀번호가 다릅니다.");
@@ -149,7 +158,7 @@ public class UserController {
 			userService.updateUser(user);
 			model.addAttribute("message", "회원 정보가 수정됐습니다.");
 			model.addAttribute("user", user);
-			return "user/login";
+			return "user/mypage";
 		} catch (Exception e) {
 			model.addAttribute("message", e.getMessage());
 			e.printStackTrace();
