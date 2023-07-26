@@ -2,6 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.myapp.review.dao.IReviewRepository">
 
+	<select id="selectPopularReview" resultType="com.example.myapp.review.model.Review">
+		<![CDATA[
+			SELECT 				
+				r.review_id as "reviewId",
+				r.user_id as "userId",
+				r.review_id as "reviewId", 
+			    r.rate as "rate", 
+			    r.content as "content", 
+			   	p.product_name as "productName", 
+			    p.product_price as "productPrice",
+			    ri.review_image_id as "reviewImageId",
+			    ri.review_image_name as "reviewImageName" 
+			FROM review r
+			LEFT JOIN review_image ri ON r.review_id = ri.review_id
+			LEFT JOIN product p on r.product_id = p.product_id
+		]]>
+	</select>
+
 	<select id="selectReviewList" parameterType="int" resultType="com.example.myapp.review.model.Review">
 		<![CDATA[
 			SELECT

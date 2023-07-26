@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.myapp.purchase.model.Purchase;
 import com.example.myapp.purchase.service.IPurchaseService;
+import com.example.myapp.review.model.Review;
+import com.example.myapp.review.service.IReviewService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -22,10 +24,17 @@ public class PurchaseController {
 	@Autowired
 	IPurchaseService purchaseService;
 	
+	@Autowired
+	IReviewService reviewService;
+	
 	@RequestMapping("/")
 	public String index(Model model) {
 		List<Purchase> list = purchaseService.selectTopThree();
+		List<Review> reviewList = reviewService.selectPopularReview();
+		int reviewCnt = reviewList.size();
 		model.addAttribute("pTopThree", list);
+		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("reviewCnt", reviewCnt);
 		return "index";
 	}
 		

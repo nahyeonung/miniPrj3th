@@ -84,6 +84,11 @@ public class ReviewService implements IReviewService {
 	public int selectReviewAvg(int productId) {
 		return reviewRepository.selectReviewAvg(productId);
 	}
+
+	@Override
+	public List<Review> selectPopularReview() {
+		return reviewRepository.selectPopularReview();
+	}
 	
 	
 }

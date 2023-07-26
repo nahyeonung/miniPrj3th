@@ -21,4 +21,6 @@ public interface IReviewService {
 	void deleteReview(int reviewId);
 	
 	int selectReviewAvg(int productId);
+	
+	List<Review> selectPopularReview();
 }
