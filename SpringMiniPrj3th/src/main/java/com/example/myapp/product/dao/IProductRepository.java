@@ -18,6 +18,10 @@ public interface IProductRepository {
 	
 	List<Product> selectPagingProduct(@Param("start") int start, @Param("end") int end, @Param("categoryId") int categoryId);
 	
+	List<Product> selectRateOrderProduct(@Param("start") int start, @Param("end") int end, @Param("categoryId") int categoryId);
+	
+	List<Product> selectPriceOrderProduct(@Param("start") int start, @Param("end") int end, @Param("categoryId") int categoryId);
+	
 	int insertCategory(@Param("categoryName") String categoryName);
 	
 	List<Category> selectAllCategory();
@@ -49,5 +53,6 @@ public interface IProductRepository {
 	List<Category> selectPagingCategory(@Param("min") int min, @Param("max") int max);
 	
 	int selectCountUseProduct(@Param("categoryId") int categoryId);
+	
 }
 

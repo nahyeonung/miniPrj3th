@@ -26,8 +26,19 @@ public class productService implements IProductService{
 	@Override
 	public List<Product> selectPagingProduct(int categoryId, int page) {
 		int start = (page-1) * 9 + 1;
-		System.out.println("im here" + start + " " + (start+8));
 		return productRepository.selectPagingProduct(start, start+8, categoryId);
+	}
+	
+	@Override
+	public List<Product> selectRateOrderProduct(int categoryId, int page) {
+		int start = (page-1) * 9 + 1;
+		return productRepository.selectRateOrderProduct(start, start+8, categoryId);
+	}
+	
+	@Override
+	public List<Product> selectPriceOrderProduct(int categoryId, int page) {
+		int start = (page-1) * 9 + 1;
+		return productRepository.selectPriceOrderProduct(start, start+8, categoryId);
 	}
 
 	@Override
@@ -116,4 +127,8 @@ public class productService implements IProductService{
 	public int selectCountUseProduct(int categoryId) {
 		return productRepository.selectCountUseProduct(categoryId);
 	}
+
+
+
+
 }
