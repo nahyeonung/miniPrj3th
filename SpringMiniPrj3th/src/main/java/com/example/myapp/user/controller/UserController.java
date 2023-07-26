@@ -48,6 +48,11 @@ public class UserController {
 		return "user/mypage";
 	}
 
+	@RequestMapping(value = "/user/join", method = RequestMethod.GET)
+	public String join() {
+		return "user/join";
+	}
+
 	@RequestMapping(value = "/user/insert", method = RequestMethod.GET)
 	public String insertUser(Model model) {
 		model.addAttribute("user", new User());

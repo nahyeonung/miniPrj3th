@@ -67,7 +67,7 @@ a:hover, a:active {
 		<div class="input-form-backgroud row">
 			<div class="input-form col-md-11 mx-auto">
 				<h3 class="mb-3 font-weight-bold text-dark">로그인</h3>
-				<form action="/user/login2" th:object="${user}" method="post"
+				<form action="/user/login" th:object="${user}" method="post"
 					class="validation-form" id="joinForm" novalidate>
 					<div class="row">
 						<div class="col-md-12 mb-3">
@@ -85,15 +85,15 @@ a:hover, a:active {
 					<div class="row">
 						<div class="col-md-12 mb-3">
 							<hr class="mb-4">
-							<button class="mb-4 btn btn-primary btn-lg btn-block">로그인
+							<button type="submit" class="mb-4 btn btn-primary btn-lg btn-block">로그인
 							</button>
+						</div>
+					</div>
+				</form>
 							<a th:href="@{/user/join}"><button
 									class="mb-4 btn btn-success btn-lg btn-block">회원가입</button></a> <a
 								href="/"><button
 									class="mb-4 btn btn-success btn-lg btn-block">홈으로</button></a>
-						</div>
-					</div>
-				</form>
 			</div>
 		</div>
 		<footer class="my-3 text-center text-small">
