@@ -34,4 +34,6 @@ public interface ICommunityRepository {
 	int selectTotalArticleCountBymylist(String userId);
 	List<Community> searchListByContentmylist(@Param("userId") String userId, @Param("start") int start, @Param("end") int end);
 	
+	void updateReplyCnt(
+			@Param("writeId") int writeId, @Param("amount") int amount);
 }

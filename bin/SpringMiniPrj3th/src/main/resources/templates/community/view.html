@@ -26,6 +26,7 @@
 			</div>
 			<hr>
 		</div>
+
 		<div id="post-body">
 			<div id="content">
 				<span class="contentmessage" th:utext="${community.writeContent}"></span>
@@ -37,27 +38,30 @@
 				</a>회원님의 게시글 더 보기
 			</div>
 			<table>
-				<tr th:each="reply : ${replyList}">
-					<td th:text="${reply.userId}"></td>
-					<td th:text="${reply.replyContent}"></td>
-					<td th:text="${reply.regDate}"></td>
-				</tr>
+				 <tr th:each="ReplyVO : ${replyList}" var="replyList">
+        <td th:text="${ReplyVO.userId}"></td>
+        <td th:text="${ReplyVO.replyContent}"></td>
+        <td th:text="${ReplyVO.regDate}"></td>
+    </tr>
 			</table>
+			<div>
 
-			<div class="card my-4">
-				<h5 class="card-header">Leave a Comment:</h5>
-				<div class="card-body">
-					<form name="comment-form" action="/reply/write" method="post"
-						autocomplete="off">
-						<div class="form-group">
-							<input type="hidden" name="writeId" th:value="*{writeId}" />
-							<textarea name="replyContent" class="form-control" rows="3"></textarea>
-						</div>
-						<button type="submit" class="btn btn-primary">Submit</button>
-					</form>
-				</div>
-			</div>
-
+	<form method="post" action="/reply/write">
+	
+		<p>
+			<label>댓글 작성자</label> <input type="text" name="userId">
+		</p>
+		<p>
+			<textarea rows="5" cols="50" name="replyContent"></textarea>
+		</p>
+		<p>
+		<input type="hidden" name="writeId" value="${replyList.writeId}">
+			<button type="submit">댓글 작성</button>
+		</p>
+	</form>
+	
+</div>
+			
 
 			<a th:href="@{/community/list}"><button type="button"
 					class="btn list">목록</button></a> <a

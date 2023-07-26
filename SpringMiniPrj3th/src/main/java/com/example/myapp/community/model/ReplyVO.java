@@ -4,7 +4,8 @@ import java.sql.Timestamp;
 
 import lombok.Getter;
 import lombok.Setter;
-@Getter @Setter
+import lombok.ToString;
+@Getter @Setter @ToString
 public class ReplyVO {
 	 private int rno;
 	 private String replyContent;

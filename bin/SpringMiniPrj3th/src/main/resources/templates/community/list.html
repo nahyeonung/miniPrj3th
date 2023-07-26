@@ -36,8 +36,7 @@
 				<h1>[[${bbsCount}]]개의 글</h1>
 
 				<a th:href="@{/community/write}">
-				<button type="button" class="btn_write"><img src="https://ssl.pstatic.net/static/blog/img_write_btn.png" width="86" height="37" alt="글쓰기">
-					</button>
+					<button type="button" class="btn btn_write">글쓰기</button>
 				</a>
 			</div>
 		</div>
@@ -58,10 +57,8 @@
 							<td><a
 								th:href="@{/community/mylist?userId={userId}(userId=${community.userId})}">[[${community.userId}]]</a></td>
 							<td><a th:href="@{/community/__${community.writeId}__}">
-									<span th:text="${community.writeTitle}"></span>[<span th:text="${community.replyCnt}"></span>]</a></td>
-									
+									[[${community.writeTitle}]]</a></td>
 							<td th:text="${#dates.format(community.writeDate, 'yy/MM/dd')}"></td>
-							
 						</tr>
 					</tbody>
 				</table>
