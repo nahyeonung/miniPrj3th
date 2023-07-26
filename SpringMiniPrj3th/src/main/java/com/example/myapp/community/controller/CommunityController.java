@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +21,7 @@ import com.example.myapp.community.model.Community;
 import com.example.myapp.community.model.ReplyVO;
 import com.example.myapp.community.service.ICommunityService;
 import com.example.myapp.community.service.IReplyService;
+import com.example.myapp.user.model.User;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -32,7 +34,6 @@ public class CommunityController {
 
 	@Autowired
 	ICommunityService communityService;
-	
 
 	@RequestMapping("/community/list/{page}")
 	public String getListByCommunity(@PathVariable int page, HttpSession session, Model model) {
@@ -95,22 +96,36 @@ public class CommunityController {
 	}
 
 	@RequestMapping(value = "/community/write", method = RequestMethod.GET)
-	public String writeArticle(Model model) {
-//		model.addAttribute("community", new Community());
-		return "community/write";
+	public String writeArticle(HttpSession session, Model model) {
+		String userId = (String) session.getAttribute("userId");
+		if (userId != null && !userId.equals("")) {
+			model.addAttribute("userId", userId);
+			return "community/write";
+		} else {
+			model.addAttribute("message", "로그인 하지 않은 사용자입니다.");
+			return "user/login";
+		}
 	}
 
 	@RequestMapping(value = "/community/write", method = RequestMethod.POST)
-	public String writeArticle(Community community, BindingResult results, RedirectAttributes redirectAttrs) {
-//		logger.info("/community/write : " + community.toString());
+	public String writeArticle(@Validated Community community, BindingResult result, HttpSession session, Model model, RedirectAttributes redirectAttrs) {
+		// logger.info("/community/write : " + community.toString());
+//		if (result.hasErrors()) {
+//			model.addAttribute("commuinty", community);
+//			return "community/write";
+//		}
 		try {
-			community.setUserId("test");
+			String userId = (String) session.getAttribute("userId");
+			community.setUserId(userId);
 			communityService.insertArticle(community);
+			model.addAttribute("message", "새로운 게시글이 등록 되었습니다.");
+			model.addAttribute("commuinty", community);
+			return "redirect:/community/list";
 		} catch (Exception e) {
 			e.printStackTrace();
-			redirectAttrs.addFlashAttribute("message", "공란이 있습니다.");
+			model.addAttribute("message", e.getMessage());
+			return "community/error";
 		}
-		return "redirect:/community/list";
 	}
 
 	@RequestMapping(value = "/community/update/{writeId}", method = RequestMethod.GET)
