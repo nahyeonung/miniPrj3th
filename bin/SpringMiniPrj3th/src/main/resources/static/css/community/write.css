@@ -1,0 +1,30 @@
+@charset "UTF-8";
+.btn{
+	float: right;
+}
+
+.btn{
+	padding: 10px;
+}
+input#no {
+	    margin-left: 10px;
+}
+h8{
+	font-size: 1.5rem;
+	  color: #808080;
+}
+h9 {
+  font-size: 32px;
+  color: #333333;
+  font-weight: 400;
+  text-align: center;
+  
+}
+.page_title{
+	text-align: center;
+	margin-top: 50px;
+	margin-bottom: 20px;
+}
+.btn{
+	  
+}

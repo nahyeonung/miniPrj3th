@@ -2,20 +2,20 @@ package com.example.myapp.community.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.myapp.community.dao.ICommunityRepository;
 import com.example.myapp.community.dao.IReplyRepository;
 import com.example.myapp.community.model.ReplyVO;
 @Service
-public class replyService implements IReplyService {
+public class ReplyService implements IReplyService {
 
 	@Autowired
 	IReplyRepository dao;
 	// 댓글 조회
-
+	@Autowired
+	ICommunityRepository communityRepository;
 	// 댓글 조회
 	@Override
 	public List<ReplyVO> replyList(int writeId) {
@@ -24,6 +24,7 @@ public class replyService implements IReplyService {
 
 	@Override
 	public void replyWrite(ReplyVO vo) {
+		communityRepository.updateReplyCnt(vo.getWriteId(), 1);
 	    dao.replyWrite(vo);
 	}
 
@@ -35,4 +36,8 @@ public class replyService implements IReplyService {
 	@Override
 	public void replyDelete(int writeId) {
 	    dao.replyDelete(writeId);
-	}}
+	}
+	
+
+
+}

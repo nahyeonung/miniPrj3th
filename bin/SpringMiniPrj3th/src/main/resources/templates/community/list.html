@@ -57,10 +57,8 @@
 							<td><a
 								th:href="@{/community/mylist?userId={userId}(userId=${community.userId})}">[[${community.userId}]]</a></td>
 							<td><a th:href="@{/community/__${community.writeId}__}">
-									<span th:text="${community.writeTitle}"></span>[<span th:text="${community.replyCnt}"></span>]</a></td>
-									
+									[[${community.writeTitle}]]</a></td>
 							<td th:text="${#dates.format(community.writeDate, 'yy/MM/dd')}"></td>
-							
 						</tr>
 					</tbody>
 				</table>
