@@ -16,7 +16,7 @@ public interface IPurchaseRepository {
 	void insertPurchaseDetail(Purchase purchase);
 	
 	Purchase selectUserInfo(String userId);
-	Purchase selectProductInfo(Purchase purchase);
+	Purchase selectProductInfo(int productId);
 	List<Purchase> selectCartInfo(@Param("cartIdList") List<Integer> cartIdList, @Param("userId") String userId);
 	
 	int getPurchaseId();

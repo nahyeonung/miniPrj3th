@@ -31,38 +31,84 @@
 	</select>
 	
 	<select id="selectPagingProduct" parameterType="int" resultType="com.example.myapp.product.model.Product">
-		SELECT
-			product_id AS productId,
-			category_id AS categoryId,
-			category_name AS categoryName,
-			product_name AS productName,
-			product_price AS productPrice,
-			product_description AS productDescription,
-			product_state AS productState,
-			product_stock AS productStock,
-			product_date AS productDate,
-			image_name AS imageName,
-			image_data AS imageData,
-			image_id AS imageId,
-			image_type AS imageType,
-			image_size AS imageSize
-		FROM (
-			SELECT product_id, category_id, category_name, product_name, product_price, product_description, product_state, product_stock,
-            product_date, image_name, image_data, image_id, image_type, image_size, rownum AS rnum
-            FROM (
-            	SELECT p.product_id, c.category_id, category_name, product_name, product_price, product_description, product_state, product_stock,
-            	product_date, image_name, image_data, image_id, image_type, image_size
-            	FROM product p 
-            	LEFT JOIN category c on p.category_id = c.category_id 
-            	LEFT JOIN product_image pi on p.product_id = pi.product_id
-            	ORDER BY p.product_id
-            	)
-			)
-		WHERE rnum BETWEEN #{start} AND #{end}
-		AND product_state = 0
+		SELECT pp.product_name AS productName, 
+				pp.product_price AS productPrice, 
+				pp.category_id AS categoryId, 
+			    pp.product_id AS productId,
+			    pp.product_state AS productState,
+			    pp.ravg AS avgRate,
+			   	pi.image_id AS imageId,
+			    pi.image_name AS imageName, 
+			    pi.image_size AS imageSize, 
+			    pi.image_type AS imageType, 
+			    pi.image_data AS imageData
+			    FROM(
+					SELECT product_id, product_name, product_price, product_state ,category_id, NVL(ravg,0) as ravg, rownum as rnum
+					FROM(
+					SELECT p.product_id, p.product_name, p.product_price, p.product_state, p.category_id, round(avg(r.rate),0) as ravg 
+						FROM product p left join review r on p.product_id = r.product_id
+						WHERE p.product_state = 0
+						GROUP BY p.product_id, p.product_name, p.product_price, p.product_state ,p.category_id
+						)
+					)
+					pp LEFT JOIN product_image pi on pp.product_id = pi.product_id 
+					WHERE rnum BETWEEN #{start} AND #{end}
 		<if test='categoryId != -1'>
 			AND category_id = #{categoryId}
 		</if>		
+	</select>
+	
+	<select id="selectRateOrderProduct" resultType="com.example.myapp.product.model.Product">
+	<![CDATA[
+			SELECT pp.product_name AS productName, 
+				   pp.product_price AS productPrice, 
+				   pp.category_id AS categoryId, 
+			       pp.product_id AS productId,
+			       pp.product_state AS productState,
+			       pp.ravg AS avgRate,
+			   	   pi.image_id AS imageId,
+			       pi.image_name AS imageName, 
+			       pi.image_size AS imageSize, 
+			       pi.image_type AS imageType, 
+			       pi.image_data AS imageData
+			       FROM(
+					SELECT product_id, product_name, product_price, product_state ,category_id, NVL(ravg,0) as ravg, rownum as rnum
+					FROM(
+					SELECT p.product_id, p.product_name, p.product_price, p.product_state, p.category_id, round(avg(r.rate),0) as ravg 
+						FROM product p left join review r on p.product_id = r.product_id
+						WHERE p.product_state = 0
+						GROUP BY p.product_id, p.product_name, p.product_price, p.product_state ,p.category_id ORDER BY ravg
+						)
+					)
+					pp LEFT JOIN product_image pi on pp.product_id = pi.product_id 
+					WHERE rnum BETWEEN #{start} AND #{end} 
+					ORDER BY rnum
+	]]>
+	</select>
+	
+	<select id="selectPriceOrderProduct" resultType="com.example.myapp.product.model.Product">
+	<![CDATA[
+		SELECT pp.product_name AS productName, 
+        	pp.product_price AS productPrice, 
+        	pp.category_id AS categoryId, 
+        	pp.product_id AS productId,
+            pp.ravg AS avgRate,
+        	pi.image_id AS imageId,
+        	pi.image_name AS imageName, 
+        	pi.image_size AS imageSize, 
+        	pi.image_type AS imageType, 
+        	pi.image_data AS imageData FROM
+			(SELECT product_id, product_name, product_price, category_id, NVL(ravg,0) as ravg ,rownum as rnum FROM 
+				(SELECT p.product_id, p.product_name, p.product_price, p.category_id, round(avg(r.rate),0) as ravg from product p
+                       LEFT JOIN review r on p.product_id = r.product_id 
+                       WHERE p.product_state = 0
+                       GROUP BY p.product_id, p.product_name, p.product_price, p.category_id 
+                       ORDER BY p.product_price desc
+                 )
+            ) pp
+			LEFT JOIN product_image pi on pp.product_id = pi.product_id 
+			WHERE rnum BETWEEN #{start} AND #{end} ORDER BY rnum
+	]]>
 	</select>
 	
 	<select id="selectCountUseProduct" parameterType="int" resultType="int">

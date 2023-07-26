@@ -26,18 +26,33 @@
 	
 						<h5 class="text-center p-3 fw-bold">상품 정보</h5>
 						<hr>
-	
-						<div th:each="product : ${list}" class="d-flex my-5 px-3">
-							<img th:src="@{/file/{id}(id=${product.imageId})}" style="width:150px">
-	
-							<div class="productInfo">
-								<p>상품 이름 : [[${product.productName}]]</p>
-								<p>상품 가격 : [[${product.productPrice}]]</p>
-								<p>상품 수량 : [[${product.cartCnt}]]</p>
-						        <input type="hidden" name="productId" th:value="${product.productId}" />
-				                <input type="hidden" name="purchaseCnt" th:value="${product.cartCnt}">
+						
+						<div th:if="${list}">
+							<div th:each="product : ${list}" class="d-flex my-5 px-3">
+								<img th:src="@{/file/{id}(id=${product.imageId})}" style="width:150px">
+		
+								<div class="productInfo">
+									<p>상품 이름 : [[${product.productName}]]</p>
+									<p>상품 가격 : [[${product.productPrice}]]</p>
+									<p>상품 수량 : [[${product.cartCnt}]]</p>
+							        <input type="hidden" name="productId" th:value="${product.productId}" />
+					                <input type="hidden" name="purchaseCnt" th:value="${product.cartCnt}">
+								</div>
 							</div>
-							
+						</div>
+						
+						<div th:unless="${list}">
+							<div class="d-flex my-5 px-3">
+								<img th:src="@{/file/{id}(id=${buy.imageId})}" style="width:150px">
+		
+								<div class="productInfo">
+									<p>상품 이름 : [[${buy.productName}]]</p>
+									<p>상품 가격 : [[${buy.productPrice}]]</p>
+									<p>상품 수량 : [[${buy.cartCnt}]]</p>
+							        <input type="hidden" name="productId" th:value="${buy.productId}" />
+					                <input type="hidden" name="purchaseCnt" th:value="${buy.cartCnt}">
+								</div>
+							</div>
 						</div>
 					</div>
 					

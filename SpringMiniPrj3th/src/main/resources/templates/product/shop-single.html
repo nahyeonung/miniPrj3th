@@ -67,15 +67,14 @@
                             <h6>Description:</h6>
                             <p>[[${product.productDescription}]]</p>
 
-                            <form action="/cart/insert" method="POST">
+                            <form id="product-form">
                                 <input type="hidden" name="productId" th:value="${product.productId}">
                                 <div class="row">
                                     <div class="col-auto">
                                         <ul class="list-inline pb-3">
                                             <li class="list-inline-item text-right">
                                                 Quantity
-                                                <input type="hidden" name="cartCnt" id="product-quanity" value="1">
-                                            </li>
+                                                <input type="hidden" name="cartCnt" id="product-quanity" th:value="1">
                                             <li class="list-inline-item"><span class="btn btn-success" id="btn-minus">-</span></li>
                                             <li class="list-inline-item"><span class="badge bg-secondary" id="var-value">1</span></li>
                                             <li class="list-inline-item"><span class="btn btn-success" id="btn-plus">+</span></li>
@@ -112,27 +111,25 @@
              <div id="carousel-related-product" class="review-flex" th:each="review : ${reviewList}">
 
                 <div class="p-2 pb-3">
-                	<div>
-                		<span>리뷰 유저: </span>
-                		<span>[[${review.userId}]]</span>
-                	</div>
-                	<div>
-                		<span>구매 상품: </span>
-                		<span>[[${review.productName}]]</span>
-                	</div>
-                    <div class="product-wap card rounded-0">
+                    <div class="product-wap card rounded-0 mx-3">
                         <div class="card rounded-0" style="height:200px">
                             <img th:if="${review.reviewImageName!=null}" style="height:200px; width:auto;" th:src="@{/review/file/{id}(id=${review.reviewImageId})}">
                         </div>
                         <div class="card-body">
-                            <a href="shop-single.html" class="h3 text-decoration-none">[[${review.content}]]</a>
-                            <ul class="list-unstyled d-flex justify-content-center mb-1">
+                            <h5 class="fw-bold">[[${review.productName}]]</h5>
+                            <ul class="list-unstyled d-flex justify-content-start mb-1">
+                            	<li class="me-3 fw-bold">[[${review.userId}]]</li>
                                 <li>
                                     <i class="text-warning fa fa-star"  th:each="num: ${#numbers.sequence(1, review.rate)}"></i>
                                     <i th:if="${review.rate<5}" class="text-muted fa fa-star" th:each="num: ${#numbers.sequence(1, 5-review.rate)}"></i>
                                 </li>
                             </ul>
-                            <p class="text-center mb-0">[[${review.productPrice}]]원</p>
+                            <p class="text-left mb-0 fw-bold">가격 : [[${review.productPrice}]]원</p>
+                            <hr>
+                            <div class="border p-3 border-success">
+                            	<h5 class="text-center fw-bold">후기</h5>
+                            	<p class="h3 text-decoration-none text-center">[[${review.content}]]</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -168,29 +165,31 @@
 	
 	        buyButton.addEventListener("click", function() {
 	            var form = document.getElementById("product-form");
-	            form.action = "/purchase/insert";
+	            form.method = "GET";
+	            form.action = "/purchase/buy";
 	        });
 	
 	        addToCartButton.addEventListener("click", function() {
 	            var form = document.getElementById("product-form");
+	            form.method = "POST";
 	            form.action = "/cart/insert";
 	        });
 	        
 	        function updateQuantity(value) {
 	            let quantity = parseInt($("#var-value").text());
 	            quantity = isNaN(quantity) ? 1 : quantity + value;
-	            if (quantity < 1) quantity = 1; // Make sure quantity is always at least 1
-	            $("#var-value").text(quantity); // Update the displayed quantity
-	            $("#product-quanity").val(quantity); // Update the hidden input value
+	            if (quantity < 1) quantity = 1;
+	            $("#var-value").text(quantity);
+	            $("#product-quanity").val(quantity);
+	            $("#purchase-quanity").val(quantity)
 	        }
 
-	        // Button click events
 	        $("#btn-plus").click(function() {
-	            updateQuantity(1); // Increment quantity by 1
+	            updateQuantity(1);
 	        });
 
 	        $("#btn-minus").click(function() {
-	            updateQuantity(-1); // Decrement quantity by 1
+	            updateQuantity(-1);
 	        });
 	    });
 	</script>

@@ -18,4 +18,5 @@ public interface IReplyService {
 
 		// 댓글 삭제
 		 void replyDelete(int write);
+
 }

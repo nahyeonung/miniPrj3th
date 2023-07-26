@@ -49,6 +49,16 @@ public class ProductController {
       return getAllProduct(1, id, name, session, model);
    }
    
+   @RequestMapping("/shop/rateOrder")
+   public String getRateOrder(HttpSession session, Model model) {
+	   return getAllProduct(1, -1, "평점", session, model);
+   }
+   
+   @RequestMapping("/shop/priceOrder")
+   public String getPriceOrder(HttpSession session, Model model) {
+	   return getAllProduct(1, -1, "가격", session, model);
+   }
+   
    @RequestMapping("/shop/{page}")
    public String getAllProduct(@PathVariable int page, @RequestParam(required=false, defaultValue= "-1")int id, 
 		   @RequestParam(required=false, defaultValue= "전체") String name, HttpSession session, Model model) {
@@ -56,9 +66,23 @@ public class ProductController {
 		  List<Category> categoryList = productService.selectAllCategory();
 		  int productCnt = 0;
 		  if(id == -1) {
-			  List<Product> list = productService.selectPagingProduct(-1, page);		
-			  productCnt = productService.selectCountUseProduct(-1);
-			  model.addAttribute("productList", list);
+			  if(name.equals("전체")) {
+				  List<Product> list = productService.selectPagingProduct(-1, page);		
+				  productCnt = productService.selectCountUseProduct(-1);
+				  model.addAttribute("productList", list); 
+				  System.out.println("why" + list.size());
+			  }
+			  else if(name.equals("평점")) {
+				  List<Product> list = productService.selectRateOrderProduct(-1, page);
+				  productCnt = productService.selectCountUseProduct(-1);
+				  model.addAttribute("productList", list);
+			  }
+			  else if(name.equals("가격")) {
+				  List<Product> list = productService.selectPriceOrderProduct(-1, page);
+				  productCnt = productService.selectCountUseProduct(-1);
+				  model.addAttribute("productList", list);
+			  }
+			  
 		  }else {
 			  List<Product> list = productService.selectPagingProduct(id, page);
 			  productCnt = productService.selectCountUseProduct(id);
@@ -266,7 +290,6 @@ public class ProductController {
       Product product = productService.selectProduct(productId);
       List<Review> reviewList = reviewService.selectReviewList(productId);
       int reviewRateAvg = reviewService.selectReviewAvg(productId);
-      System.out.println("생기부" + reviewRateAvg);
       
       model.addAttribute("product", product);
       model.addAttribute("reviewList", reviewList);

@@ -7,12 +7,8 @@
 
 	<select id="replyList" parameterType="int"
 		resultType="com.example.myapp.community.model.ReplyVO">
-		<![CDATA[ select 
-			rno 			AS 			"rno", 
-			user_id				AS 		"userId",	
-			reply_content			AS "replyContent",
-			regDate			AS 			"regDate",
-			write_id			AS 			"writeId"
+		<![CDATA[ select
+		rno AS "rno", write_id AS "writeId", user_id AS "userId", reply_content AS "replyContent", REGDATE AS "regDate"
 		from reply
 		WHERE write_id=#{writeId}]]>
 	</select>
@@ -20,8 +16,8 @@
 	<!-- 댓글 작성 -->
 	<insert id="replyWrite"
 		parameterType="com.example.myapp.community.model.ReplyVO">
-		<![CDATA[insert into reply(rno, write_id, user_id, reply_content, regDate)
-		values(reply_seq.nextval, #{writeId}, #{userId}, #{replyContent}, SYSDATE)]]>
+		insert into reply(write_id, user_id, reply_content, regDate)
+		value(#{writeId}, #{userId}, #{replyContent}, #{regDate})
 	</insert>
 
 	<!-- 댓글 수정 -->

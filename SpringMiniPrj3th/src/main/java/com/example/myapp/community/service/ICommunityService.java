@@ -5,8 +5,8 @@ import java.util.List;
 import com.example.myapp.community.model.Community;
 
 public interface ICommunityService {
+	
 	void insertArticle(Community community);
-
 
 	List<Community> selectArticleListByCommunity(int page);
 
@@ -26,5 +26,5 @@ public interface ICommunityService {
 	
 	int selectTotalArticleCountBymylist(String userId);
 	List<Community> searchListByContentmylist(String userId, int page);
-
+	void updateReplyCnt(int writeId, int amount);
 }

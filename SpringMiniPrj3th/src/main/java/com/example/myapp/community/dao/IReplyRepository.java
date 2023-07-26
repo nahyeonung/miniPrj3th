@@ -13,14 +13,14 @@ import com.example.myapp.community.model.ReplyVO;
 public interface IReplyRepository {
 
 	// 댓글 조회
-		List<ReplyVO> replyList(int writeId);
+	List<ReplyVO> replyList(int writeId);
 
-		// 댓글 조회
-		void replyWrite(ReplyVO vo);
+	// 댓글 조회
+	void replyWrite(ReplyVO vo);
 
-		// 댓글 수정
-		void replyModify(ReplyVO vo);
+	// 댓글 수정
+	void replyModify(ReplyVO vo);
 
-		// 댓글 삭제
-		 void replyDelete(int writeId);
+	// 댓글 삭제
+	void replyDelete(int writeId);
 }

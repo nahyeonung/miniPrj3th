@@ -83,8 +83,8 @@ https://templatemo.com/tm-559-zay-shop
                             <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
                         </a>
                         <ul id="collapseTwo" class="collapse list-unstyled pl-3">
-                            <li><a class="text-decoration-none" href="#">평점순</a></li>
-                            <li><a class="text-decoration-none" href="#">가격순</a></li>
+                            <li><a class="text-decoration-none" th:href="@{/shop/rateOrder}">평점순</a></li>
+                            <li><a class="text-decoration-none" th:href="@{/shop/priceOrder}">가격순</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -100,10 +100,10 @@ https://templatemo.com/tm-559-zay-shop
                         </ul>
                     </div>
                     <div class="col-md-6 pb-4">
-  						<h1>
+  						<h3>
 							<span th:if="${session.userId != null}" th:text="${session.userId} + '님 환영합니다.'">userId님 환영합니다.</span>
-							<span th:unless="${session.userId != null}">로그인</span>
-						</h1>
+							<span th:unless="${session.userId != null}">로그인이 필요해요</span>
+						</h3>
                     </div>
                 </div>
                 <div class="row">
@@ -121,23 +121,10 @@ https://templatemo.com/tm-559-zay-shop
                             </div>
                             <div class="card-body">
                                 <a th:href="@{/product/productDetail/{productId}(productId=${product.productId})}" class="h3 text-decoration-none">[[${product.productName}]]</a>
-                                <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                    <li>M/L/X/XL</li>
-                                    <li class="pt-2">
-                                        <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                        <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                        <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                        <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                        <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                    </li>
-                                </ul>
                                 <ul class="list-unstyled d-flex justify-content-center mb-1">
                                     <li>
-                                        <i class="text-warning fa fa-star"></i>
-                                        <i class="text-warning fa fa-star"></i>
-                                        <i class="text-warning fa fa-star"></i>
-                                        <i class="text-muted fa fa-star"></i>
-                                        <i class="text-muted fa fa-star"></i>
+                                  		<i th:if="${product.avgRate>0}" class="text-warning fa fa-star"  th:each="num: ${#numbers.sequence(1, product.avgRate)}"></i>
+                               			<i th:if="${product.avgRate<5}" class="text-dark fa fa-star" th:each="num: ${#numbers.sequence(1, 5-product.avgRate)}"></i>
                                     </li>
                                 </ul>
                                 <p class="text-center mb-0">[[${product.productPrice}]]</p>

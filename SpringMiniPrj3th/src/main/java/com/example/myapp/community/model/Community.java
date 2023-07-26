@@ -22,6 +22,7 @@ public class Community {
 	 private int rno;
 	 private String replyContent;
 	 private Timestamp regDate;
+	 private int replyCnt;
 
 //	private int readCount;
 //	private int replyNumber;

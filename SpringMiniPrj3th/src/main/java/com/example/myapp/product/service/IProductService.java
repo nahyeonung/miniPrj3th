@@ -20,6 +20,10 @@ public interface IProductService {
 	
 	List<Product> selectPagingProduct(int categoryId, int page);
 	
+	List<Product> selectRateOrderProduct(int categoryId, int page);
+	
+	List<Product> selectPriceOrderProduct(int categoryId, int page);
+	
 	int insertCategory(String categoryName);
 	
 	List<Category> selectAllCategory();

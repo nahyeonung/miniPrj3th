@@ -23,4 +23,5 @@ public class Product {
 	private long imageSize;
 	private String imageType;
 	private byte[] imageData;
+	private int avgRate;
 }
