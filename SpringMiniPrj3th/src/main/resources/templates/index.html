@@ -98,7 +98,7 @@ body {
 					<a href="#"><img style="height: 60%; width: 100%;"
 						th:src="@{/file/{id}(id=${list.imageId})}"
 						class="rounded-circle img-fluid border"></a>
-					<h5 class="text-center mt-3 mb-3">[[${list.productName}]]</h5>
+					<h5 class="text-center mt-3 mb-3">[[${list.productName}]]([[${list.totalCnt}]]개)</h5>
 					<p class="text-center">
 						<a
 							th:href="@{/product/productDetail/{productId}(productId=${list.productId})}"
@@ -125,8 +125,8 @@ body {
 					<th:block th:each="list : ${reviewList}">
 						<div class="col-12 col-md-4 mb-4">
 							<div class="card h-100">
-								<img th:src="@{/review/file/{id}(id=${list.reviewImageId})}"
-									class="card-img-top" style="height: 200px;">
+								<img th:if="${list.reviewImageId != 0}" th:src="@{/review/file/{id}(id=${list.reviewImageId})}" class="card-img-top" style="height:200px;">
+                         		<img th:unless="${list.reviewImageId != 0}" th:src="@{/img/최애의아이배너.png}" class="card-img-top" style="height:200px;">
 								<div class="card-body">
 									<ul class="list-unstyled d-flex justify-content-between">
 										<li><i class="text-warning fa fa-star"></i> <i
@@ -184,7 +184,7 @@ body {
 
     function translateContainer(direction){
     	  const selectedBtn = (direction === 1) ? 'prev' : 'next';
-    	  container.style.transitionDuration = '300ms';
+    	  container.style.transitionDuration = '700ms';
     	  container.style.transform = `translateX(${direction * (100 / reviewCnt)}%)`;
     	  container.ontransitionend = () => reorganizeEl(selectedBtn);
     	}
