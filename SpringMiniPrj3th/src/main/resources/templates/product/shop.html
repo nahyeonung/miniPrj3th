@@ -71,9 +71,9 @@ https://templatemo.com/tm-559-zay-shop
                             <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
                         </a>
                         <ul class="collapse show list-unstyled pl-3">
-                        	<li><a class="text-decoration-none" th:href="@{/shop}">전체</a></li>
+                        	<li><a class="text-decoration-none" th:href="@{/shop}">&nbsp &nbsp▶ 전체</a></li>
                         	<th:block th:each="list : ${categoryList}">
-                        		<li><a class="text-decoration-none" th:href="@{/shop(id=${list.categoryId}, name=${list.categoryName})}">[[${list.categoryName}]]</a></li>
+                        		<li><a class="text-decoration-none" th:href="@{/shop(id=${list.categoryId}, name=${list.categoryName})}">&nbsp &nbsp▶ [[${list.categoryName}]]</a></li>
                         	</th:block>
                         </ul>
                     </li>
@@ -83,8 +83,8 @@ https://templatemo.com/tm-559-zay-shop
                             <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
                         </a>
                         <ul id="collapseTwo" class="collapse list-unstyled pl-3">
-                            <li><a class="text-decoration-none" th:href="@{/shop/rateOrder}">평점순</a></li>
-                            <li><a class="text-decoration-none" th:href="@{/shop/priceOrder}">가격순</a></li>
+                            <li><a class="text-decoration-none" th:href="@{/shop/rateOrder}">&nbsp &nbsp▶ 평점순</a></li>
+                            <li><a class="text-decoration-none" th:href="@{/shop/priceOrder}">&nbsp &nbsp▶ 가격순</a></li>
                         </ul>
                     </li>
                 </ul>
