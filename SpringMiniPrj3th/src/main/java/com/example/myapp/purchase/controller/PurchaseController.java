@@ -83,12 +83,17 @@ public class PurchaseController {
 		model.addAttribute("buy", buy);
 
 		String userId = (String) session.getAttribute("userId");
+		if(userId != null && !userId.equals("")) {
 		purchase = purchaseService.selectUserInfo(userId);
 
 		model.addAttribute("purchase", purchase);
 		model.addAttribute("sum", sum);
 
-		return "purchase/insert";
+		return "purchase/insert";}
+		else {
+			model.addAttribute("message", "NOT_LOGIN_USER");
+			return "user/login";
+		}
 	}
 
 	@RequestMapping("/purchase/list")

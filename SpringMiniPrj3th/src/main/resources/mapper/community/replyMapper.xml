@@ -14,7 +14,8 @@
 			regDate			AS 			"regDate",
 			write_id			AS 			"writeId"
 		from reply
-		WHERE write_id=#{writeId}]]>
+		WHERE write_id=#{writeId}
+		order by  rno desc]]>
 	</select>
 
 	<!-- 댓글 작성 -->
