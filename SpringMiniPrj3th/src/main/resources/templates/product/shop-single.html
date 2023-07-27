@@ -129,8 +129,8 @@
                             <div class="border p-3 border-success">
                             	<h5 class="text-center fw-bold">후기</h5>
                             	<p class="h3 text-decoration-none text-center">[[${review.content}]]</p>
-                            	<hr>
-                            	<div class="d-flex justify-content-center">
+                           		<hr>
+                            	<div th:if="${session.userId.equals(review.userId)}" class="d-flex justify-content-center">
 									<a class="btn btn-outline-primary me-3" th:href="@{/review/update/{reviewId}(reviewId=${review.reviewId})}">글수정</a>
 	              					<a class="btn btn-outline-danger" th:href="@{/review/delete(reviewId=${review.reviewId})}">글삭제</a>
 								</div>
