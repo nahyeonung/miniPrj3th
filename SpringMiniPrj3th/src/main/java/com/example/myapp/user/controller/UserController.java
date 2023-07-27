@@ -99,36 +99,41 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
-	public String login(String userId, String userPwd, HttpSession session, Model model) {
-		User user = userService.selectUser(userId);
-		if (user != null) {
-			System.out.println(user.getUserState());
-			if (user.getUserState() == 1) {
-				session.invalidate();
-				model.addAttribute("message", "비활성화된 계정입니다. 관리자에게 문의하세요.");
-				return "user/login";
-			} else {
-
-				logger.info(user.toString());
-				String dbPassword = user.getUserPwd();
-				if (dbPassword.equals(userPwd)) { // 비밀번호 일치
-					session.setMaxInactiveInterval(600); // 10분
-					session.setAttribute("userId", userId);
-					session.setAttribute("userName", user.getUserName());
-					session.setAttribute("userState", user.getUserState());
-					model.addAttribute("user", user);
-					return "index";
-				} else { // 비밀번호가 다름
-					session.invalidate();
-					model.addAttribute("message", "비밀번호가 다릅니다. 다시 확인해주세요.");
-				}
-			}
-		} else { // 아이디가 없음
-			session.invalidate();
-			model.addAttribute("message", "존재하지 않는 아이디입니다. 다시 확인해주세요.");
-		}
-		return "index"; // 로그인 성공 시 "index"로 이동
-	}
+	   public String login(String userId, String userPwd, HttpSession session, Model model) {
+	       // 사용자 정보를 데이터베이스에서 조회합니다.
+	       User user = userService.selectUser(userId);
+	       if (user != null) {
+	           System.out.println(user.getUserState());
+	           if (user.getUserState() == 1) {
+	               // 계정이 비활성화된 경우, 세션을 무효화하고 에러 메시지를 전달하여 "user/login" 뷰를 반환합니다.
+	               session.invalidate();
+	               model.addAttribute("message", "비활성화된 계정입니다. 관리자에게 문의하세요.");
+	               return "user/login";
+	           } else {
+	               logger.info(user.toString());
+	               String dbPassword = user.getUserPwd();
+	               if (dbPassword.equals(userPwd)) { // 비밀번호 일치
+	                   // 로그인이 성공한 경우, 세션에 사용자 정보를 설정하고 "index" 뷰를 반환합니다.
+	                   session.setMaxInactiveInterval(600); // 10분
+	                   session.setAttribute("userId", userId);
+	                   session.setAttribute("userName", user.getUserName());
+	                   session.setAttribute("userState", user.getUserState());
+	                   model.addAttribute("user", user);
+	                   return "index";
+	               } else { // 비밀번호가 다른 경우
+	                   // 세션을 무효화하고 에러 메시지를 전달하여 "user/login" 뷰를 반환합니다.
+	                   session.invalidate();
+	                   model.addAttribute("message", "비밀번호가 다릅니다. 다시 확인해주세요.");
+	                   return "user/login";
+	               }
+	           }
+	       } else { // 아이디가 존재하지 않는 경우
+	           // 세션을 무효화하고 에러 메시지를 전달하여 "user/login" 뷰를 반환합니다.
+	           session.invalidate();
+	           model.addAttribute("message", "존재하지 않는 아이디입니다. 다시 확인해주세요.");
+	           return "user/login";
+	       }
+	   }
 
 	@RequestMapping(value = "/user/userInfo", method = RequestMethod.GET)
 	public String userInfo(String userId, HttpSession session, Model model) {
