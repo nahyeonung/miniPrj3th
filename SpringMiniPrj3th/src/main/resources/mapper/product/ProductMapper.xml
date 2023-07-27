@@ -50,12 +50,13 @@
 						WHERE p.product_state = 0
 						GROUP BY p.product_id, p.product_name, p.product_price, p.product_state ,p.category_id
 						)
+						<if test='categoryId != -1'>
+							WHERE category_id = #{categoryId}
+						</if>
 					)
 					pp LEFT JOIN product_image pi on pp.product_id = pi.product_id 
 					WHERE rnum BETWEEN #{start} AND #{end}
-		<if test='categoryId != -1'>
-			AND category_id = #{categoryId}
-		</if>		
+				
 	</select>
 	
 	<select id="selectRateOrderProduct" resultType="com.example.myapp.product.model.Product">
