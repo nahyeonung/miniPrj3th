@@ -122,22 +122,20 @@ https://templatemo.com/tm-559-zay-shop
                             <div class="card rounded-0">
                                 <img class="card-img rounded-0 img-fluid" th:src="@{/file/{id}(id=${product.imageId})}">
                                 <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                    <ul class="list-unstyled">
-                                        <li><a class="btn btn-success text-white" th:href="@{/product/productDetail/{productId}(productId=${product.productId})}"><i class="far fa-heart"></i></a></li>
-                                        <li><a class="btn btn-success text-white mt-2" th:href="@{/product/productDetail/{productId}(productId=${product.productId})}"><i class="far fa-eye"></i></a></li>
-                                        <li><a class="btn btn-success text-white mt-2" th:href="@{/product/productDetail/{productId}(productId=${product.productId})}"><i class="fas fa-cart-plus"></i></a></li>
-                                    </ul>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <a th:href="@{/product/productDetail/{productId}(productId=${product.productId})}" class="h3 text-decoration-none">[[${product.productName}]]</a>
+                            	<div class="text-center">
+                                	<a th:href="@{/product/productDetail/{productId}(productId=${product.productId})}" class="h3 text-decoration-none">[[${product.productName}]]</a>
+                                </div>
                                 <ul class="list-unstyled d-flex justify-content-center mb-1">
                                     <li>
                                   		<i th:if="${product.avgRate>0}" class="text-warning fa fa-star"  th:each="num: ${#numbers.sequence(1, product.avgRate)}"></i>
                                			<i th:if="${product.avgRate<5}" class="text-dark fa fa-star" th:each="num: ${#numbers.sequence(1, 5-product.avgRate)}"></i>
                                     </li>
                                 </ul>
-                                <p class="text-center mb-0">[[${product.productPrice}]]</p>
+                                <!-- <p class="text-center mb-0">[[${product.productPrice}]]</p> -->
+                                <p class="text-center" data-th-text="${#numbers.formatInteger(product.productPrice, 3, 'COMMA') + '원'}"></p>
                             </div>
                         </div>
                     </div>

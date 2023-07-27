@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -206,13 +205,19 @@ public class ProductController {
    }
    
    @RequestMapping(value="/category/delete", method=RequestMethod.POST)
-   public String deleteCategory(@RequestParam List<Integer> categoryId, Model model) {
-      if(categoryId.size() > 0) {   
-         for(int i=0; i<categoryId.size(); i++) {
-            int row = productService.deleteCategory(categoryId.get(i));            
-         }
+   public String deleteCategory(@RequestParam List<Integer> categoryId, Model model, RedirectAttributes redirectAttrs) {
+      try {
+		  if(categoryId.size() > 0) {   
+			  for(int i=0; i<categoryId.size(); i++) {
+				  int row = productService.deleteCategory(categoryId.get(i));            
+			  }
+		  }
+		  return productFactory(model);    	  
+      } catch(RuntimeException e) {
+    	  e.printStackTrace();
+    	  redirectAttrs.addFlashAttribute("message", e.getMessage());
+    	  return "redirect:/product/productInsert";
       }
-      return productFactory(model);
    }
    
    @RequestMapping(value="/product/insert", method=RequestMethod.POST)
