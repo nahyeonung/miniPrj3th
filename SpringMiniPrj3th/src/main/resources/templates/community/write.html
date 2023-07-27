@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" th:href="@{/css/community/write.css}">
+<link rel="stylesheet" th:href="@{/css/community/update.css}">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
 
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script
 	src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 <!-- include summernote css/js-->
-
-<link rel="shortcut icon" type="image/x-icon"
-	th:href="@{static/img/favicon.ico}">
-
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css"
 	rel="stylesheet">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
 <!-- include summernote-ko-KR -->
-<script src="/resources/js/summernote-ko-KR.js"></script>
+<script src="/js/summernote-ko-KR.js"></script>
 <head th:replace="~{/include/head :: header}"></head>
 <body>
 	<!-- Start Top Nav -->
@@ -64,47 +64,48 @@
 	<!-- End Footer -->
 
 	<script>
-        var Target = document.getElementById("clock");
-        function clock() {
-            var time = new Date();
-            var month = time.getMonth();
-            var date = time.getDate();
-            var day = time.getDay();
-            var week = ['일', '월', '화', '수', '목', '금', '토'];
 
-            var hours = time.getHours();
-            var minutes = time.getMinutes();
-          
+	function goWrite(community) {
+    	var title = community.writeTitle.value;
+    	var content = community.writeContent.value;
 
-            Target.innerText = 
-            `${month + 1}월 ${date}일 ${week[day]}요일 ` +
-            `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}`;
-                
-        }
-        clock();
-        setInterval(clock, 1000); // 1초마다 실행
-        
-        function goBack() {
-        	  window.history.back();
-        	}
-        
-        function goWrite(community) {
-        	var title = community.writeTitle.value;
-        	var content = community.writeContent.value;
-        	
-        	if (title.trim() == ''){
-        		alert("제목을 입력해주세요");
-        		title.trim.focus();
-        	return false; 
-        	} else if (content.trim() == ''){
-        		alert("내용을 입력해주세요");
-        		content.trim.focus();
-        		return false;
-        	} else{community.submit();
-        	return true;}
-        }
-        
-        $(document).ready(function() {
+    	if (title.trim() == ''){
+    		alert("제목을 입력해주세요");
+    		title.trim.focus();
+    	return false; 
+    	} else if (content.trim() == ''){
+    		alert("내용을 입력해주세요");
+    		content.trim.focus();
+    		return false;
+    	} else{community.submit();
+    	return true;}
+    }
+	
+	var Target = document.getElementById("clock");
+    function clock() {
+        var time = new Date();
+        var month = time.getMonth();
+        var date = time.getDate();
+        var day = time.getDay();
+        var week = ['일', '월', '화', '수', '목', '금', '토'];
+
+        var hours = time.getHours();
+        var minutes = time.getMinutes();
+      
+
+        Target.innerText = 
+        `${month + 1}월 ${date}일 ${week[day]}요일 ` +
+        `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}`;
+            
+    }
+    clock();
+    setInterval(clock, 1000); // 1초마다 실행
+    
+		function goBack() {
+			window.history.back();
+		}
+
+		$(document).ready(function() {
         	$('#summernote').summernote({
                 // 에디터 높이
                 height: 500,
@@ -137,7 +138,7 @@
 
             });
       	});
-       
-    </script>
+
+	</script>
 </body>
 </html>
