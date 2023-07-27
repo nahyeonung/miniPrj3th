@@ -75,8 +75,34 @@ tr {
 	background-repeat: no-repeat;	
 }
 
+.bg2 {
+	background-image: url("/img/pho.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;	
+}
+
+.bg2 {
+	background-image: url("/img/pho.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;	
+}
+
+.bg3 {
+	background-image: url("/img/나루토.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;	
+}
+
 .opacity-9 {
-	opacity: 0.95
+	opacity: 0.9
+}
+
+.opacity-7 {
+	opacity: 0.75
+}
+
+.opacity-8 {
+	opacity: 0.85
 }
 
 .py-80 {
