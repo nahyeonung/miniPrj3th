@@ -11,26 +11,38 @@
     <div th:replace="~{/include/navbar :: navbar}"></div>
     <!-- Close Header -->
 	
-	<div class="container">
-		<form th:object="${review}" th:action="@{/review/update}" method="post" enctype="multipart/form-data">
-			<input type="number" name="productId" th:value=${review.productId} readonly>
-			<label for="rate">평점</label>
-			<select id="rate" name="rate" required>
-				<option th:value=1>1점</option>
-				<option th:value=2>2점</option>
-				<option th:value=3>3점</option>
-				<option th:value=4>4점</option>
-				<option th:value=5>5점</option>
-			</select>
-			<label for="content">내용</label>
-			<textarea name="content" rows="10" cols="100">[[${review.content}]]</textarea>
-			<img th:src="@{/review/file/{id}(id=${review.reviewImageId})}">
-			<input type="hidden" name="reviewId" th:value="${review.reviewId}">
-			<input type="hidden"  name="reviewImageId" th:value="${review.reviewImageId}">
-			<input type="file" name="file">[[${review.reviewImageName}]]
-			<input type="submit" value="글 쓰기">
-			<input type="reset" value="취소">
-		</form>
+	<div class="bg3 p-5">
+		<div class="container bg-white rounded opacity-9">
+			
+			<div class="text-center mb-5 p-5">	
+				<img alt="" src="/img/review.png" style="height:100px;">
+			</div>
+			
+			<form class="p-5" th:object="${review}" th:action="@{/review/update}" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="productId" th:value=${review.productId} readonly>
+				<select class="form-select mb-3 border-success border-3 width-15" id="rate" name="rate" required>
+					<option th:value=1>🌟</option>
+					<option th:value=2>🌟🌟</option>
+					<option th:value=3>🌟🌟🌟</option>
+					<option th:value=4>🌟🌟🌟🌟</option>
+					<option th:value=5>🌟🌟🌟🌟🌟</option>
+				</select>
+				<textarea class="form-control border border-success mb-3 border-3 fw-bold" name="content" rows="10" cols="100">[[${review.content}]]</textarea>
+				
+			
+				<img class="border border-success border-3 mb-3" th:src="@{/review/file/{id}(id=${review.reviewImageId})}" style="width:200px;">
+				<span>[[${review.reviewImageName}]]</span>
+				<input class="form-control border-success border-3 mb-3 width-50" type="file" name="file">
+				
+				<input type="hidden" name="reviewId" th:value="${review.reviewId}">
+				<input type="hidden"  name="reviewImageId" th:value="${review.reviewImageId}">
+				
+				<div class="d-flex justify-content-center">
+					<input class="btn btn-outline-success mx-3 width-15" type="submit" value="글 쓰기">
+					<input class="btn btn-outline-danger mx-3 width-15" type="reset" value="취소">
+				</div>
+			</form>
+		</div>
 	</div>
     
     <!-- Start Footer -->

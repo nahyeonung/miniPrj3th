@@ -14,7 +14,9 @@
 	
 	<div class="bg">
 		<div class="container p-5 border width-50 bg-white opacity-9 border-3 border-success">
-			<h2 class="text-center my-5">[리뷰쓰기]</h2>
+			<div class="text-center mb-5 p-5">	
+				<img alt="" src="/img/review.png" style="height:100px;">
+			</div>
 			<form class="form" th:action="@{/review/insert}" method="post" enctype="multipart/form-data">
 				<input class="form-label" type="hidden" name="productId" th:value=${productId}>
 				<div class="d-flex my-3">
