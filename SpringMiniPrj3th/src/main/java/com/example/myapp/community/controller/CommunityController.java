@@ -72,7 +72,6 @@ public class CommunityController {
 	@RequestMapping("/community/{writeId}/{page}")
 	public String getCommunityDetails(@PathVariable int writeId, @PathVariable int page, Model model) {
 		Community community = communityService.selectArticle(writeId);
-		System.out.println(writeId);
 		model.addAttribute("writeId", writeId);
 		List<ReplyVO> replyList = replyService.replyList(writeId);
 		if (community != null) {
