@@ -129,11 +129,10 @@ body {
                          		<img th:unless="${list.reviewImageId != 0}" th:src="@{/img/최애의아이배너.png}" class="card-img-top" style="height:200px;">
 								<div class="card-body">
 									<ul class="list-unstyled d-flex justify-content-between">
-										<li><i class="text-warning fa fa-star"></i> <i
-											class="text-warning fa fa-star"></i> <i
-											class="text-warning fa fa-star"></i> <i
-											class="text-muted fa fa-star"></i> <i
-											class="text-muted fa fa-star"></i></li>
+										<li>
+										<i th:if="${list.rate>0}" class="text-warning fa fa-star"  th:each="num: ${#numbers.sequence(1, list.rate)}"></i>
+                               			<i th:if="${list.rate<5}" class="text-dark fa fa-star" th:each="num: ${#numbers.sequence(1, 5-list.rate)}"></i>
+										</li>
 									</ul>
 									<a href="shop-single.html"
 										class="h3 text-decoration-none text-dark">[[${list.productName}]]</a>
