@@ -99,12 +99,6 @@ https://templatemo.com/tm-559-zay-shop
                             </li>
                         </ul>
                     </div>
-                    <div class="col-md-6 pb-4">
-  						<h3>
-							<span th:if="${session.userId != null}" th:text="${session.userId} + '님 환영합니다.'">userId님 환영합니다.</span>
-							<span th:unless="${session.userId != null}">로그인이 필요해요</span>
-						</h3>
-                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4" th:each="product : ${productList}" th:if="${product.productState==0}">
