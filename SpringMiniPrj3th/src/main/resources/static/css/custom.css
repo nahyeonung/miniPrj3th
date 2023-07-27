@@ -49,6 +49,10 @@ tr {
 	width: 15%
 }
 
+.width-30 {
+	width: 30%
+}
+
 .width-50 {
 	width: 50%
 }
@@ -82,4 +86,10 @@ tr {
 
 .pb-80 {
 	padding-bottom: 80px;
+}
+
+footer {
+	position: absolute;
+	left:0;
+	right:0;
 }

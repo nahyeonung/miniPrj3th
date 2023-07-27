@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.myapp.community.model.ReplyVO;
 import com.example.myapp.community.service.IReplyService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class ReplyController {
 
@@ -32,14 +34,18 @@ public class ReplyController {
 //	}
 
 	@PostMapping("/reply/write")
-	public String replyWrite(@RequestParam("writeId") int writeId, @RequestParam("replyContent") String replyContent) {
+	public String replyWrite(@RequestParam("writeId") int writeId, HttpSession session, @RequestParam("replyContent") String replyContent) {
+		String userId = (String)session.getAttribute("userId");
+		if(userId != null && !userId.equals("")) {
 		ReplyVO replyVo = new ReplyVO();
 		replyVo.setReplyContent(replyContent);
 		replyVo.setWriteId(writeId);
-		replyVo.setUserId("test");
+		replyVo.setUserId(userId);
 		replyService.replyWrite(replyVo);
 		 return "redirect:/community/" + writeId;
-	}
+	}else {
+		return "user/login";
+	}}
 	
 	
 }

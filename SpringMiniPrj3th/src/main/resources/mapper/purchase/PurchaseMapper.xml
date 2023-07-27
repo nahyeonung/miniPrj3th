@@ -150,6 +150,7 @@
 			   pp.product_price AS productPrice, 
 			   pp.category_id AS categoryId, 
 			   pp.product_id AS productId, 
+			   pp.ssum AS totalCnt,
 			   pi.image_id AS imageId,
 			   pi.image_name AS imageName, 
 			   pi.image_size AS imageSize, 
@@ -165,6 +166,7 @@
 				) pp 
 				LEFT JOIN product_image pi on pp.product_id = pi.product_id 
 				WHERE rnum <= 3
+				ORDER BY rnum
 	]]>
 	</select>
 	

@@ -102,8 +102,7 @@
 			COUNT(*) FROM community
 		WHERE 
 			write_title LIKE #{keyword}
-		    		OR 
-		    		write_content LIKE #{keyword}
+		    		
 	]]>
 	</select> 
 

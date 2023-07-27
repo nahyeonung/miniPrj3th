@@ -7,7 +7,52 @@ div.ContentBox {
     margin-right: auto;
     
 }
+.containerr{
+	background-color: #eef2f5;
+	width: 650px;
+	margin-bottom: 15px;
+	height: 80px; 
+}
 
+
+.second{
+	width: 650px;
+	background-color: white;
+	border-radius: 4px;
+	height: 80px;
+	box-shadow: 10px 10px 5px #aaaaaa;
+}
+.third{
+	margin: 15px;
+	height: 60px;
+}
+.d-flex{
+	margin:10px;
+	
+}
+.text1{
+	margin: 30px;
+	font-size: 24px;
+    font-weight: 500;
+    color: #56575b;
+}
+.text2{
+	font-size: 20px;
+    font-weight: 500;
+    margin-left: 60px;
+    color: #56575b;
+}
+.text3{
+	font-size: 18px;
+    font-weight: 500;
+    margin-right: 4px;
+    color: #828386;
+    
+}
+.text3o{
+	color: #00a5f4;
+
+}
 #body{
 	background: url(/img/commwrite.jpg)  no-repeat center;
 	background-size: cover;

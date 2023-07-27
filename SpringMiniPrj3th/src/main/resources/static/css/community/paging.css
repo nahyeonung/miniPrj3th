@@ -1,19 +1,24 @@
 @charset "UTF-8";
-.pagination {
+.pagination1 {
+	all: unset;
    margin-top:10px;
    list-style:none;
-   display:inline;
+   display:block;
    text-align:center;
    align-items: center;
 }
+.pagination-container {
+  text-align: center;
+}
 
-.pagination li {
+
+.pagination1 li {
    text-align:center;
    align-items: center;
    display:inline;
    vertical-align:middle;
 }
-.pagination li a {
+.pagination1 li a {
    display:-moz-inline-stack;   /*FF2*/
    display:inline-block;
    vertical-align:top;
@@ -25,14 +30,15 @@
    text-align:center;
    text-decoration:none;
    width /**/:26px;
+   float:none;
 }
-.pagination li a:hover, .pagination li a:focus {
+.pagination1 li a:hover, .pagination li a:focus {
    color:#fff;
    border:1px solid #f40;
    background-color:#f40;
 }
 
-.pagination li a.now {
+.pagination1 li a.now {
    color:#fff;
    background-color:#f40;
    border:1px solid #f40;

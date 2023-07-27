@@ -72,12 +72,12 @@
 			       pi.image_type AS imageType, 
 			       pi.image_data AS imageData
 			       FROM(
-					SELECT product_id, product_name, product_price, product_state ,category_id, NVL(ravg,0) as ravg, rownum as rnum
+					SELECT product_id, product_name, product_price, product_state ,category_id, ravg, rownum as rnum
 					FROM(
-					SELECT p.product_id, p.product_name, p.product_price, p.product_state, p.category_id, round(avg(r.rate),0) as ravg 
+					SELECT p.product_id, p.product_name, p.product_price, p.product_state, p.category_id, NVL(round(avg(r.rate),0),0) as ravg 
 						FROM product p left join review r on p.product_id = r.product_id
 						WHERE p.product_state = 0
-						GROUP BY p.product_id, p.product_name, p.product_price, p.product_state ,p.category_id ORDER BY ravg
+						GROUP BY p.product_id, p.product_name, p.product_price, p.product_state ,p.category_id ORDER BY ravg desc
 						)
 					)
 					pp LEFT JOIN product_image pi on pp.product_id = pi.product_id 
