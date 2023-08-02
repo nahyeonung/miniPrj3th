@@ -134,7 +134,6 @@ https://templatemo.com/tm-559-zay-shop
                                			<i th:if="${product.avgRate<5}" class="text-dark fa fa-star" th:each="num: ${#numbers.sequence(1, 5-product.avgRate)}"></i>
                                     </li>
                                 </ul>
-                                <!-- <p class="text-center mb-0">[[${product.productPrice}]]</p> -->
                                 <p class="text-center" data-th-text="${#numbers.formatInteger(product.productPrice, 3, 'COMMA') + '원'}"></p>
                             </div>
                         </div>

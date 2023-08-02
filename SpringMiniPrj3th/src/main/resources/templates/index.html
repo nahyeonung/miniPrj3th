@@ -184,13 +184,14 @@ body {
     function translateContainer(direction){
     	  const selectedBtn = (direction === 1) ? 'prev' : 'next';
     	  container.style.transitionDuration = '700ms';
-    	  container.style.transform = `translateX(${direction * (200 / reviewCnt)}%)`;
+    	  container.style.transform = `translateX(${direction * (300 / reviewCnt)}%)`;
     	  container.ontransitionend = () => reorganizeEl(selectedBtn);
     	}
     function reorganizeEl(selectedBtn) {
     	container.removeAttribute('style');
     	container.style.flexWrap = "nowrap";
-    	  (selectedBtn === 'prev') ? container.insertBefore(container.lastElementChild, container.firstElementChild): container.appendChild(container.firstElementChild);
+    	(selectedBtn === 'prev') ? 
+    	container.insertBefore(container.lastElementChild, container.firstElementChild): container.appendChild(container.firstElementChild);
     	}
     </script>
 </body>
